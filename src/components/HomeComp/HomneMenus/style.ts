@@ -12,6 +12,7 @@ export const HomeMenusContainer = styled.div`
     justify-content: center;
     p {
       display: flex;
+      align-items: center;
       font-size: 20px;
       font-weight: 500;
       line-height: 26px;
@@ -31,7 +32,7 @@ export const HomeMenusContainer = styled.div`
   }
 `;
 
-export const HomeMenuIcon = styled.img`
+export const HomeMenuIcon = styled.span`
   &.checkIcon {
     margin-right: 10px;
   }
