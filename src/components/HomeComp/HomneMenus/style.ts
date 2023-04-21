@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const HomeMenusContainer = styled.div`
   display: flex;
-  div:first-of-type {
+  .homeMenu.black {
     margin-right: 27px;
     color: #fff;
   }
@@ -35,7 +35,7 @@ export const HomeMenuIcon = styled.img`
   &.checkIcon {
     margin-right: 10px;
   }
-  &.arrowIcon path {
+  &.arrowIcon {
     margin-left: 15px;
     stroke: red;
   }
