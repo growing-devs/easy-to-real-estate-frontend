@@ -1,5 +1,11 @@
+import HomeTitle from '@/components/HomeComp/HomeTitle';
+
 const Home = () => {
-  return <div>홈화면</div>;
+  return (
+    <div>
+      <HomeTitle />
+    </div>
+  );
 };
 
 export default Home;
