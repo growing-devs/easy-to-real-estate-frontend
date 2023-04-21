@@ -11,6 +11,8 @@ interface FontProps {
   color?: string;
   size?: string;
   weight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+  lineHeight?: string;
+  align?: string;
 }
 
 export const Pretendard = styled.span<FontProps>`
@@ -25,6 +27,8 @@ export const Pretendard = styled.span<FontProps>`
   font-weight: ${(props) => props.weight || 400};
   font-size: ${(props) => props.size || '16px'};
   color: ${(props) => props.color || Theme.Font_BL};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.align};
 `;
 
 export const subLargeButton = css`
