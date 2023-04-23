@@ -5,22 +5,22 @@ import Footer from '@/components/Layout/Footer';
 
 const Home = () => {
   return (
-    <HomeLayout>
-      <HomeTitle />
-      <HomeMenus />
+    <>
+      <HomeLayout>
+        <HomeTitle />
+        <HomeMenus />
+      </HomeLayout>
       <Footer />
-    </HomeLayout>
+    </>
   );
 };
 
 const HomeLayout = styled.div`
+  min-height: calc(100vh - 250px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 188px;
-  footer {
-    margin-top: 140px;
-  }
+  padding: 188px 0 140px 0;
 `;
 
 export default Home;

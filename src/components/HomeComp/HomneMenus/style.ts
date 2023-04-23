@@ -30,6 +30,14 @@ export const HomeMenusContainer = styled.div`
       margin-bottom: 0;
     }
   }
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    .homeMenu.black {
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+  }
 `;
 
 export const HomeMenuIcon = styled.span`
