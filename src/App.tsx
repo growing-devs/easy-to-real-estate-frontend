@@ -6,6 +6,7 @@ import Simple from './pages/Simple';
 import News from './pages/News';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
+import Kakaomap from './pages/kakaomap';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/pra" element={<Pra />} />
         <Route path="/simple" element={<Simple />} />
         <Route path="/news" element={<News />} />
+        <Route path="/map" element={<Kakaomap />} />
         <Route path="/support" element={<Support />} />
         <Route path="*" element={<NotFound />} />
       </Route>
