@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Upload from './pages/Upload';
+import Pra from './pages/Pra/PdfUpload';
 import Simple from './pages/Simple';
 import News from './pages/News';
 import Support from './pages/Support';
@@ -12,7 +12,8 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route element={<Layout />}>
-        <Route path="/upload" element={<Upload />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/pra" element={<Pra />} />
         <Route path="/simple" element={<Simple />} />
         <Route path="/news" element={<News />} />
         <Route path="/support" element={<Support />} />
