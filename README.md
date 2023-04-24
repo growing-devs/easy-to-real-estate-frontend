@@ -57,9 +57,9 @@ FE_PS 기업 연계 프로젝트.
 
 ```
 // 사용예시
-git commit -m "[ADD] 로그인 페이지 생성 #이슈번호"
-git commit -m "[DEL] 로그인 버튼 삭제 #이슈번호"
-git commit -m "[DOC] Readme.md 수정 #이슈번호"
+git commit -m "Feat: 로그인 페이지 생성 #이슈번호"
+git commit -m "Design: 로그인 버튼 디자인 #이슈번호"
+git commit -m "Docs: Readme.md 수정 #이슈번호"
 ```
 
 ## 📚사용 라이브러리
