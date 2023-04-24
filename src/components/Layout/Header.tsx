@@ -14,7 +14,6 @@ const Header = () => {
           </h1>
           <Link to="/pra">등기부등본 해석</Link>
           <Link to="/simple">담보 부동산 탐색</Link>
-          <Link to="/news">부동산 뉴스</Link>
         </div>
         <div>
           <Link to="/support">고객센터</Link>

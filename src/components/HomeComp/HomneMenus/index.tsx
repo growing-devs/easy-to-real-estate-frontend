@@ -29,7 +29,7 @@ const HomeMenus = () => {
           </p>
         </RadiusBox>
       </Link>
-      <Link to="/upload">
+      <Link to="/pra">
         <RadiusBox className="homeMenu" width="585px" height="315px" color="#F5F5F5">
           <p>상세 심사하기</p>
           <p>
