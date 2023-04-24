@@ -5,7 +5,7 @@ import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { MoreturnUrl } from './constants';
+import { MoreturnUrl } from '../utils/constants';
 
 let loadingCounter = 0;
 
