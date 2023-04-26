@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import RadiusBox from '../../common/RadiusBox';
 import { HomeMenusContainer, HomeMenuIcon } from './style';
-import Checkicon from '@/assets/homemenucheck.svg';
 
 const HomeMenus = () => {
   return (
