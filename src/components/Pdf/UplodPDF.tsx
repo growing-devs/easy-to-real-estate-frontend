@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-
 import React, { useState } from 'react';
 import { instance } from '../../utils/api';
 import LoadingIndicator from './LoadingIndicator';
+import PrimaryButton from '../common/PrimaryButton';
 
 const UplodPDF = () => {
   const [PDFfile, setPDFfile] = useState<File | null>(null);
@@ -46,6 +46,7 @@ const UplodPDF = () => {
       <h1>PDF 업로드</h1>
       {}
       <input type="file" onChange={onFileChange} disabled={isUploading} />
+      <PrimaryButton>버튼</PrimaryButton>
       <Button onClick={handledDeletePDFfile}>삭제</Button>
       <Button onClick={onFileUpload} disabled={isUploading}>
         업로드

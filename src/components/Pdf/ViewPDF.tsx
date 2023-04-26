@@ -1,7 +1,12 @@
 import React from 'react';
+import { PdfContainer } from '../../components/common/PdfContainer';
 
 const ViewPDF = () => {
-  return <div>ViewPDF</div>;
+  return (
+    <>
+      <PdfContainer />;
+    </>
+  );
 };
 
 export default ViewPDF;
