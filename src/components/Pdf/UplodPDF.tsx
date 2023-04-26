@@ -12,6 +12,7 @@ const UplodPDF = () => {
     setPDFfile(event.target.files ? event.target.files[0] : null);
   };
 
+  // 전송 하기 버튼
   const onFileUpload = async () => {
     if (!PDFfile) {
       console.log('PDF 파일이 선택되지 않았습니다.');
@@ -30,34 +31,76 @@ const UplodPDF = () => {
 
       console.log(response.data);
     } catch (error) {
-      // 필요하다면 사용자에게 에러 메시지를 표시합니다.
       console.error('파일 업로드 실패: ', error);
     } finally {
-      setIsUploading(false); // 파일 업로드 요청이 종료됨을 표시
+      setIsUploading(false);
     }
   };
+
+  // 파일 선택 취소
   const handledDeletePDFfile = (): void => {
     setPDFfile(null);
 
     console.error('삭제: ', PDFfile);
   };
+
   return (
-    <>
-      <h1>PDF 업로드</h1>
-      {}
-      <input type="file" onChange={onFileChange} disabled={isUploading} />
-      <PrimaryButton>버튼</PrimaryButton>
-      <Button onClick={handledDeletePDFfile}>삭제</Button>
-      <Button onClick={onFileUpload} disabled={isUploading}>
-        업로드
-      </Button>
-      <LoadingIndicator />
-    </>
+    <UploadWrap>
+      <UploadTitle>
+        <Title>등기부등본 파일 첨부</Title>
+        <Content>*단일 PDF(100MB 이하)만 업로드 가능합니다.</Content>
+      </UploadTitle>
+      <UploadBox>
+        <UploadInput type="file" onChange={onFileChange} disabled={isUploading} />
+        <PrimaryButton>파일선택</PrimaryButton>
+        <Button onClick={handledDeletePDFfile}>삭제</Button>
+        <PrimaryButton onClick={onFileUpload} disabled={isUploading}>
+          업로드
+        </PrimaryButton>
+        {/* <LoadingIndicator /> */}
+      </UploadBox>
+    </UploadWrap>
   );
 };
 
 export default UplodPDF;
 
+const Title = styled.span`
+  font-size: 30px;
+  font-weight: bold;
+
+  margin-top: 30px;
+`;
+
+const Content = styled.span`
+  margin-top: 30px;
+  color: red;
+`;
+
+const UploadTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const UploadInput = styled.input``;
+
+const UploadBox = styled.div`
+  border: 1px dotted #ccc;
+  margin-top: 50px;
+  padding: 30px;
+`;
+
+const UploadWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  margin: 20px;
+  height: 577px;
+  background: #ffffff;
+  box-shadow: 0px 0px 21px rgba(232, 232, 232, 0.81);
+  border-radius: 32px;
+`;
 const Button = styled.button`
   background-color: #007bff;
   color: #fff;
