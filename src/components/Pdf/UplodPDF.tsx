@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import React, { useState } from 'react';
-import { instance } from '../../utils/api';
+import { instance } from '../../api/api';
 import LoadingIndicator from './LoadingIndicator';
 
 const UplodPDF = () => {
