@@ -1,31 +1,6 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
-import logo from '@/assets/logo.svg';
 
-const Header = () => {
-  return (
-    <HeaderContainer>
-      <HeaderWrap>
-        <div>
-          <h1>
-            <Link to="/">
-              <img src={logo} alt="logo" />
-            </Link>
-          </h1>
-          <Link to="/pra">등기부등본 해석</Link>
-          <Link to="/simple">담보 부동산 탐색</Link>
-        </div>
-        <div>
-          <Link to="/support">고객센터</Link>
-        </div>
-      </HeaderWrap>
-    </HeaderContainer>
-  );
-};
-
-export default Header;
-
-const HeaderContainer = styled.header`
+export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   height: 100px;
@@ -34,7 +9,7 @@ const HeaderContainer = styled.header`
   background-color: #fff;
 `;
 
-const HeaderWrap = styled.div`
+export const HeaderWrap = styled.div`
   display: flex;
   justify-content: space-between;
   width: 1240px;
