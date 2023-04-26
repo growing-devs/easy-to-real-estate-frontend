@@ -2,41 +2,41 @@ import styled from '@emotion/styled';
 
 export const HomeMenusContainer = styled.div`
   display: flex;
-  .homeMenu.black {
-    margin-right: 27px;
-    color: #fff;
-  }
-  .homeMenu {
+  flex-direction: column;
+  align-items: center;
+  .homeMain {
+    width: 306px;
+    height: 80px;
+    background-color: #1a237e;
+    border-radius: 8px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    p {
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 26px;
-      margin-bottom: 30px;
-    }
-    p:first-of-type {
-      font-size: 40px;
-      font-weight: 700;
-      line-height: 48px;
-    }
-    p:last-child {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 19px;
-      margin-bottom: 0;
-    }
+    align-items: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    margin-bottom: 30px;
+  }
+  .homeSub {
+    color: #5c5c5c;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 160%;
+    letter-spacing: 0em;
+    position: relative;
   }
 
-  @media (max-width: 1200px) {
-    flex-direction: column;
-    .homeMenu.black {
-      margin-right: 0;
-      margin-bottom: 30px;
-    }
+  /* 밑줄 그려주기 위한 after 가상요소.  text-dacoration 썼더니 안 이뻐서.. */
+  .homeSub::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    height: 2px;
+    width: 100%;
+    background-color: #5c5c5c;
   }
 `;
 
