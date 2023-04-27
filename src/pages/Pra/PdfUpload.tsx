@@ -33,14 +33,13 @@ export default PRA;
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 85px;
 `;
 const LinkDetail = styled.div`
   display: flex;
   gap: 20px;
   font-weight: bold;
-  margin-top: 22px;
   margin-bottom: 22px;
-
   font-size: 20px;
   align-self: flex-end;
 `;
@@ -81,7 +80,7 @@ const PageName = styled.span`
   }
 `;
 const PageDetail = styled.p`
-  margin-top: 16px;
+  margin-top: 30px;
   color: #8f8f8f;
   font-weight: 600;
   font-size: 30px;

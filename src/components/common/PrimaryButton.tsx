@@ -14,6 +14,7 @@ const ButtonCss = styled.button<Props>`
   border-radius: 40px;
   padding: 10px 20px;
   font-size: 13px;
+  height: max-content;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
   &:hover {
