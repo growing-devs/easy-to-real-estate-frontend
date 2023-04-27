@@ -8,7 +8,7 @@ const HomeMenus = () => {
       <Link to="/pra" className="homeMain">
         심사 시작하기
       </Link>
-      <Link to="/simple" className="homeSub">
+      <Link to="/search" className="homeSub">
         등기부등본이 없으시다면?
       </Link>
     </HomeMenusContainer>
