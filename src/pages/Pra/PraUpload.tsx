@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-
-import ViewPDF from '../../components/Pdf/ViewPDF';
 import Upload from '../../components/Pdf/UplodPDF';
-import DragAndDrop from '@/components/Pdf/DragAndDrop';
+// Potential Rate of Appraisal  해당 부동산의 잠재 가치를 나타내는 지표를 의미합니다
 
-//  업로드 상태변화를 감지하여 페이지를 이동해주는 컴포넌트
 const PRA = () => {
   return (
     <WrapContainer>
@@ -21,15 +18,21 @@ const PRA = () => {
         </LinkDetail>
         <LinkDetail>
           <StyledLink to="/">등기부등본 없는 간편심사 바로가기</StyledLink>
-          <StyledLink to="/">등기부등록 발급 바로가기</StyledLink>
+          <StyledAtag href="https://www.iros.go.kr/pos1/jsp/help2/jsp/001001001002.jsp">
+            등기부등록 발급 바로가기
+          </StyledAtag>
         </LinkDetail>
       </LinkContainer>
+      {/* 업로드기능 */}
       <Upload />
     </WrapContainer>
   );
 };
 
 export default PRA;
+const StyledAtag = styled.a`
+  text-decoration: underline;
+`;
 const LinkContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,7 +49,6 @@ const LinkDetail = styled.div`
 const StyledLink = styled(Link)`
   text-decoration: underline;
 `;
-
 const WrapContainer = styled.div`
   width: 1200px;
   height: auto;
