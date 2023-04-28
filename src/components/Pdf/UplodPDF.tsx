@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState, useRef, useEffect } from 'react';
-import { instance } from '../../utils/api';
+import { instance } from '../../api/api';
 import LoadingIndicator from './LoadingIndicator';
 import DragAndDrop from '../Pdf/DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.png';
