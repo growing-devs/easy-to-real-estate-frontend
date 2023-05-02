@@ -15,16 +15,19 @@
     <!-- 백엔드가 api 주소를 바꾼다면 이후 지우거나 수정 -->
     <link rel="preconnect" href="https://moreturn.shop" crossorigin />
 
-    <title>Moreturn 쉬운 부동산</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-
     <!-- 카카오 지도 api -->
     <script
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=697a355fbbe49be250eb554bcb37345c&libraries=services,clusterer"
     ></script>
+
+    <!-- 다음 우편번호 검색 서비스 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <title>Moreturn 쉬운 부동산</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

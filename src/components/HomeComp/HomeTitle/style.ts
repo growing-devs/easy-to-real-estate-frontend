@@ -12,9 +12,12 @@ export const HomeTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 102px;
+  margin-bottom: 85px;
   .mainTitle {
-    margin-bottom: 102px;
+    margin-bottom: 40px;
+  }
+  .secondaryTheme {
+    color: #ccac55;
   }
 `;
 
