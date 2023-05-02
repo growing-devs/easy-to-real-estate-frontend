@@ -15,9 +15,9 @@ interface SearchState {
 }
 
 export const useSearchStore = create<SearchState>((set) => ({
-  address: '제주특별자치도 제주시 첨단로 242',
-  newLat: 33.450701,
-  newLng: 126.570667,
+  address: '서울 중구 세종대로 110',
+  newLat: 0,
+  newLng: 0,
   sampleData1: '',
   sampleData2: '',
   sampleData3: '',
