@@ -1,28 +1,38 @@
 import styled from '@emotion/styled';
 
 export const MapContainer = styled.div`
+  display: flex;
   position: relative;
-  width: 630px;
+  width: 100%;
   height: 390px;
-  #map,
-  #roadview {
-    position: absolute;
+  #map {
     width: 100%;
     height: 100%;
+    &.active {
+      width: 50%;
+    }
   }
-  .active {
-    z-index: 1;
+  #roadview {
+    &.active {
+      /* z-index: 1; */
+      display: block;
+      width: 50%;
+    }
+    &.inactive {
+      /* z-index: 0; */
+      display: none;
+    }
   }
-  .inactive {
-    z-index: 0;
-  }
+
   #btnRoadview {
     position: absolute;
     top: 5px;
     left: 5px;
-    width: 75px;
-    height: 35px;
-    font-size: 14px;
+    width: 138px;
+    height: 45px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #9f9f9f;
     border: 1px solid #dbdbdb;
     background-color: #fff;
     border-radius: 5px;
@@ -32,40 +42,7 @@ export const MapContainer = styled.div`
     :hover {
       background-color: #eee;
     }
-    /* &.active:hover {
-      background-color: #eee;
-    } */
   }
-  /* .wrapper {
-    .tooltip {
-      position: absolute;
-      left: 10px;
-      top: 45px;
-      background: #646fd4;
-      padding: 10px;
-      border-radius: 5px;
-      color: #fff;
-      text-align: center;
-      display: none;
-      z-index: 5;
-    }
-    .tooltip:after {
-      display: block;
-      content: '';
-      position: absolute;
-      top: -7px;
-      left: 15px;
-      width: 0px;
-      height: 0px;
-      border-top: 8px solid none;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 8px solid #646fd4;
-    }
-  }
-  .wrapper.inactive:hover .tooltip {
-    display: block;
-  } */
 `;
 
 export const MapFilterContainer = styled.ul`

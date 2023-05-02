@@ -2,8 +2,9 @@
 /* eslint-disable react/no-this-in-sfc */
 import { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/store';
-import { MapContainer, MapFilterContainer } from './style';
+import { MapContainer } from './style';
 import centerMarker from '@/assets/centerMarker.png';
+import MapCategories from './MapCategories';
 
 declare global {
   interface Window {
@@ -30,6 +31,7 @@ const Map = () => {
     const contentNode = document.createElement('div'); // 커스텀 오버레이의 컨텐츠 엘리먼트
     let categoryMarkers: any = []; // 카테고리 마커를 담을 배열
     let currCategory = ''; // 현재 선택된 카테고리
+    let overlayOn = true;
 
     // 장소 좌표
     const placePosition = new window.kakao.maps.LatLng(newLat, newLng);
@@ -43,18 +45,75 @@ const Map = () => {
     // 지도 생성
     const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
-    // 로드뷰 생성 및 세팅
+    // 마커 이미지로 사용할 이미지 세팅
+    const markerImage = new window.kakao.maps.MarkerImage(
+      centerMarker,
+      new window.kakao.maps.Size(36, 50), // 중앙 마커만 살짝 크게 조정
+    );
+
+    // 마커 생성
+    const marker = new window.kakao.maps.Marker({
+      position: placePosition,
+      image: markerImage, // 이미지 파일을 마커로 적용
+    });
+    // 마커를 지도 위에 표시
+    marker.setMap(map);
+
+    // 로드뷰 생성
     const roadview = new window.kakao.maps.Roadview(rvContainer);
 
-    // 좌표에 가장 가까운 로드뷰 가져오기
-    const roadviewClient = new window.kakao.maps.RoadviewClient();
-    roadviewClient.getNearestPanoId(placePosition, 50, (panoId: any) => {
-      roadview.setPanoId(panoId, placePosition); // 근접한 로드뷰 실행
-      setPano(panoId);
+    // 로드뷰 핀  이미지를 생성
+    const roadviewPinImg = new window.kakao.maps.MarkerImage(
+      'https://t1.daumcdn.net/localimg/localimages/07/2018/pc/roadview_minimap_wk_2018.png',
+      new window.kakao.maps.Size(26, 46),
+      {
+        // 스프라이트 이미지를 사용
+        // 스프라이트 이미지 전체의 크기를 지정하고
+        spriteSize: new window.kakao.maps.Size(1666, 168),
+        // 사용하고 싶은 영역의 좌상단 좌표를 입력합니다.
+        // background-position으로 지정하는 값이며 부호는 반대입니다.
+        spriteOrigin: new window.kakao.maps.Point(705, 114),
+        offset: new window.kakao.maps.Point(13, 46),
+      },
+    );
+
+    // 로드뷰 핀을 생성
+    const roadviewPin = new window.kakao.maps.Marker({
+      image: roadviewPinImg,
+      position: placePosition,
+      draggable: true,
     });
 
-    // 로드뷰 초기화가 완료되면
-    window.kakao.maps.event.addListener(roadview, 'init', () => {
+    // 로드뷰 핀에 dragend 이벤트 할당
+    window.kakao.maps.event.addListener(roadviewPin, 'dragend', () => {
+      const position = roadviewPin.getPosition(); // 현재 마커가 놓인 자리의 좌표
+      toggleRoadview(position); // 로드뷰를 토글합니다
+    });
+
+    // 좌표로부터 로드뷰 파노라마 ID를 가져올 로드뷰 클라이언트 객체를 생성
+    const roadviewClient = new window.kakao.maps.RoadviewClient();
+    // 전달받은 좌표에 가까운 로드뷰의 파노라마 ID를 추출하여 로드뷰 설정하는 함수
+    function toggleRoadview(position: any) {
+      roadviewClient.getNearestPanoId(position, 50, (panoId: any) => {
+        roadview.setPanoId(panoId, position); // 근접한 로드뷰 실행
+      });
+    }
+
+    // 로드뷰가 토글되면,
+    if (toggle) {
+      overlayOn = true;
+      // 지도 위에 로드뷰 도로 오버레이를 추가
+      map.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW);
+      // 지도 위에 마커를 표시합니다
+      roadviewPin.setMap(map);
+      // 마커의 위치를 지도 중심으로 설정
+      roadviewPin.setPosition(map.getCenter());
+      // 로드뷰의 위치를 지도 중심으로 설정
+      toggleRoadview(map.getCenter());
+    }
+
+    // 로드뷰 위치가 바뀔때 마다 작동하는 이벤트 할당
+    window.kakao.maps.event.addListener(roadview, 'position_changed', () => {
       // 로드뷰에 특정 장소를 표시할 마커를 생성하고 로드뷰 위에 표시
       const rvMarker = new window.kakao.maps.Marker({
         position: placePosition,
@@ -70,21 +129,15 @@ const Map = () => {
         rvMarker.getAltitude(),
       );
       roadview.setViewpoint(viewpoint);
-    });
 
-    // 마커 이미지로 사용할 이미지 세팅
-    const markerImage = new window.kakao.maps.MarkerImage(
-      centerMarker,
-      new window.kakao.maps.Size(36, 50), // 중앙 마커만 살짝 크게 조정
-    );
-
-    // 마커 생성
-    const marker = new window.kakao.maps.Marker({
-      position: placePosition,
-      image: markerImage, // 이미지 파일을 마커로 적용
+      // 현재 로드뷰의 위치로 로드뷰 핀 옮기기
+      const rvPosition = roadview.getPosition(); // 현재 로드뷰의 위치 값 받아오기
+      map.setCenter(rvPosition); // 지도의 중앙을 현재 로드뷰의 위치
+      // 로드뷰 지도 오버레이 된 상태면,
+      if (overlayOn) {
+        roadviewPin.setPosition(rvPosition); // 로드뷰 핀 위치를 현재 로드뷰 위치로 설정
+      }
     });
-    // 마커를 지도 위에 표시
-    marker.setMap(map);
 
     // 지도 위에 표시되고 있는 카테고리 마커를 모두 제거하는 함수
     const removeMarker = () => {
@@ -204,70 +257,21 @@ const Map = () => {
         searchPlaces();
       }
     }
-  }, [newLat]);
+  }, [newLat, toggle]);
 
   return (
     <div>
       <MapContainer id="container">
-        {/* <input
+        <input
           type="button"
           id="btnRoadview"
-          value={toggle ? '지도' : '로드뷰'}
+          value={toggle ? '지도 보기' : '로드뷰 보기'}
           onClick={handleToggle}
-        /> */}
-        <div className={typeof pano === 'number' ? 'wrapper' : 'wrapper inactive'}>
-          {/* <div className="tooltip">해당 위치에 로드뷰 이미지가 없습니다</div> */}
-          <button
-            type="button"
-            id="btnRoadview"
-            className={typeof pano === 'number' ? 'active' : 'inactive'}
-            onClick={handleToggle}
-            disabled={typeof pano !== 'number'}
-          >
-            {toggle ? '지도' : '로드뷰'}
-          </button>
-        </div>
-        <div id="map" className={toggle ? 'inactive' : 'active'} />
+        />
+        <div id="map" className={toggle ? 'active' : 'inactive'} />
         <div id="roadview" className={toggle ? 'active' : 'inactive'} />
       </MapContainer>
-      <MapFilterContainer id="category">
-        <li id="SW8" data-order="0">
-          <span className="material-symbols-outlined">directions_subway</span>
-          <p>지하철역</p>
-        </li>
-        <li id="SC4" data-order="1">
-          <span className="material-symbols-outlined">menu_book</span>
-          <p>학교</p>
-        </li>
-        <li id="MT1" data-order="2">
-          <span className="material-symbols-outlined">shopping_cart</span>
-          <p>대형마트</p>
-        </li>
-        <li id="CT1" data-order="3">
-          <span className="material-symbols-outlined">person_play</span>
-          <p>문화시설</p>
-        </li>
-        <li id="BK9" data-order="4">
-          <span className="material-symbols-outlined">monetization_on</span>
-          <p>은행</p>
-        </li>
-        <li id="HP8" data-order="5">
-          <span className="material-symbols-outlined">local_hospital</span>
-          <p>병원</p>
-        </li>
-        <li id="PM9" data-order="6">
-          <span className="material-symbols-outlined">pill</span>
-          <p>약국</p>
-        </li>
-        <li id="FD6" data-order="7">
-          <span className="material-symbols-outlined">restaurant</span>
-          <p>음식점</p>
-        </li>
-        <li id="CE7" data-order="8">
-          <span className="material-symbols-outlined">local_cafe</span>
-          <p>카페</p>
-        </li>
-      </MapFilterContainer>
+      <MapCategories />
     </div>
   );
 };
