@@ -15,18 +15,22 @@
     "sync": "git pull origin main && npm i && git fetch --prune"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@react-pdf/renderer": "^3.1.9",
+    "@types/react-pdf": "^6.2.0",
     "@vitejs/plugin-basic-ssl": "^1.0.1",
     "axios": "^1.3.4",
     "axios-hooks": "^4.0.0",
     "emotion-reset": "^3.0.1",
     "eslint-plugin-react": "^7.32.2",
     "path": "^0.12.7",
-    "pretendard": "^1.3.6",
     "react": "^18.2.0",
+    "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
+    "react-kakao-maps-sdk": "^1.1.8",
     "react-router-dom": "^6.8.2",
+    "yarn": "^1.22.19",
     "zustand": "^4.3.7"
   },
   "devDependencies": {
@@ -46,7 +50,7 @@
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
     "typescript": "^4.9.5",
-    "vite": "^4.1.0",
+    "vite": "^4.3.1",
     "vite-tsconfig-paths": "^4.0.5"
   },
   "engines": {

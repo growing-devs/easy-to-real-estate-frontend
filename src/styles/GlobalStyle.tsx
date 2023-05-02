@@ -1,39 +1,32 @@
 import { css, Global } from '@emotion/react';
 import reset from 'emotion-reset';
-import Theme from './Theme';
 
 const style = css`
   ${reset}
-  html, body {
-    background-color: #fff;
-
-    color: ${Theme.Font_BL};
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-    a {
-      color: ${Theme.Font_BL};
-      text-decoration: none;
+  *, *::after, *::before {
+    box-sizing: border-box;
+    @font-face {
+      font-family: 'Pretendard-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+        format('woff');
     }
   }
-  * {
-    box-sizing: border-box;
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-      Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  html {
+    font-family: 'Pretendard-Regular';
   }
-
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   button {
     cursor: pointer;
   }
-
-  #root {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    position: relative;
+  .textTest {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 67px;
+    letter-spacing: -0.02em;
+    text-align: center;
   }
 `;
 
