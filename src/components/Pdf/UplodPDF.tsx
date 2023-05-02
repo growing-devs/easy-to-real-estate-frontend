@@ -4,7 +4,7 @@ import { instance } from '../../api/api';
 import LoadingIndicator from './LoadingIndicator';
 import DragAndDrop from '../Pdf/DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.png';
-import { PrimaryButton, SpinnerButton, CancelButton } from '../Common';
+import { PrimaryButton, SpinnerButton, CancelButton } from '../common';
 
 const UplodPDF = () => {
   const [PDFfile, setPDFfile] = useState<File | null>(null);
