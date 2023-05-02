@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import logo from '@/assets/logo_moneyparking.svg';
-import HomeTitle from '@/components/HomeComp/HomeTitle';
-import HomeMenus from '@/components/HomeComp/HomneMenus';
+import { HomeMenus, HomeTitle } from '@/components/HomeComp';
 import Footer from '@/components/Layout/Footer';
 
 const Home = () => {
