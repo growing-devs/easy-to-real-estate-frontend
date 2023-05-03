@@ -15,7 +15,7 @@ interface SearchState {
 }
 
 export const useSearchStore = create<SearchState>((set) => ({
-  address: '서울 중구 세종대로 110',
+  address: '신천동 7-18',
   newLat: 0,
   newLng: 0,
   sampleData1: '',

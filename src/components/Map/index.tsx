@@ -158,7 +158,6 @@ const Map = () => {
         target.attachEvent(`on${type}`, callback);
       }
     };
-
     // 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때,
     // 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록
     addEventHandle(contentNode, 'mousedown', window.kakao.maps.event.preventMap);
@@ -178,10 +177,10 @@ const Map = () => {
 
     // 카테고리 검색을 요청하는 함수
     function searchPlaces() {
-      if (!currCategory) {
-        return;
-      }
-      // 커스텀 오버레이를 숨기고
+      // if (!currCategory) {
+      //   return;
+      // }
+      // 카테고리의 커스텀 인포윈도우를 숨기고
       placeOverlay.setMap(null);
       // 먼저 선택된 지도에 표시되고 있는 카테고리 마커 제거
       removeMarker();
@@ -206,11 +205,36 @@ const Map = () => {
 
       // 카테고리 마커에 클릭이벤트를 등록
       window.kakao.maps.event.addListener(categoryMarker, 'click', () => {
-        // 카테고리 마커를 클릭하면 장소명이 인포윈도우에 표출
-        infowindow.setContent(`<div>${place.place_name}</div>`);
-        infowindow.open(map, categoryMarker);
+        // 카테고리 마커를 클릭하면 장소 정보를 인포윈도우에 전달
+        displayPlaceInfo(place);
       });
     };
+
+    // 카테고리 마커의 커스텀 인포윈도우를 생성하는 함수
+    function displayPlaceInfo(place: any) {
+      const content = `
+        <a href="${place.place_url}" target="_blank" class=place_title>
+          ${place.place_name}
+          <span class="material-symbols-outlined arrow">
+            chevron_right
+         </span>
+        </a>
+        <div class=place_body>
+          <p class=road_address>${place.road_address_name}</p>
+          <p class=address>(지번 : ${place.address_name})</p>
+          <p class=phone>${place.phone}</p>
+        </div>
+        <div class=tooltip />
+      `;
+      contentNode.innerHTML = content;
+      placeOverlay.setPosition(new window.kakao.maps.LatLng(place.y, place.x));
+      placeOverlay.setMap(map);
+    }
+
+    // 지도 클릭시 발생하는 이벤트 등록
+    window.kakao.maps.event.addListener(map, 'click', () => {
+      placeOverlay.setMap(null);
+    });
 
     // 각 카테고리에 클릭 이벤트 등록
     function addCategoryClickEvent() {

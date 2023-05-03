@@ -43,6 +43,69 @@ export const MapContainer = styled.div`
       background-color: #eee;
     }
   }
+
+  .placeinfo_wrap {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: -130px;
+    bottom: 45px;
+    border-radius: 4px;
+    .place_title {
+      width: 260px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      height: 40px;
+      background-color: #458af2;
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+      border-radius: 4px 4px 0px 0px;
+    }
+    .place_body {
+      width: 260px;
+      background-color: #fff;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-width: 0 1px 1px 1px;
+      border-radius: 0px 0px 4px 4px;
+      .road_address {
+        font-size: 13px;
+      }
+      .address {
+        font-size: 11px;
+        color: #8f8f8f;
+        margin-bottom: 14px;
+      }
+      .phone {
+        font-size: 12px;
+        color: #4caf50;
+      }
+    }
+    .tooltip {
+      width: 40px;
+      height: 10px;
+      border-top: 10px solid #ddd;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 0px solid transparent;
+    }
+    .tooltip:after {
+      content: '';
+      position: absolute;
+      border-top: 10px solid #fff;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 0px solid transparent;
+      bottom: 1px;
+      left: 110px;
+    }
+  }
 `;
 
 export const MapFilterContainer = styled.ul`
