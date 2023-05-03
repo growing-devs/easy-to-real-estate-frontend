@@ -1,90 +1,119 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import Upload from '../../components/Pdf/UplodPDF';
-// Potential Rate of Appraisal  해당 부동산의 잠재 가치를 나타내는 지표를 의미합니다
+import Upload from '../../components/Pdf/UploadPDF';
+import nextIcon from '../../assets/Pdf/nextIcon.svg';
 
 const PRA = () => {
   return (
-    <WrapContainer>
-      <PageContainer>
-        <PageName>상세심사</PageName>
-        <PageDetail>조회하실 등기부등본 파일을 업로드 해주세요.</PageDetail>
-      </PageContainer>
+    <Wrapper>
+      <PageHeader>
+        <Title>상세 심사</Title>
+        <Subtitle>조회하실 등기부등본 파일을 업로드 해주세요.</Subtitle>
+      </PageHeader>
 
-      <LinkContainer>
-        <LinkDetail>
-          <p>등기부등본이 없으신가요?</p>
-        </LinkDetail>
-        <LinkDetail>
-          <StyledLink to="/">등기부등본 없는 간편심사 바로가기</StyledLink>
-          <StyledAtag href="https://www.iros.go.kr/pos1/jsp/help2/jsp/001001001002.jsp">
-            등기부등록 발급 바로가기
-          </StyledAtag>
-        </LinkDetail>
-      </LinkContainer>
       {/* 업로드기능 */}
       <Upload />
-    </WrapContainer>
+      <HelpLinks>
+        <HelpTitle>등기부등본이 없으신가요?</HelpTitle>
+        <HelpBoxWrap>
+          <HelpBox>
+            <HelpSub>
+              등기부등본 발급 바로가기 <NextIcon alt="nextIcon" src={nextIcon} />
+            </HelpSub>
+            <HelpLink to="/">등기부등본을 발급받을 수 있는 사이트로 이동</HelpLink>
+          </HelpBox>
+          <HelpBox>
+            <HelpSub>
+              간편심사 바로가기
+              <NextIcon alt="nextIcon" src={nextIcon} />
+            </HelpSub>
+            <HelpAnchor href="https://www.iros.go.kr/pos1/jsp/help2/jsp/001001001002.jsp">
+              등기부등록 발급 필요없는 간편심사 이용
+            </HelpAnchor>
+          </HelpBox>
+        </HelpBoxWrap>
+      </HelpLinks>
+    </Wrapper>
   );
 };
 
 export default PRA;
-const StyledAtag = styled.a`
-  text-decoration: underline;
-`;
-const LinkContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 85px;
-`;
-const LinkDetail = styled.div`
-  display: flex;
-  gap: 20px;
-  font-weight: bold;
-  margin-bottom: 22px;
-  font-size: 20px;
-  align-self: flex-end;
-`;
-const StyledLink = styled(Link)`
-  text-decoration: underline;
-`;
-const WrapContainer = styled.div`
-  width: 1200px;
+
+const NextIcon = styled.img`
+  width: auto;
   height: auto;
-  align-items: center;
-  margin-top: 70px;
-  padding-top: 50px;
-  padding-bottom: 30px;
-  font-family: 'Pretendard';
-  font-style: normal;
 `;
 
-const PageContainer = styled.div`
+const HelpSub = styled.span`
+  display: inline-flex;
+  align-items: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const HelpBoxWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+`;
+
+const HelpBox = styled.div`
+  border: 1px solid #d2d2dc;
+  width: 100%;
+  height: 90px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  padding-left: 30px;
+  border-radius: 5px;
+`;
+
+const HelpTitle = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+`;
+
+const HelpLink = styled(Link)`
+  font-size: 12px;
+`;
+
+const HelpAnchor = styled.a`
+  font-size: 12px;
+`;
+
+const HelpLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 65px;
+`;
+
+const Wrapper = styled.div`
+  width: 684px;
+  height: auto;
+  align-items: center;
+  margin-top: 156px;
+  padding-bottom: 30px;
+`;
+
+const PageHeader = styled.div`
   margin-bottom: 30px;
   text-align: center;
 `;
 
-const PageName = styled.span`
-  margin-top: 40px;
+const Title = styled.span`
   text-align: center;
   font-weight: bold;
-  font-size: 60px; /* default font-size */
-  color: #e8e5d6;
-  /* 화면 너비가 768px보다 작을 때 */
-  @media (max-width: 768px) {
-    font-size: 36px;
-  }
-
-  /* 화면 너비가 768px 이상일 때 */
-  @media (min-width: 768px) {
-    font-size: 60pxpx;
-  }
+  font-size: 40px;
+  color: #000000;
 `;
-const PageDetail = styled.p`
-  margin-top: 30px;
+
+const Subtitle = styled.p`
   color: #8f8f8f;
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 70px;
+  font-size: 22px;
+  margin-top: 32px;
 `;

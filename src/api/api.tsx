@@ -1,39 +1,7 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosInstance, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { MoreturnUrl } from '../utils/constants';
 
-let loadingCounter = 0;
-
-const setLoading = (isLoading: boolean): void => {
-  if (isLoading) {
-    loadingCounter += 1;
-  } else {
-    loadingCounter = Math.max(0, loadingCounter - 1);
-  }
-  console.log(`Loading Counter: ${loadingCounter}`);
-  // 로딩 인디케이터를 업데이트하는 코드를 여기에 작성하세요.
-  // 예를 들어, loadingCounter가 0보다 크면 로딩 인디케이터를 표시하고, 아니면 숨깁니다.
-};
-
-const requestInterceptor = (config: AxiosRequestConfig): InternalAxiosRequestConfig => {
-  setLoading(true);
-  return config as InternalAxiosRequestConfig;
-};
-
-const responseInterceptor = (response: AxiosResponse): AxiosResponse => {
-  setLoading(false);
-  return response;
-};
-
-const errorInterceptor = (error: AxiosError): Promise<AxiosError> => {
-  setLoading(false);
-  return Promise.reject(error);
-};
+const maxRetries = 3;
 
 const instance: AxiosInstance = axios.create({
   baseURL: MoreturnUrl,
@@ -42,9 +10,44 @@ const instance: AxiosInstance = axios.create({
     accept: '*/*',
   },
   responseType: 'json',
+  onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+    console.log('onUploadProgress 호출됨');
+    console.log('progressEvent:', progressEvent);
+    const { loaded, total } = progressEvent;
+    if (total) {
+      const progress = Math.round((loaded * 100) / total);
+      console.log(`Upload progress: ${progress}%`);
+    }
+  },
+  onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+    console.log('onDownloadProgress 호출됨');
+    console.log('progressEvent:', progressEvent);
+    const { loaded, total } = progressEvent;
+    if (total) {
+      const progress = Math.round((loaded * 100) / total);
+      console.log(`Download progress: ${progress}%`);
+    }
+  },
 });
 
-instance.interceptors.request.use(requestInterceptor);
-instance.interceptors.response.use(responseInterceptor, errorInterceptor);
+const handleRetry = async (error: any) => {
+  const { config } = error;
 
-export { instance };
+  config.retries = config.retries || 0;
+
+  if (config.retries < maxRetries) {
+    config.retries += 1;
+    console.log(`재시도 횟수: ${config.retries}`);
+    return instance(config);
+  }
+
+  return Promise.reject(error);
+};
+
+const createCancelableRequest = (): CancelTokenSource => {
+  return axios.CancelToken.source();
+};
+
+instance.interceptors.response.use(undefined, handleRetry);
+
+export { instance, createCancelableRequest };
