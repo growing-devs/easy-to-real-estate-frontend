@@ -1,11 +1,16 @@
 import styled from '@emotion/styled';
 
-const PrimaryButton = styled.button`
+interface PrimaryButtonProps {
+  width?: string;
+  height?: string;
+}
+
+const PrimaryButton = styled.button<PrimaryButtonProps>`
   border: 0.3px solid #8e8e8e;
   border-radius: 4px;
   font-size: 16px;
-  width: 115px;
-  height: 39px;
+  width: ${({ width }) => width ?? '125px'};
+  height: ${({ height }) => height ?? '50px'};
   cursor: pointer;
   background-color: #1a237e;
   color: #f5f5f5;
@@ -15,4 +20,5 @@ const PrimaryButton = styled.button`
     color: #ffffff;
   }
 `;
+
 export default PrimaryButton;

@@ -3,6 +3,9 @@ import styled from '@emotion/styled';
 const ModalContents = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  height: 80%;
+  gap: 50px;
 `;
 
 const LoadingWrap = styled.div`
@@ -48,6 +51,7 @@ const FileNameSpan = styled.span`
 `;
 
 const UploadButtonWrapper = styled.div`
+  margin-top: 30px;
   position: relative;
 `;
 const FileSelectionWrapper = styled.div`
@@ -125,7 +129,7 @@ const UploadContent = styled.div`
 const UploadContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
   height: 312px;
   width: 684px;

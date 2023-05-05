@@ -54,6 +54,7 @@ const HelpSub = styled.span`
 `;
 
 const HelpBoxWrap = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   gap: 30px;
@@ -90,14 +91,17 @@ const HelpLinks = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 65px;
+  margin-bottom: 65px;
+
+  width: 684px;
 `;
 
 const Wrapper = styled.div`
-  width: 684px;
+  display: flex;
+  flex-direction: column;
   height: auto;
   align-items: center;
-  margin-top: 156px;
-  padding-bottom: 30px;
+  margin-top: 56px;
 `;
 
 const PageHeader = styled.div`

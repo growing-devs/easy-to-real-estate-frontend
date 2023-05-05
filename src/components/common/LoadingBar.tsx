@@ -1,42 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
-interface Props {
-  isUploading: boolean;
-  filename?: string;
+interface LoadingBarProps {
+  start: boolean;
+  progress: number;
+  type: 'upload' | 'download';
+  width?: number;
 }
 
-const LoadingBar: React.FC<Props> = ({ isUploading, filename }) => {
-  const [progress, setProgress] = useState(0);
-
+const LoadingBar = ({
+  start = false,
+  progress = 0,
+  type = 'upload',
+  width = 400,
+}: LoadingBarProps) => {
+  const [internalProgress, setInternalProgress] = useState(0);
   useEffect(() => {
-    if (isUploading) {
-      setProgress(0);
-
-      const interval = setInterval(() => {
-        setProgress((prevProgress) => (prevProgress < 100 ? prevProgress + 1 : 100));
-      }, 30);
-
-      return () => {
-        clearInterval(interval);
-      };
+    if (start) {
+      setInternalProgress(progress);
+    } else {
+      setInternalProgress(0);
     }
-  }, [isUploading, filename]);
+  }, [start, progress]);
+
   return (
-    <LoadingBarContainer>
-      <ProgressBar progress={progress} />
-    </LoadingBarContainer>
+    <LoadingBarWrap>
+      <span>총 3분 정도 소요됩니다. 조금만 기다려주세요. </span>
+
+      <LoadingBarContainer width={width}>
+        <ProgressBar progress={internalProgress} />
+      </LoadingBarContainer>
+      <div>{internalProgress}%</div>
+      <div>{type}중 입니다</div>
+    </LoadingBarWrap>
   );
 };
 
 LoadingBar.defaultProps = {
-  filename: '',
+  width: 400,
 };
-const LoadingBarContainer = styled.div`
+const LoadingBarWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
+const LoadingBarContainer = styled.div<{ width: number }>`
   background-color: #ffffff;
   border: 1px solid #1a237e;
   border-radius: 8px;
-  width: 100%;
+  width: ${({ width }) => `${width}px`};
+
   height: 10px;
   overflow: hidden;
 `;

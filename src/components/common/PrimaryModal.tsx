@@ -14,24 +14,32 @@ const PrimaryModal = ({
   children = null,
   isOpen,
   onClose,
-  width = 400,
-  height = 400,
+  width = 700,
+  height = 470,
 }: PrimaryModalProps) => {
   if (!isOpen) return null;
 
   return (
     <ModalBackground onClick={onClose}>
       <ModalContent width={width} height={height} onClick={(e) => e.stopPropagation()}>
+        <CloseButton onClick={onClose}>&times;</CloseButton>
+
         {children}
       </ModalContent>
     </ModalBackground>
   );
 };
 
-PrimaryModal.defaultProps = {
-  width: 400,
-  height: 400,
-};
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  background: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+`;
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -49,6 +57,7 @@ const ModalContent = styled.div<{ width: number; height: number }>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
   background-color: white;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

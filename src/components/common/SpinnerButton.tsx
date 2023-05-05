@@ -6,20 +6,20 @@ import checkmark from '../../assets/Pdf/checkmark.svg';
 interface Props {
   isUploading: boolean;
   filename?: string;
+  duration?: number; // 몇초동안 돌것인지
 }
 
-const SpinnerButton: React.FC<Props> = ({ isUploading, filename }) => {
+const SpinnerButton: React.FC<Props> = ({ isUploading, filename, duration }) => {
   const [isCompleted, setIsCompleted] = useState(false);
 
-  // 스피너 완료 상태를 시뮬레이션하기 위한 함수
   const simulateCompletion = () => {
     setIsCompleted(false);
 
     setTimeout(() => {
       setIsCompleted(true);
-    }, 2000); // 2초 후에 완료 상태로 변경
+    }, duration);
   };
-  // 새로운 파일이 들어왔을때를 감지해 2초간 동작
+
   useEffect(() => {
     if (filename) {
       simulateCompletion();
@@ -35,6 +35,7 @@ const SpinnerButton: React.FC<Props> = ({ isUploading, filename }) => {
 
 SpinnerButton.defaultProps = {
   filename: '',
+  duration: 1000, // 디폴트 값 1 초
 };
 
 const spin = keyframes`
@@ -72,7 +73,6 @@ const SpinnerContainer = styled.div<{ isCompleted: boolean }>`
   height: 35px;
   border-radius: 50%;
   position: relative;
-  /* transition: background-color 0.3s ease-in-out; // 배경색 변경에 대한 transition 속성 추가 */
 `;
 
 export default SpinnerButton;
