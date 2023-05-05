@@ -31,7 +31,14 @@ const LoadingBar = ({
         <ProgressBar progress={internalProgress} />
       </LoadingBarContainer>
       <div>{internalProgress}%</div>
-      <div>{type}중 입니다</div>
+      {progress === 100 ? (
+        <div>분석이 완료되었습니다.</div>
+      ) : (
+        <>
+          <div>{internalProgress}%</div>
+          <div>{type}중 입니다</div>
+        </>
+      )}
     </LoadingBarWrap>
   );
 };

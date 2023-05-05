@@ -19,7 +19,6 @@ const LoadingWrap = styled.div`
 const PDFLogoImg = styled.img`
   width: 32px;
   height: 32px;
-  margin-top: 23px;
 `;
 const DropTitle = styled.div`
   margin-top: 10px;
@@ -61,10 +60,10 @@ const FileSelectionWrapper = styled.div`
   gap: 7px;
 `;
 const DropZone = styled.div<{ fileName: string }>`
+  padding: 10px;
   margin: auto;
   display: flex;
   flex-direction: column;
-  border: ${({ fileName }) => (fileName ? 'none' : '1px dotted #ccc;')};
   width: 546px;
   height: 165px;
   align-items: center;

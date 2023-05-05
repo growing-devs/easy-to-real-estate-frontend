@@ -195,11 +195,11 @@ const UplodPDF = () => {
             )}
           </div>
           {isUploading ? (
-            <PrimaryButton width="600px" height="50px" type="button" onClick={handleCancelUpload}>
+            <PrimaryButton width={600} height={50} type="button" onClick={handleCancelUpload}>
               창닫기
             </PrimaryButton>
           ) : (
-            <PrimaryButton width="600px" height="50px" type="button" onClick={ViewChange}>
+            <PrimaryButton width={600} height={50} type="button" onClick={ViewChange}>
               다음페이지
             </PrimaryButton>
           )}
@@ -234,7 +234,7 @@ const UplodPDF = () => {
               <DropTitle>또는 여기로 파일을 끌어주세요.</DropTitle>
             ) : (
               <UploadButtonWrapper>
-                <PrimaryButton onClick={onFileUpload} disabled={isUploading}>
+                <PrimaryButton height={40} onClick={onFileUpload} disabled={isUploading}>
                   업로드
                 </PrimaryButton>
               </UploadButtonWrapper>
@@ -259,7 +259,6 @@ const {
   FileNameSpan,
   DropTitle,
   PDFLogoImg,
-  LoadingWrap,
   ModalContents,
   FileSelectionWrapper,
   UploadButtonWrapper,

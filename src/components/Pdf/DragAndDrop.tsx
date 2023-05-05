@@ -50,11 +50,11 @@ const DragContainer = styled.div`
   font-weight: bold;
   padding: 10px;
   &.active {
-    border: 2px dashed blue;
+    border: 2px dotted blue;
     background-color: rgb(225, 229, 255);
   }
   &.inactive {
-    border: 2px dashed black;
+    border: 2px dotted #ccc;
     background-color: transparent;
   }
 `;

@@ -1,16 +1,16 @@
 import styled from '@emotion/styled';
 
 interface PrimaryButtonProps {
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
 }
 
 const PrimaryButton = styled.button<PrimaryButtonProps>`
   border: 0.3px solid #8e8e8e;
   border-radius: 4px;
   font-size: 16px;
-  width: ${({ width }) => width ?? '125px'};
-  height: ${({ height }) => height ?? '50px'};
+  width: ${({ width }) => (width ? `${width}px` : '125px')};
+  height: ${({ height }) => (height ? `${height}px` : '150px')};
   cursor: pointer;
   background-color: #1a237e;
   color: #f5f5f5;
