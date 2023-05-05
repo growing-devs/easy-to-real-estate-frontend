@@ -14,6 +14,7 @@ const DragAndDrop: FunctionComponent<DragAndDropProps> = ({ handleInputFile, chi
     const newEvent: any = { target: { files: e.dataTransfer.files } };
     handleInputFile(newEvent);
     setIsDragging(false);
+    setIsDragging(false);
   };
 
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -24,6 +25,7 @@ const DragAndDrop: FunctionComponent<DragAndDropProps> = ({ handleInputFile, chi
   const dragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
+    setIsDragging(true);
   };
 
   return (
