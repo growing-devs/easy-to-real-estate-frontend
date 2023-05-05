@@ -14,23 +14,6 @@ const PropertyInfo = () => {
           <PraPropertyInfoJson>{JSON.stringify(latestItem, null, 2)}</PraPropertyInfoJson>
         </PraPropertyInfoTitle>
       </div>
-      <PropertyInfoBoxContainer>
-        <PropertyInfoBox>
-          <PropertySub>부동산구분</PropertySub>
-          <PropertyDetail>아파트</PropertyDetail>
-          <PropertyImg alt="이미지" />
-        </PropertyInfoBox>
-        <PropertyInfoBox>
-          <PropertySub>전용 면적</PropertySub>
-          <PropertyDetail>147m2</PropertyDetail>
-          <PropertyImg alt="이미지" />
-        </PropertyInfoBox>
-        <PropertyInfoBox>
-          <PropertySub>물건 층수</PropertySub>
-          <PropertyDetail>13/31층</PropertyDetail>
-          <PropertyImg alt="이미지" />
-        </PropertyInfoBox>
-      </PropertyInfoBoxContainer>
     </PraPropertyInfoWrap>
   );
 };
@@ -44,20 +27,6 @@ const PraPropertyInfoJson = styled.pre`
 const PraPropertyInfoTitle = styled.span`
   display: flex;
   flex-direction: column;
-`;
-const PropertySub = styled.span``;
-const PropertyDetail = styled.span``;
-const PropertyImg = styled.img``;
-const PropertyInfoBoxContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  gap: 30px;
-`;
-
-const PropertyInfoBox = styled.div`
-  width: auto;
-  height: auto;
-  background-color: beige;
 `;
 
 const PraPropertyInfoWrap = styled.div`

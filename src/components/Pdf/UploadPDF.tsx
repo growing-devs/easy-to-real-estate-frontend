@@ -169,6 +169,7 @@ const UplodPDF = () => {
   const navigate = useNavigate();
   const ViewChange = () => {
     console.log('이동');
+    navigate('detail');
   };
   return (
     <UploadContainer>
