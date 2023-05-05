@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useState, useRef, useEffect } from 'react';
 import { instance } from '../../api/api';
-import LoadingIndicator from './LoadingIndicator';
 import DragAndDrop from '../Pdf/DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.png';
 import { PrimaryButton, SpinnerButton, CancelButton } from '../common';
@@ -121,7 +120,7 @@ const UplodPDF = () => {
         <Subtitle>*단일 PDF(100MB 이하)만 업로드 가능합니다.</Subtitle>
       </UploadHeader>
       <UploadContent>
-        <DropZone fileName={fileName}>
+        <DropZone className="DropZon">
           <DragAndDrop handleInputFile={onFileChange}>
             <FileSelectionWrapper>
               <FileInputLabel labelWidth={labelWidth}>
@@ -130,22 +129,28 @@ const UplodPDF = () => {
                   {fileName || '파일선택'}
                 </FileNameSpan>
               </FileInputLabel>
-              {!fileName || (
-                <>
-                  <SpinnerButton />
-                  <CancelButton onClick={handledDeletePDFfile} disabled={isUploading} />
-                </>
-              )}
+              <div>
+                {!fileName || (
+                  <>
+                    <SpinnerButton isUploading={isUploading} />
+                    <CancelButton onClick={handledDeletePDFfile} disabled={isUploading} />
+                  </>
+                )}
+              </div>
             </FileSelectionWrapper>
-            {!fileName ? (
-              <DropTitle>또는 여기로 파일을 끌어주세요.</DropTitle>
-            ) : (
-              <UploadButtonWrapper>
-                <PrimaryButton onClick={onFileUpload} disabled={isUploading}>
-                  업로드
-                </PrimaryButton>
-              </UploadButtonWrapper>
-            )}
+            <div>
+              {!fileName ? (
+                <UploadButtonWrapper>
+                  <DropTitle>또는 여기로 파일을 끌어주세요.</DropTitle>
+                </UploadButtonWrapper>
+              ) : (
+                <UploadButtonWrapper>
+                  <PrimaryButton onClick={onFileUpload} disabled={isUploading}>
+                    업로드
+                  </PrimaryButton>
+                </UploadButtonWrapper>
+              )}
+            </div>
           </DragAndDrop>
         </DropZone>
 
@@ -160,7 +165,6 @@ export default UplodPDF;
 const DropTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 60px;
 `;
 const FileNameSpan = styled.span`
   display: inline-block;
@@ -172,7 +176,6 @@ const FileNameSpan = styled.span`
   &.typing {
     max-width: 0;
     animation: typing 0.7s steps(40, end) forwards;
-    border-right: 2px solid #000;
   }
 
   @keyframes typing {
@@ -196,18 +199,15 @@ const FileSelectionWrapper = styled.div`
   align-items: center;
   margin-bottom: 70px;
   margin-top: 70px;
-
   gap: 7px;
 `;
-const DropZone = styled.div<{ fileName: string }>`
+const DropZone = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: ${({ fileName }) => (fileName ? 'none' : '1px dotted #ccc;')};
-
-  width: 100%;
-  height: 370px;
   align-items: center;
+  width: 100%;
+  height: 100%;
   gap: 10px;
   padding: 20px;
 `;
@@ -223,7 +223,6 @@ const FileInputLabel = styled.label<{ labelWidth: number }>`
   border-radius: 40px;
   cursor: pointer;
   font-weight: bold;
-  border: 1px solid #8e8e8e;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

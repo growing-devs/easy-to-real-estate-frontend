@@ -1,18 +1,24 @@
 import styled from '@emotion/styled';
 
-const PrimaryButton = styled.button`
-  background-color: #ffffff;
-  color: #080808;
+interface PrimaryButtonProps {
+  width?: number;
+  height?: number;
+}
+
+const PrimaryButton = styled.button<PrimaryButtonProps>`
   border: 0.3px solid #8e8e8e;
-  border-radius: 40px;
-  padding: 15px 30px;
-  font-size: 25px;
-  height: max-content;
+  border-radius: 4px;
+  font-size: 16px;
+  width: ${({ width }) => (width ? `${width}px` : '125px')};
+  height: ${({ height }) => (height ? `${height}px` : '150px')};
   cursor: pointer;
+  background-color: #1a237e;
+  color: #f5f5f5;
 
   &:hover {
-    background-color: #1a237e;
-    color: #f5f5f5;
+    background-color: gray;
+    color: #ffffff;
   }
 `;
+
 export default PrimaryButton;

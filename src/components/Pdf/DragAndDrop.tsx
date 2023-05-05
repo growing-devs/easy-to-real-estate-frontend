@@ -14,6 +14,7 @@ const DragAndDrop: FunctionComponent<DragAndDropProps> = ({ handleInputFile, chi
     const newEvent: any = { target: { files: e.dataTransfer.files } };
     handleInputFile(newEvent);
     setIsDragging(false);
+    setIsDragging(false);
   };
 
   const dragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -24,6 +25,7 @@ const DragAndDrop: FunctionComponent<DragAndDropProps> = ({ handleInputFile, chi
   const dragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
+    setIsDragging(true);
   };
 
   return (
@@ -46,14 +48,15 @@ const DragContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 170px;
   font-weight: bold;
+  padding: 10px;
   &.active {
-    border: 2px dashed blue;
+    border: 2px dotted blue;
     background-color: rgb(225, 229, 255);
   }
   &.inactive {
-    border: 2px dashed black;
+    border: 2px dotted #ccc;
     background-color: transparent;
   }
 `;
