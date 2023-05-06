@@ -4,7 +4,7 @@ export const MapContainer = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  height: 390px;
+  height: 328px;
   #map {
     width: 100%;
     height: 100%;
@@ -50,7 +50,7 @@ export const MapContainer = styled.div`
     flex-direction: column;
     align-items: center;
     left: -130px;
-    bottom: 45px;
+    bottom: 65px;
     border-radius: 4px;
     .place_title {
       width: 260px;
@@ -78,9 +78,10 @@ export const MapContainer = styled.div`
         font-size: 13px;
       }
       .address {
-        font-size: 11px;
+        font-size: 12px;
         color: #8f8f8f;
         margin-bottom: 14px;
+        margin-top: 7px;
       }
       .phone {
         font-size: 12px;

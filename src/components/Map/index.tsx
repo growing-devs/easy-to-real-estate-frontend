@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/store';
 import { MapContainer } from './style';
 import centerMarker from '@/assets/centerMarker.png';
+import categoryMarkerimg from '@/assets/categoryMarker.png';
 import MapCategories from './MapCategories';
 
 declare global {
@@ -15,6 +16,7 @@ declare global {
 const Map = () => {
   const { newLat, newLng } = useSearchStore(); // 위도, 경도
   const [toggle, setToggle] = useState<boolean>(false);
+  const [agentList, setAgentList] = useState<any>();
   const [pano, setPano] = useState<any>(0);
 
   const handleToggle = () => {
@@ -48,7 +50,7 @@ const Map = () => {
     // 마커 이미지로 사용할 이미지 세팅
     const markerImage = new window.kakao.maps.MarkerImage(
       centerMarker,
-      new window.kakao.maps.Size(36, 50), // 중앙 마커만 살짝 크게 조정
+      new window.kakao.maps.Size(90, 87), // 중앙 마커만 살짝 크게 조정
     );
 
     // 마커 생성
@@ -94,7 +96,7 @@ const Map = () => {
     const roadviewClient = new window.kakao.maps.RoadviewClient();
     // 전달받은 좌표에 가까운 로드뷰의 파노라마 ID를 추출하여 로드뷰 설정하는 함수
     function toggleRoadview(position: any) {
-      roadviewClient.getNearestPanoId(position, 50, (panoId: any) => {
+      roadviewClient.getNearestPanoId(position, 100, (panoId: any) => {
         roadview.setPanoId(panoId, position); // 근접한 로드뷰 실행
       });
     }
@@ -113,7 +115,7 @@ const Map = () => {
     }
 
     // 로드뷰 위치가 바뀔때 마다 작동하는 이벤트 할당
-    window.kakao.maps.event.addListener(roadview, 'position_changed', () => {
+    window.kakao.maps.event.addListener(roadview, 'init', () => {
       // 로드뷰에 특정 장소를 표시할 마커를 생성하고 로드뷰 위에 표시
       const rvMarker = new window.kakao.maps.Marker({
         position: placePosition,
@@ -129,7 +131,9 @@ const Map = () => {
         rvMarker.getAltitude(),
       );
       roadview.setViewpoint(viewpoint);
+    });
 
+    window.kakao.maps.event.addListener(roadview, 'position_changed', () => {
       // 현재 로드뷰의 위치로 로드뷰 핀 옮기기
       const rvPosition = roadview.getPosition(); // 현재 로드뷰의 위치 값 받아오기
       map.setCenter(rvPosition); // 지도의 중앙을 현재 로드뷰의 위치
@@ -169,6 +173,7 @@ const Map = () => {
     // 카테고리 검색 완료시 호출될 콜백 함수
     const placesSearchCB = (data: any, status: any) => {
       if (status === window.kakao.maps.services.Status.OK) {
+        console.log(data);
         for (let i = 0; i < data.length; i += 1) {
           displayMarker(data[i]);
         }
@@ -194,11 +199,18 @@ const Map = () => {
     // 카테고리로 삼을 장소 검색 객체 생성
     const places = new window.kakao.maps.services.Places(map);
 
+    // 카테고리 이미지로 사용할 이미지 세팅
+    const categoryMarkerImage = new window.kakao.maps.MarkerImage(
+      categoryMarkerimg,
+      new window.kakao.maps.Size(45, 58),
+    );
+
     // 지도에 카테고리 마커를 표시하는 함수
     const displayMarker = (place: any) => {
       // 카테고리 장소의 마커를 생성하고 지도에 표시
       const categoryMarker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(place.y, place.x),
+        image: categoryMarkerImage,
       });
       categoryMarker.setMap(map); // 카테고리 마커 맴에 표시
       categoryMarkers.push(categoryMarker); // 카테고리 마커들을 카테고리 마커 배열에 push
@@ -212,19 +224,20 @@ const Map = () => {
 
     // 카테고리 마커의 커스텀 인포윈도우를 생성하는 함수
     function displayPlaceInfo(place: any) {
+      console.log(place);
       const content = `
-        <a href="${place.place_url}" target="_blank" class=place_title>
-          ${place.place_name}
-          <span class="material-symbols-outlined arrow">
-            chevron_right
-         </span>
-        </a>
-        <div class=place_body>
-          <p class=road_address>${place.road_address_name}</p>
-          <p class=address>(지번 : ${place.address_name})</p>
-          <p class=phone>${place.phone}</p>
-        </div>
-        <div class=tooltip />
+      <a href="${place.place_url}" target="_blank" class=place_title>
+      ${place.place_name}
+      <span class="material-symbols-outlined arrow">
+      chevron_right
+      </span>
+      </a>
+      <div class=place_body>
+      <p class=road_address>${place.road_address_name}</p>
+      <p class=address>(지번 : ${place.address_name})</p>
+      <p class=phone>${place.phone}</p>
+      </div>
+      <div class=tooltip />
       `;
       contentNode.innerHTML = content;
       placeOverlay.setPosition(new window.kakao.maps.LatLng(place.y, place.x));
@@ -281,6 +294,14 @@ const Map = () => {
         searchPlaces();
       }
     }
+
+    // const placesSearchAL = (data: any, status: any) => {
+    //   if (status === window.kakao.maps.services.Status.OK) {
+    //     console.log(data);
+    //   }
+    // };
+
+    // places.categorySearch('AG2', placesSearchAL, { useMapBounds: true });
   }, [newLat, toggle]);
 
   return (
@@ -296,6 +317,10 @@ const Map = () => {
         <div id="roadview" className={toggle ? 'active' : 'inactive'} />
       </MapContainer>
       <MapCategories />
+      <ul>
+        <li>장소 리스트</li>
+        {/* <li>{agentList[0]}</li> */}
+      </ul>
     </div>
   );
 };
