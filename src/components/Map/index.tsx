@@ -2,10 +2,11 @@
 /* eslint-disable react/no-this-in-sfc */
 import { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/store';
-import { MapContainer } from './style';
+import { MapContainer, PlaceListWrapper } from './style';
 import centerMarker from '@/assets/centerMarker.png';
 import categoryMarkerimg from '@/assets/categoryMarker.png';
 import MapCategories from './MapCategories';
+import AroundLists from './AroundLists';
 
 declare global {
   interface Window {
@@ -16,7 +17,6 @@ declare global {
 const Map = () => {
   const { newLat, newLng } = useSearchStore(); // 위도, 경도
   const [toggle, setToggle] = useState<boolean>(false);
-  const [agentList, setAgentList] = useState<any>();
   const [pano, setPano] = useState<any>(0);
 
   const handleToggle = () => {
@@ -294,14 +294,6 @@ const Map = () => {
         searchPlaces();
       }
     }
-
-    // const placesSearchAL = (data: any, status: any) => {
-    //   if (status === window.kakao.maps.services.Status.OK) {
-    //     console.log(data);
-    //   }
-    // };
-
-    // places.categorySearch('AG2', placesSearchAL, { useMapBounds: true });
   }, [newLat, toggle]);
 
   return (
@@ -317,10 +309,7 @@ const Map = () => {
         <div id="roadview" className={toggle ? 'active' : 'inactive'} />
       </MapContainer>
       <MapCategories />
-      <ul>
-        <li>장소 리스트</li>
-        {/* <li>{agentList[0]}</li> */}
-      </ul>
+      <AroundLists />
     </div>
   );
 };
