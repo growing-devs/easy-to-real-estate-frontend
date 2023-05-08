@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import Nav from './Nav';
-import Footer from './Footer';
 
 const Layout = () => {
   return (
@@ -9,7 +8,6 @@ const Layout = () => {
       <Nav />
       <MainSection>
         <Outlet />
-        <Footer />
       </MainSection>
     </>
   );
