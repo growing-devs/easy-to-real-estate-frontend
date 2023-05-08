@@ -19,8 +19,8 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/news" element={<News />} />
         <Route path="/support" element={<Support />} />
-        <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
