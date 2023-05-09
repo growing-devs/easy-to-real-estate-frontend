@@ -5,6 +5,7 @@ import { useDataStore } from '../../store/DataStore';
 const PropertyInfo = () => {
   const { responseItems } = useDataStore();
   const latestItem = responseItems[responseItems.length - 1];
+
   console.log(latestItem);
   return (
     <PraPropertyInfoWrap>

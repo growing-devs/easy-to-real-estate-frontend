@@ -4,6 +4,7 @@ const ModalContents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 80%;
   gap: 50px;
 `;
@@ -77,17 +78,20 @@ const FileInputLabel = styled.label<{ labelWidth: number }>`
   width: ${({ labelWidth }) => labelWidth}px;
   max-width: 100%;
   height: 40px;
-  background-color: #fcfcfc;
-  border-radius: 30px;
+  font-weight: 500;
+  background-color: #1a237e;
+  color: white;
+  border-radius: 4px;
+  letter-spacing: 1px;
   cursor: pointer;
-  font-weight: bold;
-  border: 1px solid #8e8e8e;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   &:hover {
-    background-color: #1a237e;
-    color: white;
+    font-weight: bold;
+    background-color: #fcfcfc;
+    border: 1px solid #8e8e8e;
+    color: #0e0e0e;
   }
   & input[type='file'] {
     opacity: 0;
