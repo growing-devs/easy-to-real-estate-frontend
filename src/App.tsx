@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import Pra from './pages/Pra/PraUpload';
 import PraDetail from './pages/Pra/PraDetail';
 import Search from './pages/Search';
-import News from './pages/News';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
 
@@ -17,7 +16,6 @@ const App = () => {
         <Route path="/pra" element={<Pra />} />
         <Route path="/pra/detail" element={<PraDetail />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/news" element={<News />} />
         <Route path="/support" element={<Support />} />
       </Route>
       <Route path="*" element={<NotFound />} />
