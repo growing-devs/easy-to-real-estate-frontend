@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
-import Nav from './Nav';
+import SideBar from './SideBar';
 
 const Layout = () => {
   return (
     <>
-      <Nav />
+      <SideBar />
       <MainSection>
         <Outlet />
       </MainSection>
@@ -14,8 +14,10 @@ const Layout = () => {
 };
 
 const MainSection = styled.main`
+  display: flex;
+  justify-content: center;
   margin-left: 408px;
-  /* min-height: calc(100vh - 350px); */
+  /* width: calc(100% - 408px); */
   min-height: 100vh;
 `;
 
