@@ -1,50 +1,42 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-  InternalAxiosRequestConfig,
-} from 'axios';
+import axios, { AxiosInstance, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { MoreturnUrl } from '../utils/constants';
 
-let loadingCounter = 0;
+const maxRetries = 3;
 
-const setLoading = (isLoading: boolean): void => {
-  if (isLoading) {
-    loadingCounter += 1;
-  } else {
-    loadingCounter = Math.max(0, loadingCounter - 1);
+const createAxiosInstance = (): AxiosInstance => {
+  return axios.create({
+    baseURL: MoreturnUrl,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      accept: '*/*',
+    },
+    responseType: 'json',
+  });
+};
+
+const handleRetry = async (error: any) => {
+  const { config } = error;
+
+  config.retries = config.retries || 0;
+
+  if (config.retries < maxRetries) {
+    config.retries += 1;
+    console.log(`Retry count: ${config.retries}`);
+    return instance(config);
   }
-  console.log(`Loading Counter: ${loadingCounter}`);
-  // 로딩 인디케이터를 업데이트하는 코드를 여기에 작성하세요.
-  // 예를 들어, loadingCounter가 0보다 크면 로딩 인디케이터를 표시하고, 아니면 숨깁니다.
-};
 
-const requestInterceptor = (config: AxiosRequestConfig): InternalAxiosRequestConfig => {
-  setLoading(true);
-  return config as InternalAxiosRequestConfig;
-};
-
-const responseInterceptor = (response: AxiosResponse): AxiosResponse => {
-  setLoading(false);
-  return response;
-};
-
-const errorInterceptor = (error: AxiosError): Promise<AxiosError> => {
-  setLoading(false);
   return Promise.reject(error);
 };
 
-const instance: AxiosInstance = axios.create({
-  baseURL: MoreturnUrl,
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    accept: '*/*',
-  },
-  responseType: 'json',
-});
+const setupResponseInterceptor = (instance: AxiosInstance) => {
+  instance.interceptors.response.use(undefined, handleRetry);
+};
 
-instance.interceptors.request.use(requestInterceptor);
-instance.interceptors.response.use(responseInterceptor, errorInterceptor);
+const instance = createAxiosInstance();
+setupResponseInterceptor(instance);
 
-export { instance };
+const cancelTokenSource = (): CancelTokenSource => {
+  return axios.CancelToken.source();
+};
+
+export { instance, cancelTokenSource };

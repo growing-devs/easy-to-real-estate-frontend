@@ -44,7 +44,7 @@
     "import/no-unresolved": "off",
     "react/jsx-props-no-spreading": "off",
     "no-use-before-define": "off",
-    "no-console": "warn",
+    "no-console": "off",
     "no-param-reassign": ["error", { "props": false }],
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/ban-types": "warn",
