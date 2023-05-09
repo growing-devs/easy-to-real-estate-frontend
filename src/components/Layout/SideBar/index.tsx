@@ -8,7 +8,7 @@ const SideBar = () => {
       <img className="logo" src={logo} alt="logo" />
       <SidebarMenus>
         <NavLink to="/pra">심사하기</NavLink>
-        <NavLink to="/news">내 심사관리</NavLink>
+        <NavLink to="/myreviews">내 심사관리</NavLink>
       </SidebarMenus>
     </SidebarContainer>
   );
