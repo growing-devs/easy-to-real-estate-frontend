@@ -8,6 +8,7 @@ interface PrimaryModalProps {
   onClose: () => void;
   width?: number;
   height?: number;
+  lockBackground?: boolean;
 }
 
 const PrimaryModal = ({
@@ -16,11 +17,12 @@ const PrimaryModal = ({
   onClose,
   width = 700,
   height = 470,
+  lockBackground = false,
 }: PrimaryModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <ModalBackground onClick={onClose}>
+    <ModalBackground onClick={!lockBackground ? onClose : undefined}>
       <ModalContent width={width} height={height} onClick={(e) => e.stopPropagation()}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
 

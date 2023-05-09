@@ -11,7 +11,6 @@ const PraDetail = () => {
           <h1>매물 요약</h1>
         </TitleHeader>
       </PraDetailTitle>
-
       {/* 담보 부동산 기본정보 */}
       <PraPropertyInfo />
     </PraDetailWrap>

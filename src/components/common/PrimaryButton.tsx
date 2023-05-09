@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 interface PrimaryButtonProps {
   width?: number;
   height?: number;
+  color?: string;
 }
 
 const PrimaryButton = styled.button<PrimaryButtonProps>`
@@ -12,7 +13,7 @@ const PrimaryButton = styled.button<PrimaryButtonProps>`
   width: ${({ width }) => (width ? `${width}px` : '125px')};
   height: ${({ height }) => (height ? `${height}px` : '150px')};
   cursor: pointer;
-  background-color: #1a237e;
+  background-color: ${({ color }) => color || '#1a237e'};
   color: #f5f5f5;
 
   &:hover {

@@ -3,38 +3,29 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Upload from '../../components/Pdf/UploadPDF';
 import nextIcon from '../../assets/Pdf/nextIcon.svg';
-
+// PRA는 Property Report Analysis의 약자로, 부동산 등기부등본 분석 및 평가를 의미하는 용어입니다.
 const PRA = () => {
   return (
-    <Wrapper>
+    <Container>
       <PageHeader>
-        <Title>상세 심사</Title>
-        <Subtitle>조회하실 등기부등본 파일을 업로드 해주세요.</Subtitle>
+        <Title>심사하기</Title>
+        <Subtitle>심사를 진행하실 등기부등본 파일을 업로드 해주세요.</Subtitle>
       </PageHeader>
 
       {/* 업로드기능 */}
       <Upload />
       <HelpLinks>
         <HelpTitle>등기부등본이 없으신가요?</HelpTitle>
-        <HelpBoxWrap>
+        <a href="https://www.iros.go.kr/pos1/jsp/help2/jsp/001001001002.jsp">
           <HelpBox>
             <HelpSub>
               등기부등본 발급 바로가기 <NextIcon alt="nextIcon" src={nextIcon} />
             </HelpSub>
-            <HelpLink to="/">등기부등본을 발급받을 수 있는 사이트로 이동</HelpLink>
+            <div>등기부등본을 발급받을 수 있는 사이트로 이동</div>
           </HelpBox>
-          <HelpBox>
-            <HelpSub>
-              간편심사 바로가기
-              <NextIcon alt="nextIcon" src={nextIcon} />
-            </HelpSub>
-            <HelpAnchor href="https://www.iros.go.kr/pos1/jsp/help2/jsp/001001001002.jsp">
-              등기부등록 발급 필요없는 간편심사 이용
-            </HelpAnchor>
-          </HelpBox>
-        </HelpBoxWrap>
+        </a>
       </HelpLinks>
-    </Wrapper>
+    </Container>
   );
 };
 
@@ -46,18 +37,9 @@ const NextIcon = styled.img`
 `;
 
 const HelpSub = styled.span`
-  display: inline-flex;
   align-items: center;
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: bold;
-`;
-
-const HelpBoxWrap = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
 `;
 
 const HelpBox = styled.div`
@@ -66,9 +48,9 @@ const HelpBox = styled.div`
   height: 90px;
   background-color: #f5f5f5;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
-  justify-content: center;
   padding-left: 30px;
   border-radius: 5px;
 `;
@@ -79,15 +61,7 @@ const HelpTitle = styled.div`
   margin-bottom: 24px;
 `;
 
-const HelpLink = styled(Link)`
-  font-size: 12px;
-`;
-
-const HelpAnchor = styled.a`
-  font-size: 12px;
-`;
-
-const HelpLinks = styled.div`
+const HelpLinks = styled.span`
   display: flex;
   flex-direction: column;
   margin-top: 65px;
@@ -96,7 +70,7 @@ const HelpLinks = styled.div`
   width: 684px;
 `;
 
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;

@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
-import { instance, cancelTokenSource } from '../../api/api';
+import { instance } from '../../api/api';
 import DragAndDrop from './DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.svg';
 import { PrimaryButton, SpinnerButton, CancelButton, PrimaryModal, LoadingBar } from '../common';
-import UplodPDFStyles from './UploadPDFStyles';
+import UplodPDFStyles from './style/UploadPDFStyles';
 import { useDataStore } from '../../store/DataStore';
 
 const UplodPDF = () => {
@@ -15,6 +15,8 @@ const UplodPDF = () => {
   const [fileName, setFileName] = useState<string>('');
   const [labelWidth, setLabelWidth] = useState<number>(120);
   const [isModalOpen, setModalIsOpen] = useState(false);
+  const [isErorrModalOpen, setErorrModalOpen] = useState(false);
+
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
@@ -64,8 +66,9 @@ const UplodPDF = () => {
   // 인풋태그에 파일이 변경되었을때 체크
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
-    // 100m 초과하는지 , pdf파일이 맞는지 아니라면 리턴
+    // 100m 초과하는지 , pdf파일이 맞는지 아니라면 리턴 둘중하나라도 false 값일경우
     if (!isPdfFileType(file) || !isFileSizeValid(file)) {
+      ErrorModal(!isPdfFileType(file), !isFileSizeValid(file));
       resetFileState();
       event.target.value = '';
 
@@ -166,13 +169,41 @@ const UplodPDF = () => {
   const handledDeletePDFfile = (): void => {
     resetFileState();
   };
+  // 이동
   const navigate = useNavigate();
   const ViewChange = () => {
     console.log('이동');
     navigate('detail');
   };
+
+  const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
+    setErorrModalOpen(true); //
+  };
+
   return (
     <UploadContainer>
+      <PrimaryModal
+        isOpen={isErorrModalOpen}
+        onClose={() => {
+          setErorrModalOpen(false);
+        }}
+        width={440}
+        height={270}
+      >
+        <ModalContents>
+          <div>pdf 파일이 아니거나, 파일사이즈 {MAX_FILE_SIZE} 보다 큽니다.</div>
+          <PrimaryButton
+            width={200}
+            height={50}
+            type="button"
+            onClick={() => {
+              setErorrModalOpen(false);
+            }}
+          >
+            확인
+          </PrimaryButton>
+        </ModalContents>
+      </PrimaryModal>
       <PrimaryModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -181,6 +212,7 @@ const UplodPDF = () => {
         }}
         width={740}
         height={470}
+        lockBackground
       >
         <ModalContents>
           <div>
