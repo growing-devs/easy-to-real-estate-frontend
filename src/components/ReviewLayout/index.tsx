@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { TitleContainer, ReviewContainer, TabMenus, ReviewLayout } from './style';
+import { TitleContainer, ReviewContainer, TabMenus } from './style';
 
-const Review = () => {
+const ReviewLayout = () => {
   return (
     <>
       <TitleContainer>
@@ -33,4 +33,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default ReviewLayout;

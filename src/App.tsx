@@ -7,7 +7,7 @@ import MyReviews from './pages/MyReviews';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 import Chart from './components/Pdf/Chart';
-import Review from './components/ReviewLayout';
+import ReviewLayout from './components/ReviewLayout';
 import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
       <Route element={<Layout />}>
         <Route path="/pra" element={<Pra />} />
         <Route path="/chart" element={<Chart />} />
-        <Route element={<Review />}>
+        <Route element={<ReviewLayout />}>
           <Route path="pra/summary" element={<PdfSummary />} />
           <Route path="pra/gap" element={<PdfGap />} />
           <Route path="pra/eul" element={<PdfEul />} />

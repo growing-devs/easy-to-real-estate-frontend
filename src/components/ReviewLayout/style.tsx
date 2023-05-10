@@ -1,9 +1,5 @@
 import styled from '@emotion/styled';
 
-export const ReviewLayout = styled.div`
-  width: 100%;
-`;
-
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
