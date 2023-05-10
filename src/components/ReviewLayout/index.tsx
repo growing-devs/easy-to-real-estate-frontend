@@ -1,35 +1,35 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { ReviewLayout, TitleContainer, ReviewContainer, TabMenus } from './style';
+import { TitleContainer, ReviewContainer, TabMenus, ReviewLayout } from './style';
 
 const Review = () => {
   return (
-    <ReviewLayout>
+    <>
       <TitleContainer>
         <p>심사하기</p>
         <div>
           <NavLink to="/pra">다른 담보 물건 심사하기 </NavLink>
-          <NavLink to="/">PDF로 저장하기</NavLink>
+          <button type="button">PDF로 저장하기</button>
         </div>
       </TitleContainer>
       <ReviewContainer>
         <div className="summarySection">
           <p className="summaryTitle">매물 요약</p>
-          <div>요약표 컴포넌트</div>
+          <div className="summaryTable">요약 표 컴포넌트</div>
         </div>
         <div className="detailSection">
           <TabMenus>
-            <NavLink to="/summary">등기부 요약</NavLink>
-            <NavLink to="/gap">등기부 갑구</NavLink>
-            <NavLink to="/eul">등기부 을구</NavLink>
-            <NavLink to="/marketprice">시세</NavLink>
-            <NavLink to="/location">입지</NavLink>
+            <NavLink to="pra/summary">등기부 요약</NavLink>
+            <NavLink to="pra/gap">등기부 갑구</NavLink>
+            <NavLink to="pra/eul">등기부 을구</NavLink>
+            <NavLink to="pra/marketprice">시세</NavLink>
+            <NavLink to="pra/location">입지</NavLink>
           </TabMenus>
           <div className="reviewDetail">
             <Outlet />
           </div>
         </div>
       </ReviewContainer>
-    </ReviewLayout>
+    </>
   );
 };
 

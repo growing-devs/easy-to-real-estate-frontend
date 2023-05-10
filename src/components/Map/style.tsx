@@ -36,7 +36,7 @@ export const MapContainer = styled.div`
     border: 1px solid #dbdbdb;
     background-color: #fff;
     border-radius: 5px;
-    z-index: 3;
+    z-index: 2;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     cursor: pointer;
     :hover {
@@ -144,7 +144,6 @@ export const MapFilterContainer = styled.ul`
 
 export const PlaceListWrapper = styled.ul`
   margin-top: 15px;
-  padding: 0 20px;
   width: 100%;
   ul {
     width: 100%;

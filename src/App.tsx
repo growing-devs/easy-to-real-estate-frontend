@@ -7,7 +7,7 @@ import MyReviews from './pages/MyReviews';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 import Chart from './components/Pdf/Chart';
-import Review from './pages/Review';
+import Review from './components/ReviewLayout';
 import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
 
 const App = () => {
@@ -18,11 +18,11 @@ const App = () => {
         <Route path="/pra" element={<Pra />} />
         <Route path="/chart" element={<Chart />} />
         <Route element={<Review />}>
-          <Route path="/summary" element={<PdfSummary />} />
-          <Route path="/gap" element={<PdfGap />} />
-          <Route path="/eul" element={<PdfEul />} />
-          <Route path="/marketprice" element={<MarketPrice />} />
-          <Route path="/location" element={<Location />} />
+          <Route path="pra/summary" element={<PdfSummary />} />
+          <Route path="pra/gap" element={<PdfGap />} />
+          <Route path="pra/eul" element={<PdfEul />} />
+          <Route path="pra/marketprice" element={<MarketPrice />} />
+          <Route path="pra/location" element={<Location />} />
         </Route>
         <Route path="/pra/detail" element={<PraDetail />} />
         <Route path="/myreviews" element={<MyReviews />} />

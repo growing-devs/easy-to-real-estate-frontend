@@ -9,6 +9,7 @@ export const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   width: calc(100% - 408px);
+  min-width: 1080px;
   position: fixed;
   top: 0;
   left: 408px;
@@ -25,7 +26,8 @@ export const TitleContainer = styled.div`
   }
   div {
     display: flex;
-    a {
+    a,
+    button {
       display: block;
       height: 40px;
       background: blue;
@@ -33,43 +35,49 @@ export const TitleContainer = styled.div`
       font-weight: 600;
       font-size: 16px;
       line-height: 40px;
-      border: 1px solid #9f9f9f;
       border-radius: 4px;
     }
-    a:first-of-type {
+    a {
       background-color: #fff;
       color: #9f9f9f;
+      border: 1px solid #9f9f9f;
     }
-    a:last-of-type {
+    button {
       margin-left: 10px;
       background-color: #1a237e;
       color: #fff;
+      border: 0;
     }
   }
 `;
 
 export const ReviewContainer = styled.div`
+  width: 100%;
   display: flex;
   margin-top: 170px;
   .summarySection {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 524px;
-    background-color: #fafafa;
+    min-width: 524px;
     height: inherit;
+    background-color: #fafafa;
     .summaryTitle {
       margin: 50px 0 17px 0;
       font-weight: 700;
       font-size: 22px;
       color: #ccac55;
     }
+    .summaryTable {
+      background: #eee;
+      width: 444px;
+      height: 978px;
+    }
   }
   .detailSection {
-    width: 988px;
-    height: 2500px;
-    /* min-width: 400px; */
+    width: 100%;
     .reviewDetail {
+      position: relative;
       padding: 30px;
     }
   }
@@ -78,6 +86,7 @@ export const ReviewContainer = styled.div`
 export const TabMenus = styled.div`
   display: flex;
   align-items: flex-end;
+  width: inherit;
   height: 88px;
   border-bottom: 1px solid #bdbdbd;
   a {
