@@ -248,9 +248,9 @@ const UplodPDF = () => {
       <UploadContent>
         <DragAndDrop handleInputFile={onFileChange}>
           <DropZone fileName={fileName}>
-            <div>{!fileName && <PDFLogoImg src={PDfLogo} />}</div>
+            <div style={{ height: '35px' }}>{!fileName && <PDFLogoImg src={PDfLogo} />}</div>
             <FileSelectionWrapper>
-              <FileInputLabel labelWidth={labelWidth}>
+              <FileInputLabel labelWidth={labelWidth} selected={Boolean(fileName)}>
                 <input type="file" onChange={onFileChange} disabled={isUploading} />
                 <FileNameSpan>{fileName || '파일선택'}</FileNameSpan>
               </FileInputLabel>
