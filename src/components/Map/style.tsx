@@ -112,7 +112,7 @@ export const MapContainer = styled.div`
 export const MapFilterContainer = styled.ul`
   display: flex;
   justify-content: space-between;
-  width: 630px;
+  width: 550px;
   li {
     display: flex;
     flex-direction: column;
@@ -145,15 +145,10 @@ export const MapFilterContainer = styled.ul`
 export const PlaceListWrapper = styled.ul`
   margin-top: 15px;
   padding: 0 20px;
-  display: flex;
-  /* justify-content: space-between; */
   width: 100%;
   ul {
-    width: 25%;
+    width: 100%;
     margin-right: 30px;
-  }
-  ul:first-of-type {
-    width: 36%;
   }
   .listTitle {
     padding: 15px 0;

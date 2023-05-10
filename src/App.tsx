@@ -9,17 +9,22 @@ import Support from './pages/Support';
 import NotFound from './pages/NotFound';
 import Chart from './components/Pdf/Chart';
 import Review from './pages/Review';
+import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
         <Route path="/pra" element={<Pra />} />
         <Route path="/chart" element={<Chart />} />
-        <Route path="/review" element={<Review />} />
-
+        <Route element={<Review />}>
+          <Route path="/summary" element={<PdfSummary />} />
+          <Route path="/gap" element={<PdfGap />} />
+          <Route path="/eul" element={<PdfEul />} />
+          <Route path="/marketprice" element={<MarketPrice />} />
+          <Route path="/location" element={<Location />} />
+        </Route>
         <Route path="/pra/detail" element={<PraDetail />} />
         <Route path="/myreviews" element={<MyReviews />} />
         <Route path="/search" element={<Search />} />
