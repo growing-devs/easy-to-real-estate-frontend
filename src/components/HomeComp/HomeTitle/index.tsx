@@ -3,9 +3,16 @@ import { HomeTitleContainer, Title } from './style';
 const HomeTitle = () => {
   return (
     <HomeTitleContainer>
-      <Title className="mainTitle" weight={700} size="80px" lineHeight="100px" align="center">
-        담보 부동산 심사과정을
-        <p className="secondaryTheme">간편하고 빠르게</p>
+      <Title
+        className="mainTitle"
+        weight={700}
+        size="80px"
+        lineHeight="100px"
+        align="center"
+        color="#333333"
+      >
+        담보 부동산 심사를
+        <p className="secondaryTheme">한 곳에서 간편하게</p>
       </Title>
       <Title
         className="subTitle"
