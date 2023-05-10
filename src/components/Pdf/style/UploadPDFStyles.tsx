@@ -22,7 +22,7 @@ const PDFLogoImg = styled.img`
   height: 32px;
 `;
 const DropTitle = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 14px;
   font-weight: bold;
   color: #000000;
@@ -70,7 +70,7 @@ const DropZone = styled.div<{ fileName: string }>`
   align-items: center;
   background-color: ${({ fileName }) => (fileName ? 'none' : '#ffffff;')};
 `;
-const FileInputLabel = styled.label<{ labelWidth: number }>`
+const FileInputLabel = styled.label<{ labelWidth: number; selected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,11 +78,12 @@ const FileInputLabel = styled.label<{ labelWidth: number }>`
   width: ${({ labelWidth }) => labelWidth}px;
   max-width: 100%;
   height: 40px;
-  font-weight: 500;
-  background-color: #1a237e;
-  color: white;
-  border-radius: 4px;
+  font-weight: bold;
+  background-color: ${({ selected }) => (selected ? 'none' : '#1a237e')};
+  color: ${({ selected }) => (selected ? '#000000' : 'white')};
+  border-radius: ${({ selected }) => (selected ? '30px' : '4px')};
   letter-spacing: 1px;
+  border: 0.5px solid #8e8e8e;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;

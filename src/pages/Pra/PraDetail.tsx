@@ -2,44 +2,52 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import PraPropertyInfo from '../../components/Pdf/PropertyInfo';
+import { PrimaryButton } from '@/components/common';
 
 const PraDetail = () => {
   return (
     <PraDetailWrap>
       <PraDetailTitle>
-        <TitleHeader>
-          <h1>매물 요약</h1>
-        </TitleHeader>
+        <TitleHeader>매물 요약</TitleHeader>
       </PraDetailTitle>
       {/* 담보 부동산 기본정보 */}
       <PraPropertyInfo />
+      <FlexDiv>
+        <PrimaryButton width={180} height={50} color="#CCAC55">
+          매물 요약 저장하기
+        </PrimaryButton>
+        <PrimaryButton width={240} height={50}>
+          전체 보고서 pdf 저장
+        </PrimaryButton>
+      </FlexDiv>
     </PraDetailWrap>
   );
 };
 
 export default PraDetail;
-
-const TitleHeader = styled.div`
-  width: 90%;
+const FlexDiv = styled.div`
+  margin-top: 20px;
   display: flex;
-  font-size: 45px;
+  justify-content: space-between;
+`;
+const TitleHeader = styled.span`
+  display: flex;
+  font-size: 22px;
   font-weight: bold;
   place-content: center;
+  color: #ccac55;
 `;
 const PraDetailTitle = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  gap: 30px;
-  background-color: #ffffff;
+  margin-bottom: 17px;
   align-items: center;
 `;
 const PraDetailWrap = styled.div`
-  padding: 10px;
+  background-color: #ececec6a;
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  margin-left: 50px;
   width: 558px;
   height: auto;
-  background-color: #000000;
 `;
