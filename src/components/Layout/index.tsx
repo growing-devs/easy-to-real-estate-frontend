@@ -17,7 +17,7 @@ const MainSection = styled.main`
   display: flex;
   justify-content: center;
   margin-left: 408px;
-  /* width: calc(100% - 408px); */
+  width: calc(100% - 408px);
   min-height: 100vh;
 `;
 

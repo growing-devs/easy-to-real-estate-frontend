@@ -5,11 +5,14 @@ import logo from '@/assets/logo.png';
 const SideBar = () => {
   return (
     <SidebarContainer>
-      <img className="logo" src={logo} alt="logo" />
+      <NavLink to="/">
+        <img className="logo" src={logo} alt="logo" />
+      </NavLink>
       <SidebarMenus>
         <NavLink to="/pra">심사하기</NavLink>
         <NavLink to="/myreviews">내 심사관리</NavLink>
       </SidebarMenus>
+      <NavLink to="/review">심사내역 페이지 이동(임시)</NavLink>
     </SidebarContainer>
   );
 };

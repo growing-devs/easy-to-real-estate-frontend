@@ -8,6 +8,7 @@ import Search from './pages/Search';
 import Support from './pages/Support';
 import NotFound from './pages/NotFound';
 import Chart from './components/Pdf/Chart';
+import Review from './pages/Review';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/pra" element={<Pra />} />
         <Route path="/chart" element={<Chart />} />
+        <Route path="/review" element={<Review />} />
 
         <Route path="/pra/detail" element={<PraDetail />} />
         <Route path="/myreviews" element={<MyReviews />} />

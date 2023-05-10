@@ -7,9 +7,12 @@ export const SidebarContainer = styled.aside`
   flex-direction: column;
   align-items: center;
   width: 408px;
-  height: 100vh;
+  height: 100%;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.15);
   background-color: #fff;
+  z-index: 9;
+  overflow-x: hidden;
+  overflow-y: auto;
   .logo {
     width: 126px;
     margin-top: 50px;
