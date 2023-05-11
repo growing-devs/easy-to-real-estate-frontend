@@ -3,10 +3,12 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Pra from './pages/Pra/PraUpload';
 import PraDetail from './pages/Pra/PraDetail';
+import PraPrice from './pages/Pra/PraPrice';
+
 import MyReviews from './pages/MyReviews';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import Chart from './components/Pdf/Chart';
+import Chart from './components/Chart';
 import ReviewLayout from './components/ReviewLayout';
 import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
 
@@ -16,7 +18,6 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route element={<Layout />}>
         <Route path="/pra" element={<Pra />} />
-        <Route path="/chart" element={<Chart />} />
         <Route element={<ReviewLayout />}>
           <Route path="pra/summary" element={<PdfSummary />} />
           <Route path="pra/gap" element={<PdfGap />} />
@@ -24,7 +25,7 @@ const App = () => {
           <Route path="pra/marketprice" element={<MarketPrice />} />
           <Route path="pra/location" element={<Location />} />
         </Route>
-        <Route path="/pra/detail" element={<PraDetail />} />
+        <Route path="/praprice" element={<PraPrice />} />
         <Route path="/myreviews" element={<MyReviews />} />
         <Route path="/search" element={<Search />} />
       </Route>

@@ -65,7 +65,6 @@ export const ReviewContainer = styled.div`
       color: #ccac55;
     }
     .summaryTable {
-      background: #eee;
       width: 444px;
       height: 978px;
     }

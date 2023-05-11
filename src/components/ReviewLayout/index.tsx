@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { TitleContainer, ReviewContainer, TabMenus } from './style';
+import PraDetail from '@/pages/Pra/PraDetail';
 
 const ReviewLayout = () => {
   return (
@@ -13,8 +14,9 @@ const ReviewLayout = () => {
       </TitleContainer>
       <ReviewContainer>
         <div className="summarySection">
-          <p className="summaryTitle">매물 요약</p>
-          <div className="summaryTable">요약 표 컴포넌트</div>
+          <div className="summaryTable">
+            <PraDetail />
+          </div>
         </div>
         <div className="detailSection">
           <TabMenus>
