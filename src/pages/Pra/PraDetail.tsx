@@ -12,7 +12,6 @@ const PraDetail = () => {
         <PraDetailTitle>
           <TitleHeader>매물 요약</TitleHeader>
         </PraDetailTitle>
-        {/* 담보 부동산 기본정보 */}
         <PraPropertyInfo />
         <FlexDiv>
           <PrimaryButton width={180} height={50} color="#CCAC55">
