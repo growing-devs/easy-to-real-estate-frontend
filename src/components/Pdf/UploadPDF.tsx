@@ -16,14 +16,16 @@ const UplodPDF = () => {
   const [labelWidth, setLabelWidth] = useState<number>(120);
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isErorrModalOpen, setErorrModalOpen] = useState(false);
+  const [UploadErorrModalOpen, setUploadErorrModalOpen] = useState(false);
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
   const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
   const { addResponseItem } = useDataStore();
+  const navigate = useNavigate();
 
   // 파일 사이즈 할당 mb단위로 ex 30m
-  const MAX_FILE_SIZE = 1000;
+  const MAX_FILE_SIZE = 100;
 
   // 초기화
   const resetFileState = (): void => {
@@ -114,8 +116,8 @@ const UplodPDF = () => {
       }
     } catch (error) {
       setDownloadProgress(0);
-
       console.error('파일 업로드 실패:', error);
+      UploadErrorModal();
     } finally {
       // 다시 업로드 가능하도록 버튼잠금 해제 및 모달 끄기
       setIsUploading(false);
@@ -170,14 +172,17 @@ const UplodPDF = () => {
     resetFileState();
   };
   // 이동
-  const navigate = useNavigate();
   const ViewChange = () => {
     console.log('이동');
-    navigate('detail');
+    navigate('marketprice');
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
-    setErorrModalOpen(true); //
+    setErorrModalOpen(true); // 초기에 pdf파일 파일사이즈 검증
+  };
+  const UploadErrorModal = () => {
+    setModalIsOpen(false); // 업로드 실패시
+    setUploadErorrModalOpen(true); // 업로드 실패시
   };
 
   return (
@@ -191,7 +196,10 @@ const UplodPDF = () => {
         height={270}
       >
         <ModalContents>
-          <div>pdf 파일이 아니거나, 파일사이즈 {MAX_FILE_SIZE} 보다 큽니다.</div>
+          <HeaderTitle>파일 오류 </HeaderTitle>
+          <div style={{ color: 'red' }}>
+            pdf 파일이 아니거나, 파일사이즈 {MAX_FILE_SIZE}MB 보다 큽니다.
+          </div>
           <PrimaryButton
             width={200}
             height={50}
@@ -204,39 +212,74 @@ const UplodPDF = () => {
           </PrimaryButton>
         </ModalContents>
       </PrimaryModal>
+
+      <PrimaryModal
+        isOpen={UploadErorrModalOpen}
+        onClose={() => {
+          setUploadErorrModalOpen(false);
+        }}
+        width={440}
+        height={270}
+      >
+        <ModalContents>
+          <HeaderTitle>업로드 오류 </HeaderTitle>
+          <div style={{ color: 'red' }}>올바른 pdf파일이 아니거나 서버의 통신문제가 있습니다.</div>
+          <PrimaryButton
+            width={200}
+            height={50}
+            type="button"
+            onClick={() => {
+              setUploadErorrModalOpen(false);
+            }}
+          >
+            확인
+          </PrimaryButton>
+        </ModalContents>
+      </PrimaryModal>
+
       <PrimaryModal
         isOpen={isModalOpen}
         onClose={() => {
           handleCancelUpload();
           setModalIsOpen(false);
         }}
-        width={740}
-        height={470}
+        width={550}
+        height={420}
         lockBackground
       >
         <ModalContents>
           <div>
-            <HeaderTitle>지금 등기부등본에서</HeaderTitle>
-            <HeaderTitle>주소 정보를 읽어오고 있습니다.</HeaderTitle>
+            {isUploading ? (
+              <HeaderTitle>
+                지금 등기부등본에서
+                <br />
+                주소 정보를 읽어오고 있습니다.
+              </HeaderTitle>
+            ) : (
+              <HeaderTitle>등기부 등본 분석이 완료되었습니다</HeaderTitle>
+            )}
           </div>
           <div>
+            <div>{fileName}</div>
+            <br />
             {uploadProgress === 100 ? (
-              <LoadingBar type="download" progress={downloadProgress} start={isModalOpen} />
+              <LoadingBar type="다운로드" progress={downloadProgress} start={isModalOpen} />
             ) : (
-              <LoadingBar type="upload" progress={uploadProgress} start={isModalOpen} />
+              <LoadingBar type="업로드" progress={uploadProgress} start={isModalOpen} />
             )}
           </div>
           {isUploading ? (
-            <PrimaryButton width={600} height={50} type="button" onClick={handleCancelUpload}>
+            <PrimaryButton width={400} height={50} type="button" onClick={handleCancelUpload}>
               창닫기
             </PrimaryButton>
           ) : (
-            <PrimaryButton width={600} height={50} type="button" onClick={ViewChange}>
-              다음페이지
+            <PrimaryButton width={400} height={50} type="button" onClick={ViewChange}>
+              상세내역 페이지로 이동
             </PrimaryButton>
           )}
         </ModalContents>
       </PrimaryModal>
+
       <UploadHeader>
         <HeaderTitle>등기부등본 파일 첨부</HeaderTitle>
         <Subtitle>

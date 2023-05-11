@@ -33,7 +33,6 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
     if (!ref.current) {
       return;
     }
-
     const svg = d3.select(ref.current);
     const marketPrices = marketPrice.map((item) => item.lower_avg_price);
     const transactionPrices = actualTransactionPrice.map((item) => item.price);
@@ -106,6 +105,18 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .attr('stroke', '#1A237E')
       .attr('stroke-dasharray', '3 3')
       .attr('d', area);
+
+    const tooltip = d3
+      .select('#tip')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0)
+      .style('border', '1px solid black')
+      .style('border-radius', '5px')
+      .style('padding', '10px')
+      .style('background-color', 'white')
+      .style('position', 'fixed');
+
     svg
       .selectAll('.dot')
       .data(actualTransactionPrice)
@@ -116,10 +127,27 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .attr('r', 4)
       .attr('fill', '#fd3c19')
       .attr('stroke', '#fd3b19c0')
-      .attr('stroke-width', 2);
+      .attr('stroke-width', 2)
+      .on('mouseover', (event, d) => {
+        const svgBounds = event.target.ownerSVGElement.getBoundingClientRect();
+        const pointer = d3.pointer(event, event.target);
+        tooltip.transition().duration(200).style('opacity', 0.9);
+        tooltip
+          .html(`날자: ${d.contract_date}<br/>시세: ${d.price}`)
+          .style('left', `${pointer[0] + svgBounds.left + 28}px`)
+          .style('top', `${pointer[1] + svgBounds.top}px`);
+      })
+      .on('mouseout', (d) => {
+        tooltip.transition().duration(500).style('opacity', 0);
+      });
+
+    return () => {
+      // 차트 정리하는 코드
+      svg.selectAll('*').remove();
+    };
   }, [actualTransactionPrice, marketPrice, height, margin, width]);
   return (
-    <div>
+    <div id="tip" style={{ position: 'relative' }}>
       <svg
         ref={ref}
         width={width + margin.left + margin.right}

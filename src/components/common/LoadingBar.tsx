@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 interface LoadingBarProps {
   start: boolean;
   progress: number;
-  type: 'upload' | 'download';
+  type: '업로드' | '다운로드';
   width?: number;
 }
 
 const LoadingBar = ({
   start = false,
   progress = 0,
-  type = 'upload',
+  type = '업로드',
   width = 400,
 }: LoadingBarProps) => {
   const [internalProgress, setInternalProgress] = useState(0);
@@ -25,8 +25,6 @@ const LoadingBar = ({
 
   return (
     <LoadingBarWrap>
-      <span>총 3분 정도 소요됩니다. 조금만 기다려주세요. </span>
-
       <LoadingBarContainer width={width}>
         <ProgressBar progress={internalProgress} />
       </LoadingBarContainer>
