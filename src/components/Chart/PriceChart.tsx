@@ -25,9 +25,9 @@ interface Data {
 
 const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
   const ref = useRef<SVGSVGElement | null>(null);
-  const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-  const width = 960 - margin.left - margin.right;
-  const height = 500 - margin.top - margin.bottom;
+  const margin = { top: 20, right: 20, bottom: 10, left: 50 };
+  const width = 480 - margin.left - margin.right;
+  const height = 200 - margin.top - margin.bottom;
 
   useEffect(() => {
     if (!ref.current) {
@@ -119,14 +119,16 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .attr('stroke-width', 2);
   }, [actualTransactionPrice, marketPrice, height, margin, width]);
   return (
-    <svg
-      ref={ref}
-      width={width + margin.left + margin.right}
-      height={height + margin.top + margin.bottom}
-    >
-      <g className="x-axis" />
-      <g className="y-axis" />
-    </svg>
+    <div>
+      <svg
+        ref={ref}
+        width={width + margin.left + margin.right}
+        height={height + margin.top + margin.bottom}
+      >
+        <g className="x-axis" />
+        <g className="y-axis" />
+      </svg>
+    </div>
   );
 };
 

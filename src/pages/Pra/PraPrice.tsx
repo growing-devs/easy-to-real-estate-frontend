@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { PrimaryButton } from '@/components/common';
-import Chart from '@/components/Chart/PriceChart';
+import Chart from '@/components/Chart/';
 
 const PraPrice = () => {
   return (
@@ -11,7 +11,7 @@ const PraPrice = () => {
         <PraPriceFlexDiv
           style={{ justifyContent: 'space-between', gap: '15px', marginTop: '25px' }}
         >
-          <PraPriceChart>asd</PraPriceChart>
+          <Chart />
           <PraPriceFlexColumnDiv style={{ width: '100%', gap: '20px', alignItems: 'center' }}>
             <PraPriceNow style={{ gap: '15px' }}>
               <PraPriceTitle>시세가</PraPriceTitle>
@@ -158,7 +158,6 @@ const PraPriceTitle = styled.span`
 const PraPriceContent = styled.div`
   padding: 20px;
   margin: 10px;
-  border: 1px solid black;
 `;
 
 const PraPriceWrap = styled.div`

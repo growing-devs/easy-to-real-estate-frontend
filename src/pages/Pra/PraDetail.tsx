@@ -11,8 +11,8 @@ const PraDetail = () => {
       <PraDetailWrap>
         <PraDetailTitle>
           <TitleHeader>매물 요약</TitleHeader>
+          <PraPropertyInfo />
         </PraDetailTitle>
-        <PraPropertyInfo />
         <FlexDiv>
           <PrimaryButton width={180} height={50} color="#CCAC55">
             매물 요약 저장하기
@@ -22,10 +22,6 @@ const PraDetail = () => {
           </PrimaryButton>
         </FlexDiv>
       </PraDetailWrap>
-
-      <div>
-        <PraPrice />
-      </div>
     </PraContainer>
   );
 };
@@ -46,6 +42,8 @@ const TitleHeader = styled.span`
   font-weight: bold;
   place-content: center;
   color: #ccac55;
+  margin-top: 50px;
+  margin-bottom: 20px;
 `;
 const PraDetailTitle = styled.div`
   display: flex;
@@ -54,8 +52,6 @@ const PraDetailTitle = styled.div`
   align-items: center;
 `;
 const PraDetailWrap = styled.div`
-  background-color: #ececec6a;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   width: 558px;

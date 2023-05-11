@@ -22,13 +22,6 @@ const style = css`
   button {
     cursor: pointer;
   }
-  .textTest {
-    font-size: 48px;
-    font-weight: 600;
-    line-height: 67px;
-    letter-spacing: -0.02em;
-    text-align: center;
-  }
 `;
 
 const GlobalStyle = () => {

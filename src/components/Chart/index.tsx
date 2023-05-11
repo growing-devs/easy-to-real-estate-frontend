@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
+import styled from '@emotion/styled';
 import data from './data';
 import Chart from './PriceChart';
 import { ChartButton } from './PriceChartButton';
@@ -48,7 +49,7 @@ const index = () => {
     setYear(event.target.value);
   };
   return (
-    <div>
+    <ChartWrap>
       <ChartButton
         dealType={dealType}
         year={year}
@@ -59,8 +60,19 @@ const index = () => {
         actualTransactionPrice={data.actual_transaction_price}
         marketPrice={data.market_price}
       />
-    </div>
+    </ChartWrap>
   );
 };
 
 export default index;
+
+const ChartWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 220px;
+  border: 1px solid #cacaca81;
+  border-radius: 5px;
+  padding-top: 10px;
+`;
