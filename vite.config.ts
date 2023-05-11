@@ -4,7 +4,6 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/easy-to-real-estate-frontend/',
   resolve: {
     alias: [{ find: '@', replacement: path.resolve('src') }],
   },
