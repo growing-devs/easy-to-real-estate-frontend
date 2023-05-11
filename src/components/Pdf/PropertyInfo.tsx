@@ -175,5 +175,4 @@ const PraPropertyInfoWrap = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  padding-right: 50px;
 `;
