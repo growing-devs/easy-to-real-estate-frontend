@@ -12,7 +12,7 @@ const SideBar = () => {
         <NavLink to="/pra">심사하기</NavLink>
         <NavLink to="/myreviews">내 심사관리</NavLink>
       </SidebarMenus>
-      <NavLink to="/pra/summary">심사내역 페이지 이동(작업용 임시)</NavLink>
+      <NavLink to="/pra/summary">심사내역 페이지(작업용 임시)</NavLink>
     </SidebarContainer>
   );
 };

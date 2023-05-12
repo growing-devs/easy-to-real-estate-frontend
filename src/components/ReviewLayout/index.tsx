@@ -1,21 +1,22 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { TitleContainer, ReviewContainer, TabMenus } from './style';
+import { ReviewLayoutContainer, TitleContainer, ReviewContainer, TabMenus } from './style';
 import PraDetail from '@/pages/Pra/PraDetail';
 
 const ReviewLayout = () => {
   return (
-    <>
+    <ReviewLayoutContainer>
       <TitleContainer>
         <p>심사하기</p>
         <div>
-          <NavLink to="/pra">다른 담보 물건 심사하기 </NavLink>
           <button type="button">PDF로 저장하기</button>
+          <button type="button">심사 종료하기</button>
         </div>
       </TitleContainer>
       <ReviewContainer>
         <div className="summarySection">
           <div className="summaryTable">
-            <PraDetail />
+            {/* <PraDetail /> */}
+            매물요약표
           </div>
         </div>
         <div className="detailSection">
@@ -31,7 +32,7 @@ const ReviewLayout = () => {
           </div>
         </div>
       </ReviewContainer>
-    </>
+    </ReviewLayoutContainer>
   );
 };
 

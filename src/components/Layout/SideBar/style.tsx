@@ -6,7 +6,7 @@ export const SidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 408px;
+  width: 370px;
   height: 100%;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.15);
   background-color: #fff;
@@ -16,6 +16,11 @@ export const SidebarContainer = styled.aside`
   .logo {
     width: 126px;
     margin-top: 50px;
+  }
+
+  /* 1920 미만 */
+  @media (max-width: 1919px) {
+    width: 250px;
   }
 `;
 

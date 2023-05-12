@@ -1,48 +1,46 @@
 import styled from '@emotion/styled';
 
+export const ReviewLayoutContainer = styled.div`
+  /* width: 100%;
+  height: 100vh;
+  overflow-y: hidden; */
+`;
+
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  width: calc(100% - 408px);
-  min-width: 1080px;
-  position: fixed;
-  top: 0;
-  left: 408px;
-  height: 170px;
-  padding: 30px 58px;
+  align-items: center;
+  width: 100%;
+  min-width: calc(1440px - 250px);
+  height: 64px;
+  padding: 0 40px;
   background-color: #f1efe8;
   z-index: 3;
   p {
     height: 40px;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 16px;
     line-height: 40px;
     color: #1a237e;
   }
   div {
     display: flex;
-    a,
     button {
       display: block;
-      height: 40px;
+      width: 130px;
+      height: 30px;
       background: blue;
-      padding: 0 20px;
       font-weight: 600;
-      font-size: 16px;
-      line-height: 40px;
+      font-size: 12px;
       border-radius: 4px;
-    }
-    a {
-      background-color: #fff;
-      color: #9f9f9f;
-      border: 1px solid #9f9f9f;
-    }
-    button {
-      margin-left: 10px;
       background-color: #1a237e;
       color: #fff;
       border: 0;
+    }
+    button:last-of-type {
+      background-color: #8f8f8f;
+      color: #fff;
+      margin-left: 10px;
     }
   }
 `;
@@ -50,52 +48,72 @@ export const TitleContainer = styled.div`
 export const ReviewContainer = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 170px;
   .summarySection {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 524px;
-    height: inherit;
-    background-color: #fafafa;
-    .summaryTitle {
-      margin: 50px 0 17px 0;
-      font-weight: 700;
-      font-size: 22px;
-      color: #ccac55;
+    justify-content: center;
+    min-width: 502px;
+    height: calc(100vh - 64px);
+    padding: 32px 42px;
+    background-color: #fdfdfd;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background-color: #616161;
+        border-radius: 4px;
+      }
     }
     .summaryTable {
-      width: 444px;
+      width: 100%;
       height: 978px;
+      background: #fff;
+      border: 1px solid #bdbdbd;
+      border-radius: 4px;
     }
   }
   .detailSection {
     width: 100%;
+    min-width: calc(1440px - (250px + 502px));
+    padding: 0 5px;
     .reviewDetail {
       position: relative;
-      padding: 30px;
+      padding: 20px 30px;
+      overflow-y: auto;
+      height: calc(100vh - 100px);
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &:hover {
+        &::-webkit-scrollbar-thumb {
+          background-color: #616161;
+          border-radius: 4px;
+        }
+      }
     }
   }
 `;
 
 export const TabMenus = styled.div`
   display: flex;
-  align-items: flex-end;
-  width: inherit;
-  height: 88px;
+  align-items: center;
   border-bottom: 1px solid #bdbdbd;
   a {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 48px;
-    font-size: 14px;
+    width: 80px;
+    height: 36px;
+    font-size: 12px;
     color: #7d7d7d;
+    &:hover {
+      font-weight: 700;
+      color: #1a237e;
+    }
     &.active {
       font-weight: 700;
-      font-size: 16px;
       color: #1a237e;
       &:after {
         position: absolute;
