@@ -33,7 +33,7 @@ const SideBar = () => {
           >
             <span className="submenuIcon material-symbols-outlined">upload_file</span>
             등기부등본 업로드
-            <MenuBadge className="badge">새로 심사하기</MenuBadge>
+            <MenuBadge className="dark">새로 심사하기</MenuBadge>
           </NavLink>
           <NavLink
             to="/review/pdfsummary"
@@ -54,7 +54,7 @@ const SideBar = () => {
           }}
         >
           내 심사관리
-          <MenuBadge className="badge">준비중</MenuBadge>
+          <MenuBadge className="light">준비중</MenuBadge>
         </NavLink>
       </SidebarMenus>
     </SidebarContainer>

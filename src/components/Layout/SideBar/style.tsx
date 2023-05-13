@@ -53,11 +53,12 @@ export const Submenus = styled.div`
   font-weight: 500;
   font-size: 14px;
   color: #8f8f8f;
+  padding: 0 40px;
   .submenu {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    padding: 15px 40px;
+    padding: 15px 0;
     .submenuIcon {
       margin-right: 8px;
     }
@@ -69,14 +70,29 @@ export const Submenus = styled.div`
   &.hide {
     display: none;
   }
+
+  /* 1920 미만 */
+  @media (max-width: 1919px) {
+    padding: 0 10px;
+    .dark {
+      margin-left: 10px;
+    }
+  }
 `;
 
 export const MenuBadge = styled.span`
   padding: 7px;
-  margin-left: 3px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 11px;
-  color: #1a237e;
-  background-color: #f3f4fa;
   border-radius: 8px;
+  &.dark {
+    margin-left: 80px;
+    color: #fff;
+    background-color: #1a237e;
+  }
+  &.light {
+    margin-left: 5px;
+    color: #1a237e;
+    background-color: #f3f4fa;
+  }
 `;
