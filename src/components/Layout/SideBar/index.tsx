@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { SidebarContainer, SidebarMenus } from './style';
+import { SidebarContainer, SidebarMenus, Submenus, MenuBadge } from './style';
 import logo from '@/assets/logo.png';
 import { useStepStore } from '@/store/store';
 
@@ -20,41 +20,43 @@ const SideBar = () => {
         <img className="logo" src={logo} alt="logo" />
       </NavLink>
       <SidebarMenus>
-        <NavLink className={step !== 0 ? 'active' : ''} to="pra">
+        <NavLink className={step !== 0 ? 'mainmenu active' : 'mainmenu'} to="pra">
           심사하기
         </NavLink>
-        <ul className={step !== 0 ? 'submenus' : 'submenus hide'}>
-          <li className={step >= 1 ? 'active' : ''}>
-            <span className="step" />
+        <Submenus className={step !== 0 ? '' : 'hide'}>
+          <NavLink
+            to="pra"
+            className="submenu"
+            onClick={() => {
+              setStep(1);
+            }}
+          >
+            <span className="submenuIcon material-symbols-outlined">upload_file</span>
             등기부등본 업로드
-          </li>
-          <li className={step === 2 ? 'active' : ''}>
-            <span className="step" />
+            <MenuBadge className="badge">새로 심사하기</MenuBadge>
+          </NavLink>
+          <NavLink
+            to="/review/pdfsummary"
+            className="submenu"
+            onClick={() => {
+              setStep(2);
+            }}
+          >
+            <span className="submenuIcon material-symbols-outlined">description</span>
             심사결과
-          </li>
-          <li>
-            <span className="step" />
-            심사종료
-          </li>
-        </ul>
+          </NavLink>
+        </Submenus>
         <NavLink
+          className="mainmenu"
           to="/myreviews"
           onClick={() => {
             setStep(0);
           }}
         >
           내 심사관리
-          <span className="badge">준비중</span>
+          <MenuBadge className="badge">준비중</MenuBadge>
         </NavLink>
       </SidebarMenus>
-      <NavLink
-        to="/review/pdfsummary"
-        onClick={() => {
-          setStep(2);
-        }}
-      >
-        심사내역 페이지(작업용 임시)
-      </NavLink>
     </SidebarContainer>
   );
 };

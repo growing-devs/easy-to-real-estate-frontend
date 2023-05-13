@@ -27,7 +27,7 @@ export const SidebarContainer = styled.aside`
 export const SidebarMenus = styled.div`
   margin-top: 140px;
   width: inherit;
-  a {
+  .mainmenu {
     display: flex;
     align-items: center;
     height: 76px;
@@ -44,56 +44,39 @@ export const SidebarMenus = styled.div`
       font-weight: 700;
       background-color: #f6f5ef;
       color: #1a237e;
-      border-right: 4px solid #1a237e;
+      border-right: 4px solid #ccac55;
     }
-    .badge {
-      padding: 7px;
-      margin-left: 3px;
-      font-weight: 600;
-      font-size: 11px;
+  }
+`;
+
+export const Submenus = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  color: #8f8f8f;
+  .submenu {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 15px 40px;
+    .submenuIcon {
+      margin-right: 8px;
+    }
+    &.active {
+      font-weight: 700;
       color: #1a237e;
-      background-color: #f3f4fa;
-      border-radius: 8px;
     }
   }
-  .submenus {
-    font-weight: 500;
-    font-size: 14px;
-    li {
-      display: flex;
-      align-items: center;
-      padding: 15px 0 15px 60px;
-      span {
-        position: relative;
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background-color: #8f8f8f;
-        border-radius: 5px;
-        margin-right: 10px;
-        &:after {
-          content: '';
-          position: absolute;
-          left: 4px;
-          bottom: 12px;
-          display: block;
-          width: 2px;
-          height: 30px;
-          background-color: #8f8f8f;
-        }
-      }
-      &.active span {
-        background-color: #1a237e;
-        &:after {
-          background-color: #1a237e;
-        }
-      }
-      &:first-of-type :after {
-        display: none;
-      }
-    }
-    &.hide {
-      display: none;
-    }
+  &.hide {
+    display: none;
   }
+`;
+
+export const MenuBadge = styled.span`
+  padding: 7px;
+  margin-left: 3px;
+  font-weight: 600;
+  font-size: 11px;
+  color: #1a237e;
+  background-color: #f3f4fa;
+  border-radius: 8px;
 `;
