@@ -1,12 +1,16 @@
-import { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { SidebarContainer, SidebarMenus, Submenus, MenuBadge } from './style';
 import logo from '@/assets/logo.png';
-import { useStepStore } from '@/store/store';
+import { useStepStore, useTitleStore } from '@/store/store';
 import RecentHistory from './RecentHistory';
 
 const SideBar = () => {
-  const { step, setStep } = useStepStore();
+  const { step } = useStepStore();
+  const { setTitle } = useTitleStore();
+
+  const handleMenuClick = (menuName: string) => {
+    setTitle(menuName);
+  };
 
   return (
     <SidebarContainer>
@@ -14,7 +18,11 @@ const SideBar = () => {
         <img className="logo" src={logo} alt="logo" />
       </NavLink>
       <SidebarMenus>
-        <NavLink className={step !== 0 ? 'mainmenu active' : 'mainmenu'} to="pra">
+        <NavLink
+          className={step !== 0 ? 'mainmenu active' : 'mainmenu'}
+          to="pra"
+          onClick={() => handleMenuClick('심사하기')}
+        >
           심사하기
         </NavLink>
         <Submenus className={step !== 0 ? '' : 'hide'}>
@@ -32,7 +40,7 @@ const SideBar = () => {
           className="mainmenu"
           to="/myreviews"
           onClick={() => {
-            setStep(0);
+            handleMenuClick('내 심사관리');
           }}
         >
           내 심사관리
