@@ -17,13 +17,13 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route element={<Layout />}>
-        <Route path="/pra" element={<Pra />} />
-        <Route element={<ReviewLayout />}>
-          <Route path="pra/summary" element={<PdfSummary />} />
-          <Route path="pra/gap" element={<PdfGap />} />
-          <Route path="pra/eul" element={<PdfEul />} />
-          <Route path="pra/marketprice" element={<MarketPrice />} />
-          <Route path="pra/location" element={<Location />} />
+        <Route path="pra" element={<Pra />} />
+        <Route path="review" element={<ReviewLayout />}>
+          <Route path="pdfsummary" element={<PdfSummary />} />
+          <Route path="gap" element={<PdfGap />} />
+          <Route path="eul" element={<PdfEul />} />
+          <Route path="marketprice" element={<MarketPrice />} />
+          <Route path="location" element={<Location />} />
         </Route>
         <Route path="/praprice" element={<PraPrice />} />
         <Route path="/myreviews" element={<MyReviews />} />

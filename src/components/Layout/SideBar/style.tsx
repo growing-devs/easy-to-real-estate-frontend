@@ -6,7 +6,7 @@ export const SidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 408px;
+  width: 370px;
   height: 100%;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.15);
   background-color: #fff;
@@ -17,18 +17,23 @@ export const SidebarContainer = styled.aside`
     width: 126px;
     margin-top: 50px;
   }
+
+  /* 1920 미만 */
+  @media (max-width: 1919px) {
+    width: 250px;
+  }
 `;
 
 export const SidebarMenus = styled.div`
   margin-top: 140px;
   width: inherit;
-  a {
+  .mainmenu {
     display: flex;
     align-items: center;
     height: 76px;
     padding: 0 40px;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 16px;
     color: #616161;
     &:hover {
       font-weight: 700;
@@ -39,7 +44,55 @@ export const SidebarMenus = styled.div`
       font-weight: 700;
       background-color: #f6f5ef;
       color: #1a237e;
-      border-right: 4px solid #1a237e;
+      border-right: 4px solid #ccac55;
     }
+  }
+`;
+
+export const Submenus = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  color: #8f8f8f;
+  padding: 0 40px;
+  .submenu {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 15px 0;
+    .submenuIcon {
+      margin-right: 8px;
+    }
+    &.active {
+      font-weight: 700;
+      color: #1a237e;
+    }
+  }
+  &.hide {
+    display: none;
+  }
+
+  /* 1920 미만 */
+  @media (max-width: 1919px) {
+    padding: 0 10px;
+    .dark {
+      margin-left: 10px;
+    }
+  }
+`;
+
+export const MenuBadge = styled.span`
+  padding: 7px;
+  font-weight: 700;
+  font-size: 11px;
+  border-radius: 8px;
+  &.dark {
+    margin-left: 80px;
+    color: #fff;
+    background-color: #1a237e;
+  }
+  &.light {
+    margin-left: 5px;
+    color: #1a237e;
+    background-color: #f3f4fa;
   }
 `;

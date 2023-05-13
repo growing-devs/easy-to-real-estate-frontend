@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 // 주소 검색 데이터 + 간편 심사시 서버에서 받을 데이터
 interface SearchState {
@@ -36,5 +37,18 @@ export const useSearchStore = create<SearchState>((set) => ({
       sampleData2: res.sido,
       sampleData3: res.sigungu,
     }));
+  },
+}));
+
+interface StspState {
+  step: number;
+  setStep: (num: number) => void;
+}
+
+// step 1은 등기부 업로드, step 2는 심사 내역 확인, step 3는 심사 종료(심사페이지 벗어나기), step 0은 그 외
+export const useStepStore = create<StspState>((set) => ({
+  step: 0,
+  setStep: (num) => {
+    set((state) => ({ step: num }));
   },
 }));
