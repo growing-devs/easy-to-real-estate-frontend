@@ -4,7 +4,7 @@ import { HomeMenusContainer } from './style';
 const HomeMenus = () => {
   return (
     <HomeMenusContainer>
-      <Link to="/pra" className="homeMain">
+      <Link to="pra" className="homeMain">
         심사 시작하기
       </Link>
     </HomeMenusContainer>

@@ -1,12 +1,17 @@
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
 import SideBar from './SideBar';
+import Title from './Title';
+import { useStepStore } from '@/store/store';
 
 const Layout = () => {
+  const { step } = useStepStore();
+
   return (
     <>
       <SideBar />
       <MainSection>
+        {step >= 1 ? <Title /> : null}
         <Outlet />
       </MainSection>
     </>
