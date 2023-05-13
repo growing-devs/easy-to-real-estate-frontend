@@ -1,49 +1,53 @@
-import styled from '@emotion/styled';
-import { Outlet, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, useParams, NavLink, useLocation } from 'react-router-dom';
+import { useStepStore } from '@/store/store';
+import { LayoutContainer, SummarySection, MainSection, TabMenus } from './style';
 import SideBar from './SideBar';
 import Title from './Title';
-import { useStepStore } from '@/store/store';
+import PraDetail from '@/pages/Pra/PraDetail';
 
 const Layout = () => {
-  const { step } = useStepStore();
-  const praId = useParams();
-  console.log(praId);
+  const { setStep } = useStepStore();
+  const pdfId = useParams().id;
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname.includes('pra')) {
+      setStep(pdfId ? 2 : 1);
+    } else {
+      setStep(0);
+    }
+  }, [location]);
 
   return (
-    <>
+    <LayoutContainer>
       <SideBar />
-      <MainSection>
-        {step >= 1 ? <Title /> : null}
-        <Outlet />
-      </MainSection>
-    </>
+      <Title />
+      {pdfId ? (
+        <>
+          <SummarySection>
+            <PraDetail />
+          </SummarySection>
+          <MainSection>
+            <TabMenus>
+              <NavLink to={`pra/${pdfId}/pdfsummary`}>등기부 요약</NavLink>
+              <NavLink to={`pra/${pdfId}/gap`}>등기부 갑구</NavLink>
+              <NavLink to={`pra/${pdfId}/eul`}>등기부 을구</NavLink>
+              <NavLink to={`pra/${pdfId}/marketprice`}>시세</NavLink>
+              <NavLink to={`pra/${pdfId}/location`}>입지</NavLink>
+            </TabMenus>
+            <div className="praDetail">
+              <Outlet />
+            </div>
+          </MainSection>
+        </>
+      ) : (
+        <div className="pra">
+          <Outlet />
+        </div>
+      )}
+    </LayoutContainer>
   );
 };
-
-const MainSection = styled.main`
-  margin-left: 370px;
-  width: calc(100% - 370px);
-  height: 100vh;
-  overflow-y: hidden;
-  overflow-x: auto;
-  &::-webkit-scrollbar {
-    height: 12px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #616161;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-    border-radius: 8px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #ddd;
-  }
-
-  /* 1920 미만 */
-  @media (max-width: 1919px) {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-  }
-`;
 
 export default Layout;

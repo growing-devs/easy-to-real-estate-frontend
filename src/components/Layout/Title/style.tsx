@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
 
 export const TitleWrapper = styled.div`
+  grid-area: b;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-width: calc(1440px - 250px);
   height: 64px;
   padding: 0 40px;
   background-color: #f1efe8;
-  z-index: 3;
   p {
     height: 40px;
     font-weight: 700;
