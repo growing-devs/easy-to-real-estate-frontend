@@ -1,9 +1,34 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { PrimaryButton } from '@/components/common';
 import Chart from '@/components/Chart/';
+import Table from '@/components/common/Table';
 
 const PraPrice = () => {
+  const exampleData = [
+    { id: 1, name: 'John', age: 25 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    { id: 2, name: 'Jane', age: 30 },
+    { id: 3, name: 'Bob', age: 35 },
+    // 추가적인 데이터...
+  ];
+  const columns = useMemo(
+    () => [
+      { Header: 'ID', accessor: 'id' },
+      { Header: 'Name', accessor: 'name' },
+      { Header: 'Age', accessor: 'age' },
+    ],
+    [],
+  );
   return (
     <PraPriceWrap>
       <PraPriceContent>
@@ -54,7 +79,9 @@ const PraPrice = () => {
           <PraPriceTitle>2. 실거래가</PraPriceTitle>
           <PraPriceTitle>필터버튼</PraPriceTitle>
         </PraPriceFlexDiv>
-        <PraPriceTable>테이블</PraPriceTable>
+        <PraPriceTable>
+          <Table tableData={exampleData} tableColumns={columns} />
+        </PraPriceTable>
       </PraPriceContent>
 
       <PraPriceContent>
@@ -157,7 +184,6 @@ const PraPriceTitle = styled.span`
 
 const PraPriceContent = styled.div`
   padding: 20px;
-  margin: 10px;
 `;
 
 const PraPriceWrap = styled.div`
