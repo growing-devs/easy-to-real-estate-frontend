@@ -1,7 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { ReviewLayoutContainer, TabMenus } from './style';
 import PraDetail from '@/pages/Pra/PraDetail';
-import Summary from './Summary';
 
 const ReviewLayout = () => {
   return (

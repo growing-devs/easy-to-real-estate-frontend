@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { SidebarContainer, SidebarMenus, Submenus, MenuBadge } from './style';
 import logo from '@/assets/logo.png';
 import { useStepStore } from '@/store/store';
+import RecentHistory from './RecentHistory';
 
 const SideBar = () => {
   const location = useLocation();
@@ -35,16 +36,10 @@ const SideBar = () => {
             등기부등본 업로드
             <MenuBadge className="dark">새로 심사하기</MenuBadge>
           </NavLink>
-          <NavLink
-            to="/review/pdfsummary"
-            className="submenu"
-            onClick={() => {
-              setStep(2);
-            }}
-          >
+          <div className={step === 2 ? 'submenu active' : 'submenu'}>
             <span className="submenuIcon material-symbols-outlined">description</span>
             심사결과
-          </NavLink>
+          </div>
         </Submenus>
         <NavLink
           className="mainmenu"
@@ -57,6 +52,7 @@ const SideBar = () => {
           <MenuBadge className="light">준비중</MenuBadge>
         </NavLink>
       </SidebarMenus>
+      <RecentHistory />
     </SidebarContainer>
   );
 };
