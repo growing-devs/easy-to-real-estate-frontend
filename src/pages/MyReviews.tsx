@@ -1,6 +1,24 @@
+import { useState } from 'react';
 import styled from '@emotion/styled';
 
 const MyReviews = () => {
+  const [email, setEmail] = useState<string>('');
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (email.trim() === '') {
+      alert('이메일을 입력하세요');
+      return;
+    }
+    console.log(email);
+    setEmail('');
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
   return (
     <PreparingPage>
       <p className="mainTitle">
@@ -13,11 +31,13 @@ const MyReviews = () => {
         등기부등본 업로드 한번으로 간편한 대출 심사 프로세스를 경험해보세요.
       </p>
       <SubscribeFormContainer>
-        <p>
-          지금 사전 등록하고, 서비스 출시 일정을 이메일로 안내받으시겠어요?
-          <br />
-          사전등록하신 분에게는 10% 할인쿠폰을 드립니다.
-        </p>
+        <p>지금 사전 등록하고, 서비스 출시 일정을 이메일로 안내받으시겠어요?</p>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="emailInput">
+            <input type="email" value={email} onChange={handleChange} />
+          </label>
+          <button type="submit">등록</button>
+        </form>
       </SubscribeFormContainer>
     </PreparingPage>
   );
@@ -38,29 +58,51 @@ const PreparingPage = styled.div`
   }
   .mainTitle {
     font-weight: 700;
-    font-size: 84px;
-    line-height: 105px;
+    font-size: 64px;
+    line-height: 88px;
     color: #333;
-    margin-bottom: 50px;
+    margin-bottom: 18px;
   }
   .subTitle {
     font-weight: 400;
-    font-size: 28px;
+    font-size: 20px;
     line-height: 38px;
     color: #616161;
   }
 `;
 
 const SubscribeFormContainer = styled.div`
-  margin-top: 40px;
-  padding: 40px 58px;
+  margin-top: 35px;
+  padding: 30px 58px;
   border: 1px solid #dddddd;
   border-radius: 4px;
   background-color: #fdfdfd;
   p {
     font-weight: 300;
-    font-size: 22px;
-    line-height: 33px;
+    font-size: 14px;
     color: #333;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 260px;
+    height: 40px;
+    padding: 0 15px;
+    background-color: #d9d9d9;
+    border: 0;
+    font-size: 16px;
+    color: #616161;
+    border-radius: 4px;
+    outline: none;
+  }
+  button {
+    width: 112px;
+    height: 40px;
+    margin-left: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    background-color: #1a237e;
+    border: 0;
+    border-radius: 4px;
   }
 `;
