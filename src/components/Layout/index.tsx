@@ -1,11 +1,13 @@
 import styled from '@emotion/styled';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import SideBar from './SideBar';
 import Title from './Title';
 import { useStepStore } from '@/store/store';
 
 const Layout = () => {
   const { step } = useStepStore();
+  const praId = useParams();
+  console.log(praId);
 
   return (
     <>

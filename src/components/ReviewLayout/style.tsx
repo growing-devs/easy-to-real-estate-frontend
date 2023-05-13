@@ -5,6 +5,7 @@ export const ReviewLayoutContainer = styled.div`
   display: flex;
   .summarySection {
     min-width: 502px;
+    width: 502px;
     height: calc(100vh - 64px);
     padding: 32px 50px;
     background-color: #fdfdfd;
@@ -20,9 +21,9 @@ export const ReviewLayoutContainer = styled.div`
     }
   }
   .detailSection {
-    width: 100%;
     min-width: calc(1440px - (250px + 502px));
     padding: 0 5px;
+    flex-grow: 1;
     .reviewDetail {
       position: relative;
       padding: 20px 30px;

@@ -14,8 +14,8 @@ export const SidebarContainer = styled.aside`
   overflow-x: hidden;
   overflow-y: auto;
   .logo {
-    width: 126px;
-    margin-top: 50px;
+    width: 100px;
+    margin-top: 40px;
   }
 
   /* 1920 미만 */
@@ -25,7 +25,7 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const SidebarMenus = styled.div`
-  margin-top: 140px;
+  margin-top: 95px;
   width: inherit;
   .mainmenu {
     display: flex;
@@ -74,6 +74,53 @@ export const Submenus = styled.div`
   /* 1920 미만 */
   @media (max-width: 1919px) {
     padding: 0 10px;
+  }
+`;
+
+export const RecentHistoryContainer = styled.div`
+  margin-top: 40px;
+  width: 100%;
+  padding: 0 26px;
+  p {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 18px;
+    color: #1a237e;
+    &:last-of-type {
+      font-weight: 500;
+      font-size: 11px;
+      color: #8f8f8f;
+    }
+  }
+  .recentHistoryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    padding: 16px 13px 19px 20px;
+    background-color: #fdfdfd;
+    border: 1px solid #e8eaf6;
+    border-radius: 4px;
+    span {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 140%;
+      color: #8f8f8f;
+      word-break: break-all;
+      margin-right: 8px;
+    }
+    button {
+      border: 0;
+      background: transparent;
+      color: #616161;
+      &:hover {
+        font-weight: 700;
+        color: #000;
+        background: #ddd;
+        border-radius: 100%;
+      }
+    }
   }
 `;
 
