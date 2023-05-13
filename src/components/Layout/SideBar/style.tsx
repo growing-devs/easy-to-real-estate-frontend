@@ -74,9 +74,6 @@ export const Submenus = styled.div`
   /* 1920 미만 */
   @media (max-width: 1919px) {
     padding: 0 10px;
-    .dark {
-      margin-left: 10px;
-    }
   }
 `;
 
@@ -94,5 +91,12 @@ export const MenuBadge = styled.span`
     margin-left: 5px;
     color: #1a237e;
     background-color: #f3f4fa;
+  }
+
+  /* 1920 미만 */
+  @media (max-width: 1919px) {
+    &.dark {
+      margin-left: 10px;
+    }
   }
 `;
