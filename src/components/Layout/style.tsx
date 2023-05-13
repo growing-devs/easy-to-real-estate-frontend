@@ -12,8 +12,9 @@ export const LayoutContainer = styled.div`
     'a c d';
   overflow-y: hidden;
 
-  .pra {
+  .combineSection {
     grid-column: 2/ -1;
+    grid-row: 2/ -1;
   }
 
   /* 1920 미만 */

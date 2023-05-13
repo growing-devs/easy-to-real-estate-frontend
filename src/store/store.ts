@@ -44,11 +44,21 @@ interface StspState {
   step: number;
   setStep: (num: number) => void;
 }
-
-// step 1은 등기부 업로드, step 2는 심사 내역 확인, step 3는 심사 종료(심사페이지 벗어나기), step 0은 그 외
+// step 1은 등기부 업로드, step 2는 심사 내역 확인, step 0은 그 외
 export const useStepStore = create<StspState>((set) => ({
   step: 0,
   setStep: (num) => {
     set((state) => ({ step: num }));
+  },
+}));
+
+interface TitleState {
+  currentTitle: string | null;
+  setTitle: (menuName: string) => void;
+}
+export const useTitleStore = create<TitleState>((set) => ({
+  currentTitle: null,
+  setTitle: (menuName) => {
+    set((state) => ({ currentTitle: menuName }));
   },
 }));

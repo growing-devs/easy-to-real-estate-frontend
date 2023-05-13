@@ -42,7 +42,7 @@ const Layout = () => {
           </MainSection>
         </>
       ) : (
-        <div className="pra">
+        <div className="combineSection">
           <Outlet />
         </div>
       )}
