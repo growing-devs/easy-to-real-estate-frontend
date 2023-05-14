@@ -1,25 +1,15 @@
 import { Column } from 'react-table';
 
 export const COLUMNS: Column<{
-  contract_date: string;
-  transaction: string;
-  price: string;
-  floor: string;
+  collateral_amount: string;
+  principal_amount_estimate: string;
 }>[] = [
   {
-    Header: '계약일',
-    accessor: 'contract_date',
+    Header: '담보총액/건수',
+    accessor: 'collateral_amount',
   },
   {
-    Header: '거래',
-    accessor: 'transaction',
-  },
-  {
-    Header: '가격',
-    accessor: 'price',
-  },
-  {
-    Header: '층',
-    accessor: 'floor',
+    Header: '원금 추론액',
+    accessor: 'principal_amount_estimate',
   },
 ];
