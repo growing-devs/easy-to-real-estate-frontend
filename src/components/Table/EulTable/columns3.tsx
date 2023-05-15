@@ -1,7 +1,7 @@
 import { Column } from 'react-table';
 
 export const COLUMNS: Column<{
-  rank: number;
+  rank: string;
   registration_purpose: string;
   reception_information: string;
   major_registration_items: string;
