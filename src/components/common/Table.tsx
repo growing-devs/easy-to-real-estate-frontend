@@ -59,22 +59,42 @@ const TableWrapper = styled.div<{ maxHeight?: string }>`
 `;
 
 const TableHeader = styled.thead`
-  background-color: #e6e6e6;
-  color: #000;
-  font-weight: bold;
-  border-top: 0.5px solid #ccc;
-  border-bottom: 0.5px solid #ccc;
+  background-color: #eee;
+  color: #333;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  th {
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #eee;
+  }
 `;
 
 const TableBody = styled.tbody`
+  color: #333;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+
   tr:nth-of-type(even) {
-    background-color: #e0e6f8;
+    background-color: #f3f4fa;
   }
   tr:nth-of-type(odd) {
     background-color: #fff;
   }
+  tr:last-of-type td {
+    border-bottom: 1px solid #ccc;
+  }
+  td {
+    text-align: center;
+  }
 `;
 
 const TableCell = styled.td`
-  padding: 1rem;
+  padding: 10px;
 `;
