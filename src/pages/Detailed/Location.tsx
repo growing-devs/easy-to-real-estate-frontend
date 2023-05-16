@@ -6,7 +6,8 @@ import EstateAgentLists from '@/components/Map/EstateAgentLists';
 import FacilityLists from '@/components/Map/FacilityLists';
 
 const Location = () => {
-  const { address, setLat, setLng } = useSearchStore();
+  const { address, newLat, newLng, setLat, setLng } = useSearchStore();
+  const link = `https://new.land.naver.com/complexes?ms=${newLat},${newLng},19`;
 
   // 주소 받으면 좌표로 변환해서 전역 상태로 저장
   useEffect(() => {
@@ -31,6 +32,9 @@ const Location = () => {
       <FacilityLists />
       <p>3. 주변 부동산 정보</p>
       <EstateAgentLists />
+      <a href={link} target="_blank" rel="noreferrer">
+        네이버 부동산에서 더보기<span className="material-symbols-outlined">arrow_forward_ios</span>
+      </a>
     </LocationContainer>
   );
 };
@@ -48,6 +52,24 @@ const LocationContainer = styled.div`
     }
     &:first-of-type {
       margin-top: 0;
+    }
+  }
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    margin-top: 24px;
+    font-weight: 700;
+    font-size: 12px;
+    color: #53a74a;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    span {
+      margin-left: 10px;
+      font-weight: 700;
+      font-size: 12px;
     }
   }
 `;
