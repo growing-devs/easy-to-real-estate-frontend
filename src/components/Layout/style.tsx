@@ -46,9 +46,9 @@ export const MainSection = styled.main`
   width: 100%;
   .praDetail {
     position: relative;
+    padding: 40px 70px 40px 30px;
     overflow-y: auto;
     height: calc(100vh - 100px);
-    padding-right: 46px;
     &::-webkit-scrollbar {
       width: 6px;
     }
@@ -58,9 +58,6 @@ export const MainSection = styled.main`
         border-radius: 4px;
       }
     }
-    .wrapper {
-      padding: 40px 30px;
-    }
   }
 `;
 
@@ -68,6 +65,7 @@ export const TabMenus = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #bdbdbd;
+  margin-right: 40px;
   a {
     position: relative;
     display: flex;
