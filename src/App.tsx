@@ -5,7 +5,6 @@ import Pra from './pages/Pra/PraUpload';
 import PraPrice from './pages/Pra/PraPrice';
 
 import MyReviews from './pages/MyReviews';
-import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
 
@@ -23,7 +22,6 @@ const App = () => {
 
         <Route path="/praprice" element={<PraPrice />} />
         <Route path="/myreviews" element={<MyReviews />} />
-        <Route path="/search" element={<Search />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

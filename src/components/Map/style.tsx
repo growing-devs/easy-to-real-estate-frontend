@@ -6,22 +6,11 @@ export const MapContainer = styled.div`
   width: 100%;
   height: 328px;
   #map {
-    width: 100%;
+    width: 50%;
     height: 100%;
-    &.active {
-      width: 50%;
-    }
   }
   #roadview {
-    &.active {
-      /* z-index: 1; */
-      display: block;
-      width: 50%;
-    }
-    &.inactive {
-      /* z-index: 0; */
-      display: none;
-    }
+    width: 50%;
   }
 
   #btnRoadview {

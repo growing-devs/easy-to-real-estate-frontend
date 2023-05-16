@@ -11,8 +11,8 @@ interface SearchState {
 // 주소 검색 데이터 + 간편 심사시 서버에서 받을 데이터
 export const useSearchStore = create<SearchState>((set) => ({
   address: '신천동 7-18',
-  newLat: 0,
-  newLng: 0,
+  newLat: 37.5144542739603,
+  newLng: 127.1007349885,
   sampleData1: '',
   sampleData2: '',
   sampleData3: '',
