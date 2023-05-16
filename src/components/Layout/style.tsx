@@ -44,10 +44,9 @@ export const SummarySection = styled.div`
 export const MainSection = styled.main`
   grid-area: d;
   width: 100%;
-  padding: 0 5px;
   .praDetail {
     position: relative;
-    padding: 20px 30px;
+    padding: 40px 70px 40px 30px;
     overflow-y: auto;
     height: calc(100vh - 100px);
     &::-webkit-scrollbar {
@@ -66,6 +65,7 @@ export const TabMenus = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #bdbdbd;
+  margin-right: 40px;
   a {
     position: relative;
     display: flex;
