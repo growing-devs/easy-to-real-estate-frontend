@@ -1,6 +1,8 @@
+import { Column } from 'react-table';
 import { useState, useEffect } from 'react';
 import { PlaceListWrapper } from './style';
 import { useSearchStore } from '@/store/store';
+import Table, { TableProps } from '../common/Table';
 
 const EstateAgentLists = () => {
   const { newLat, newLng } = useSearchStore(); // 위도, 경도
@@ -31,31 +33,43 @@ const EstateAgentLists = () => {
       } else {
         setAgentLists(null); // 검색 결과 없으면 상태값 비우기
       }
+      console.log(agentLists);
     }
   }, [newLat]);
 
-  return (
-    <PlaceListWrapper>
-      <ul>
-        <li className="listTitle">부동산 리스트</li>
-        {agentLists ? (
-          agentLists.map((list: any) => {
-            return (
-              <li className="placelist" key={list.id}>
-                <span className="listName">
-                  {list.place_name}({list.distance}m)
-                </span>
-                <span className="listAddress">{list.address_name}</span>
-                <span className="listPhone">{list.phone}</span>
-              </li>
-            );
-          })
-        ) : (
-          <li>리스트 없습니다</li>
-        )}
-      </ul>
-    </PlaceListWrapper>
-  );
+  const COLUMNS: Column<{
+    place_name: string;
+    distance: string;
+    address_name: string;
+    phone: string;
+  }>[] = [
+    {
+      Header: '공인중개사명',
+      accessor: 'place_name',
+    },
+    {
+      Header: '거리',
+      accessor: 'distance',
+    },
+    {
+      Header: '주소',
+      accessor: 'address_name',
+    },
+    {
+      Header: '전화번호',
+      accessor: 'phone',
+    },
+  ];
+
+  const tableProps: TableProps = {
+    tableData: agentLists,
+    tableColumns: COLUMNS,
+    maxHeight: '100%',
+    disableScroll: true, // 스크롤 없음
+    width: ['240px', '200px', '320px', '180px'],
+  };
+
+  return <div>{agentLists ? <Table {...tableProps} /> : null}</div>;
 };
 
 export default EstateAgentLists;
