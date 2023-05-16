@@ -38,14 +38,3 @@ export const useStepStore = create<StspState>((set) => ({
     set({ step: num });
   },
 }));
-
-interface TitleState {
-  currentTitle: string | null;
-  setTitle: (menuName: string) => void;
-}
-export const useTitleStore = create<TitleState>((set) => ({
-  currentTitle: null,
-  setTitle: (menuName) => {
-    set({ currentTitle: menuName });
-  },
-}));

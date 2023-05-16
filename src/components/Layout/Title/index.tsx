@@ -1,20 +1,24 @@
-import { useEffect } from 'react';
-import { useStepStore, useTitleStore } from '@/store/store';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useStepStore } from '@/store/store';
 import { TitleWrapper } from './style';
 
 const Title = () => {
   const { step } = useStepStore();
-  const { currentTitle, setTitle } = useTitleStore();
+  const location = useLocation();
+  const [title, setTitle] = useState<string>('');
 
   useEffect(() => {
-    if (step > 0) {
+    if (location.pathname.includes('pra')) {
       setTitle('심사하기');
+    } else if (location.pathname.includes('myreviews')) {
+      setTitle('내 심사관리');
     }
-  }, [step]);
+  }, [location]);
 
   return (
     <TitleWrapper>
-      <p>{currentTitle}</p>
+      <p>{title}</p>
       {step === 2 ? (
         <div>
           <button type="button">PDF로 저장하기</button>
