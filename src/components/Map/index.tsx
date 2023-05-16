@@ -1,10 +1,9 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/no-this-in-sfc */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchStore } from '@/store/store';
 import { MapContainer } from './style';
 import centerMarker from '@/assets/centerMarker.png';
-import AroundLists from './AroundLists';
 
 declare global {
   interface Window {
@@ -90,8 +89,6 @@ const Map = () => {
         position: mapCenter,
         draggable: true,
       });
-      roadviewPin.setMap(kakaoMap);
-      roadviewPin.setPosition(kakaoMap.getCenter());
 
       // 로드뷰 핀에 dragend 이벤트 할당
       window.kakao.maps.event.addListener(roadviewPin, 'dragend', () => {
@@ -124,10 +121,11 @@ const Map = () => {
         const rvPosition = roadview.getPosition(); // 현재 로드뷰의 위치 값 받아오기
         kakaoMap.setCenter(rvPosition); // 지도의 중앙을 현재 로드뷰의 위치
         // 로드뷰 핀 위치를 현재 로드뷰 위치로 설정
+        roadviewPin.setMap(kakaoMap);
         roadviewPin.setPosition(rvPosition);
       });
     }
-  }, [mapCenter, kakaoMap]);
+  }, [mapCenter]);
 
   return (
     <div>
@@ -135,7 +133,6 @@ const Map = () => {
         <div id="map" />
         <div id="roadview" />
       </MapContainer>
-      <AroundLists />
     </div>
   );
 };

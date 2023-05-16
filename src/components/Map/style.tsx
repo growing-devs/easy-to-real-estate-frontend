@@ -98,39 +98,6 @@ export const MapContainer = styled.div`
   }
 `;
 
-export const MapFilterContainer = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  width: 550px;
-  li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 63px;
-    height: 63px;
-    background-color: #fdfdfd;
-    color: #8f8f8f;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-    border: 2px solid #bdbdbd;
-    border-radius: 4px;
-    cursor: pointer;
-    :hover {
-      background-color: #e9e9e9;
-    }
-    p {
-      margin-top: 5px;
-    }
-    &.on {
-      background-color: #e8eaf6;
-      border-color: #1a237e;
-      color: #1a237e;
-    }
-  }
-`;
-
 export const PlaceListWrapper = styled.ul`
   margin-top: 15px;
   width: 100%;
@@ -159,5 +126,36 @@ export const PlaceListWrapper = styled.ul`
   }
   .listAddress {
     margin-right: 30px;
+  }
+`;
+
+export const FacilityListsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const FacilityListsTable = styled.table`
+  width: 464px;
+  border-top: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
+  font-size: 12px;
+  th,
+  td {
+    text-align: center;
+    padding: 10px 0;
+  }
+  td:first-of-type,
+  td:last-of-type {
+    width: 102px;
+  }
+  thead {
+    background-color: #eee;
+    border-bottom: 1px solid #bdbdbd;
+  }
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: #f3f4fa;
+    }
   }
 `;

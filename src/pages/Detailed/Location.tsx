@@ -1,6 +1,9 @@
+import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useSearchStore } from '@/store/store';
 import Map from '@/components/Map';
+import EstateAgentLists from '@/components/Map/EstateAgentLists';
+import FacilityLists from '@/components/Map/FacilityLists';
 
 const Location = () => {
   const { address, setLat, setLng } = useSearchStore();
@@ -19,10 +22,32 @@ const Location = () => {
   }, [address]);
 
   return (
-    <div>
+    <LocationContainer>
+      <p>1. 지도/로드뷰</p>
       <Map />
-    </div>
+      <p>
+        2. 주변 시설<span>(담보물건 1km 이내에서 가장 가까운 장소를 표시합니다.)</span>
+      </p>
+      <FacilityLists />
+      <p>3. 주변 부동산 정보</p>
+      <EstateAgentLists />
+    </LocationContainer>
   );
 };
 
 export default Location;
+
+const LocationContainer = styled.div`
+  width: 100%;
+  p {
+    font-weight: 500;
+    font-size: 14px;
+    margin: 24px 0;
+    span {
+      font-size: 12px;
+    }
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+`;
