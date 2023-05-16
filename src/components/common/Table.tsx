@@ -8,6 +8,7 @@ export interface TableProps {
   maxHeight?: string; // 테이블 높이 설정 (default: '200px')
   disableScroll?: boolean; // 스크롤 제거 여부 (default: false 스크롤 있음)
   width?: string[]; // 각 열의 너비값 배열 (tableColumns 배열의 순서와 일치해야함)
+  renderCell?: (value: string, column: any) => string | JSX.Element; // renderCell 함수 타입 추가
 }
 
 const Table: React.FC<TableProps> = ({
@@ -16,6 +17,7 @@ const Table: React.FC<TableProps> = ({
   maxHeight = '200px',
   disableScroll = false,
   width = [],
+  renderCell, // renderCell prop 추가
 }) => {
   const data = useMemo(() => tableData, [tableData]);
   const columns = useMemo(
@@ -54,7 +56,7 @@ const Table: React.FC<TableProps> = ({
               <tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map((cell) => (
                   <TableCell {...cell.getCellProps()} key={cell.column.id}>
-                    {cell.render('Cell')}
+                    {renderCell ? renderCell(cell.value, cell.column) : cell.render('Cell')}
                   </TableCell>
                 ))}
               </tr>
@@ -70,6 +72,7 @@ Table.defaultProps = {
   maxHeight: '200px',
   disableScroll: false,
   width: [],
+  renderCell: undefined,
 };
 
 export default Table;
