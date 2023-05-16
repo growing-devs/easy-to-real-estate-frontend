@@ -1,36 +1,50 @@
+import styled from '@emotion/styled';
 import { EulTable11, EulTable12, EulTable13, EulTable2 } from '@/components/Table/EulTable';
 
-const PdfGap = () => {
+const PdfEul = () => {
   return (
-    <div>
-      <div style={{ marginTop: '20px', width: '940px', display: 'flex', marginBottom: '32px' }}>
-        <div style={{ marginRight: '8.1px' }}>
-          <p style={{ marginBottom: '24px', fontSize: '14px', fontWeight: 'bold' }}>
-            1-1. 근저당 정보
-          </p>
+    <EulPageContainer>
+      <Container>
+        <div>
+          <p className="tableTitle">1-1. 근저당 정보</p>
           <EulTable11 />
         </div>
-        <div style={{ marginRight: '8.1px' }}>
-          <p style={{ marginBottom: '24px', fontSize: '14px', fontWeight: 'bold' }}>
-            1-2. 전세권 정보
-          </p>
+        <div>
+          <p className="tableTitle">1-2. 전세권 정보</p>
           <EulTable12 />
         </div>
-      </div>
-      <div style={{ marginBottom: '24px' }}>
-        <p style={{ marginBottom: '24px', fontSize: '14px', fontWeight: 'bold' }}>
-          1-3. 근저당 상세 내용
-        </p>
+      </Container>
+      <SectionContainer>
+        <p className="tableTitle">1-3. 근저당 상세 내용</p>
         <EulTable13 />
-      </div>
+      </SectionContainer>
       <div>
-        <p style={{ marginBottom: '24px', fontSize: '14px', fontWeight: 'bold' }}>
-          2. 소유권 이외의 권리에 관한 사항
-        </p>
+        <p className="tableTitle">2. 소유권 이외의 권리에 관한 사항</p>
         <EulTable2 />
       </div>
-    </div>
+    </EulPageContainer>
   );
 };
 
-export default PdfGap;
+export default PdfEul;
+
+const Container = styled.div`
+  margin-top: 0;
+  width: 940px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+`;
+
+const SectionContainer = styled.div`
+  margin-bottom: 24px;
+`;
+
+const EulPageContainer = styled.div`
+  width: 100%;
+  .tableTitle {
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+`;
