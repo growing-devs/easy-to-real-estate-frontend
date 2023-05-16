@@ -37,7 +37,9 @@ const Layout = () => {
               <NavLink to={`pra/${pdfId}/location`}>입지</NavLink>
             </TabMenus>
             <div className="praDetail">
-              <Outlet />
+              <div className="wrapper">
+                <Outlet />
+              </div>
             </div>
           </MainSection>
         </>

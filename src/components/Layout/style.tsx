@@ -44,12 +44,11 @@ export const SummarySection = styled.div`
 export const MainSection = styled.main`
   grid-area: d;
   width: 100%;
-  padding: 0 5px;
   .praDetail {
     position: relative;
-    padding: 20px 30px;
     overflow-y: auto;
     height: calc(100vh - 100px);
+    padding-right: 46px;
     &::-webkit-scrollbar {
       width: 6px;
     }
@@ -58,6 +57,9 @@ export const MainSection = styled.main`
         background-color: #bfbfbf;
         border-radius: 4px;
       }
+    }
+    .wrapper {
+      padding: 40px 30px;
     }
   }
 `;
