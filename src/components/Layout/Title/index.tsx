@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { useStepStore, useTitleStore } from '@/store/store';
 import { TitleWrapper } from './style';
 
 const Title = () => {
   const { step } = useStepStore();
-  const { currentTitle } = useTitleStore();
+  const { currentTitle, setTitle } = useTitleStore();
+
+  useEffect(() => {
+    if (step > 0) {
+      setTitle('심사하기');
+    }
+  }, [step]);
 
   return (
     <TitleWrapper>
