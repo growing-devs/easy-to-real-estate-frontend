@@ -31,8 +31,6 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   const responseData = response.data.response.body.items.item;
   const { totalCount } = response.data.response.body;
   if (totalCount > pageNo * 49) {
-    console.log(`초과된 페이지 조회`, totalCount, yyyymm);
-
     const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
     return responseData.concat(nextPageItems);
   }
@@ -45,8 +43,12 @@ const ApartData = (adress: string) => {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
       const pastDates = getPastDates(1).slice(0, 2);
 
-      console.log(`카카오 api 를 활용한 법정동 코드`, documents.address.b_code);
-      console.log(`카카오 api 를 활용한 도로명 주소`, documents.road_address.main_building_no);
+      console.log(
+        `카카오 api 를 활용한 도로명 : `,
+        documents.road_address.main_building_no,
+        ' 법정동 : ',
+        documents.address.b_code,
+      );
       const Bcode = documents.address.b_code;
       const lawCityNumber = Bcode.slice(0, 5);
       const lawSectionNumber = parseInt(Bcode.slice(5, 10), 10);
@@ -58,7 +60,7 @@ const ApartData = (adress: string) => {
         pastDates.map((yyyymm) => {
           return fetchData(lawCityNumber, yyyymm)
             .then((responseData) => {
-              console.log('ALL ResponseData', responseData);
+              console.log(yyyymm, '의 ResponseData :', responseData);
               const filteredData = responseData.filter(
                 (item: any) =>
                   item.도로명건물본번호코드 === roadNumber &&

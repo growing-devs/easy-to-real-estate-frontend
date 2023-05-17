@@ -3,6 +3,11 @@
 FE_PS 기업 연계 프로젝트.  
 부동산 정보를 보다 쉽게 알 수 있도록 돕는 웹 서비스 구축.
 
+## 🖥️데모
+
+상시 업데이트
+https://zesty-faun-019504.netlify.app/
+
 ## 📁폴더구조
 
 ```
@@ -11,6 +16,7 @@ FE_PS 기업 연계 프로젝트.
 ├── src
 │   ├── main.tsx
 │   ├── App.tsx
+│   ├── GlobalStyle.tsx  // reset.css
 │   ├── 🗀api  // api 관리 폴더
 │   │   └── api.ts
 │   ├── 🗀assets  // 로고 이미지 등 사용 파일 관리 폴더
@@ -34,10 +40,6 @@ FE_PS 기업 연계 프로젝트.
 │   │   └── 🗀NotFound
 │   ├── 🗀store  // 전역 상태 관리 폴더
 │   │   └── ㄴstore.js
-│   ├── 🗀styles  // 공용 스타일 관리 폴더
-│   │   ├── DesignSystem.tsx  // 폰트 관리
-│   │   ├── GlobalStyle.tsx  // reset.css
-│   │   └── Theme.ts  // 테마 컬러 관리
 │   └── 🗀util  // 유틸 함수, 커스텀 훅 저장 폴더
 └── index.html
 ```

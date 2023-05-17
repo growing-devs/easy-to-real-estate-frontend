@@ -112,7 +112,8 @@ const UplodPDF = () => {
       console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
       if (response) {
-        const customData = await ApartData('리스폰 데이타 주소');
+        console.log('리스폰', response);
+        const customData = await ApartData(response.data.summary.newAddress);
         const lastId = addResponseItem(fileName, { ...response.data, customData });
         setDataStoreId(lastId);
         console.log('반환값', dataStoreId);
