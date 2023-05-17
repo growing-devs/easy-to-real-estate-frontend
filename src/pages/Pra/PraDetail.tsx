@@ -11,6 +11,9 @@ const PraDetail = () => {
           <FlexDiv>
             <TitleHeader>담보물건 요약</TitleHeader>
             <PrimaryButton
+              onClick={() => {
+                alert('클릭하셧습니다');
+              }}
               style={{ fontSize: '10px', border: 'none' }}
               width={100}
               height={24}
