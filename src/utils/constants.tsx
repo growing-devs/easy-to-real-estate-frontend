@@ -1,3 +1,3 @@
-export const MoreturnUrl = 'http://54.180.182.33:8080/';
+export const MoreturnUrl = 'https://www.mollyteam.shop/';
 
 // 통신 베이스 주소

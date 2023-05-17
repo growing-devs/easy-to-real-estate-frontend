@@ -27,7 +27,6 @@ export const SummarySection = styled.div`
   grid-area: c;
   width: 100%;
   height: calc(100vh - 64px);
-  padding: 32px 50px;
   background-color: #fdfdfd;
   overflow-y: auto;
   &::-webkit-scrollbar {

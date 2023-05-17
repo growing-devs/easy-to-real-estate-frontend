@@ -1,53 +1,84 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import data from './data';
+import axios from 'axios';
+
 import Chart from './PriceChart';
 import { ChartButton } from './PriceChartButton';
+import ApartData from '@/api/ApartDataApi';
+import { KakaoApi } from '@/api/kakaoApi';
 
-// 백앤드가 기술적 이해 부족으로 데이타를 나눠서 보내주겠다고함
-const actualTransactionPrice = data.actual_transaction_price.map(
-  ({ contract_date, price, transaction_type }) => ({
-    contract_date,
-    price,
-    transaction_type,
-  }),
-);
+// 클라이언트에서 API 요청
 
-const marketPrice = data.market_price.map(
-  ({ reference_date, lower_avg_price, upper_avg_price, transaction_type }) => ({
-    reference_date,
-    lower_avg_price,
-    upper_avg_price,
-    transaction_type,
-  }),
-);
+// const AreaPrice = data.actual_transaction_price.map(
+//   ({ contract_date, price, transaction_type }) => ({
+//     contract_date,
+//     price,
+//     transaction_type,
+//   }),
+// );
 
-// 데이터 전처리 타입을 기준으로 나눔
-
-const filterByTransactionType = (items: any[], transactionType: string) =>
-  items.filter((item) => item.transaction_type === transactionType);
-
-// 필터링
-const sales = filterByTransactionType(actualTransactionPrice, 'sale');
-const rents = filterByTransactionType(actualTransactionPrice, 'rent');
-const saleMarketPrice = filterByTransactionType(marketPrice, 'sale');
-const rentMarketPrice = filterByTransactionType(marketPrice, 'rent');
+// const MarketPrice = data.market_price.map(
+//   ({ contract_date, lower_avg_price, upper_avg_price, transaction_type }) => ({
+//     contract_date,
+//     lower_avg_price,
+//     upper_avg_price,
+//     transaction_type,
+//   }),
+// );
 
 const index = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // const apart = await KakaoApi('서울 특별시 벚꽃로 100');
+        const apartdt = await ApartData('서울특별시 관악구 신림동 1735');
+
+        // console.log('apart', apart);
+        console.log('ChartResponse', apartdt);
+
+        // 동기 처리 후에 다음 작업 수행
+        // ...
+      } catch (error) {
+        console.log('error', error);
+
+        // 에러 처리
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const [sail, setSail] = useState<any[]>([]);
   const [dealType, setDealType] = useState('sale');
   const [year, setYear] = useState('3');
 
+  const filterByYear = (items: any[], selectyear: string) =>
+    items.filter((item) => {
+      const itemYear = new Date(item.contract_date).getFullYear();
+      const currentYear = new Date().getFullYear();
+      return itemYear === currentYear - parseInt(selectyear, 10);
+    });
+
+  const groupByTransactionType = (items: any[], transactionType: string) =>
+    items.filter((item) => item.transaction_type === transactionType);
+
   useEffect(() => {
-    console.log('변경', dealType, year);
+    console.log(dealType, year);
   }, [dealType, year]);
+
+  useEffect(() => {
+    console.log(dealType, '타입', year, '년 변경', sail);
+  }, [sail]);
 
   const handleDealTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDealType(event.target.value);
   };
+
   const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYear(event.target.value);
   };
+
   return (
     <ChartWrap>
       <ChartButton
@@ -56,10 +87,10 @@ const index = () => {
         handleDealTypeChange={handleDealTypeChange}
         handleYearChange={handleYearChange}
       />
-      <Chart
+      {/* <Chart
         actualTransactionPrice={data.actual_transaction_price}
         marketPrice={data.market_price}
-      />
+      /> */}
     </ChartWrap>
   );
 };

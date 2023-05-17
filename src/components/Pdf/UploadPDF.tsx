@@ -1,13 +1,13 @@
-import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
-import { instance } from '../../api/api';
+import { instance } from '../../api/UploadApi';
 import DragAndDrop from './DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.svg';
 import { PrimaryButton, SpinnerButton, CancelButton, PrimaryModal, LoadingBar } from '../common';
 import UplodPDFStyles from './style/UploadPDFStyles';
 import { useDataStore } from '../../store/DataStore';
+import ApartData from '@/api/ApartDataApi';
 
 const UplodPDF = () => {
   const [PDFfile, setPDFfile] = useState<File | null>(null);
@@ -20,7 +20,10 @@ const UplodPDF = () => {
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isUploadComplete, setIsUploadComplete] = useState(false);
+
   const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
+  const [dataStoreId, setDataStoreId] = useState(0);
   const { addResponseItem } = useDataStore();
   const navigate = useNavigate();
 
@@ -87,7 +90,7 @@ const UplodPDF = () => {
   // 파일 업로드 부분
   const onFileUpload = async () => {
     if (!PDFfile) {
-      console.log('PDF 파일이 선택되지 않았습니다.');
+      setErorrModalOpen(true);
       return;
     }
     setDownloadProgress(0);
@@ -109,9 +112,11 @@ const UplodPDF = () => {
       console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
       if (response) {
-        addResponseItem(fileName, response.data);
-      }
-      if (response) {
+        console.log('리스폰', response);
+        const customData = await ApartData(response.data.summary.newAddress);
+        const lastId = addResponseItem(fileName, { ...response.data, customData });
+        setDataStoreId(lastId);
+        console.log('반환값', dataStoreId);
         setDownloadProgress(100);
       }
     } catch (error) {
@@ -123,6 +128,7 @@ const UplodPDF = () => {
       setIsUploading(false);
     }
   };
+  // 업로드 로딩바 완료시 시간지연
 
   // 서버 전송 하기위한 비동기 처리
 
@@ -135,8 +141,8 @@ const UplodPDF = () => {
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           if (progressEvent.loaded && progressEvent.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(progress);
             console.log('uploadProgress', progress);
+            setUploadProgress(progress);
           }
         },
         onDownloadProgress: (progressEvent?: AxiosProgressEvent) => {
@@ -148,19 +154,42 @@ const UplodPDF = () => {
         },
       });
 
-      console.log('Response data:', response.data);
+      console.log('응답 데이타 data:', response.data);
 
       return response.data;
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log('Request canceled by the user:', error.message);
+        setIsUploadComplete(false);
+        setUploadProgress(0);
+        console.log('사용자 취소 실패:', error.message);
+      } else {
+        setIsUploadComplete(false);
+        setUploadProgress(0);
+        console.log('통신 실패:');
       }
-      throw error;
     }
   };
+
+  useEffect(() => {
+    let timer: number;
+    if (uploadProgress === 100) {
+      timer = setTimeout(() => {
+        setIsUploadComplete(true);
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [uploadProgress]);
+
   const handleCancelUpload = () => {
+    setIsUploadComplete(false);
+    setUploadProgress(0);
+    console.log(uploadProgress);
+
     if (cancelToken) {
-      cancelToken.cancel('Request canceled by the user.');
+      cancelToken.cancel('사용자 취소 요청.');
       setCancelToken(null);
       setIsUploading(false);
       setModalIsOpen(false);
@@ -174,7 +203,7 @@ const UplodPDF = () => {
   // 이동
   const ViewChange = () => {
     console.log('이동');
-    navigate('marketprice');
+    navigate(`${dataStoreId}/marketprice`);
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
@@ -262,7 +291,7 @@ const UplodPDF = () => {
           <div>
             <div>{fileName}</div>
             <br />
-            {uploadProgress === 100 ? (
+            {isUploadComplete ? (
               <LoadingBar type="다운로드" progress={downloadProgress} start={isModalOpen} />
             ) : (
               <LoadingBar type="업로드" progress={uploadProgress} start={isModalOpen} />
