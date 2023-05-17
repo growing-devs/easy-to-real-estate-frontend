@@ -2,15 +2,13 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Pra from './pages/Pra/PraUpload';
-import PraDetail from './pages/Pra/PraDetail';
-import PraPrice from './pages/Pra/PraPrice';
 
 import MyReviews from './pages/MyReviews';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
-import Chart from './components/Chart';
 import ReviewLayout from './components/ReviewLayout';
 import { PdfSummary, PdfGap, PdfEul, MarketPrice, Location } from './pages/Detailed';
+import Chart from '@/components/Chart/';
 
 const App = () => {
   return (
@@ -18,14 +16,16 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route element={<Layout />}>
         <Route path="/pra" element={<Pra />} />
-        <Route element={<ReviewLayout />}>
-          <Route path="pra/summary" element={<PdfSummary />} />
-          <Route path="pra/gap" element={<PdfGap />} />
-          <Route path="pra/eul" element={<PdfEul />} />
-          <Route path="pra/marketprice" element={<MarketPrice />} />
-          <Route path="pra/location" element={<Location />} />
+
+        <Route path="pra/:id" element={<ReviewLayout />}>
+          <Route path="summary" element={<PdfSummary />} />
+          <Route path="gap" element={<PdfGap />} />
+          <Route path="eul" element={<PdfEul />} />
+          <Route path="marketprice" element={<MarketPrice />} />
+          <Route path="location" element={<Location />} />
         </Route>
-        <Route path="/praprice" element={<PraPrice />} />
+        <Route path="chart" element={<Chart />} />
+
         <Route path="/myreviews" element={<MyReviews />} />
         <Route path="/search" element={<Search />} />
       </Route>

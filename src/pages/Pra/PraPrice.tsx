@@ -1,34 +1,32 @@
 import styled from '@emotion/styled';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { PrimaryButton } from '@/components/common';
 import Chart from '@/components/Chart/';
 import Table from '@/components/common/Table';
+import { useDataStore } from '@/store/DataStore';
 
 const PraPrice = () => {
-  const exampleData = [
-    { id: 1, name: 'John', age: 25 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    { id: 2, name: 'Jane', age: 30 },
-    { id: 3, name: 'Bob', age: 35 },
-    // 추가적인 데이터...
-  ];
-  const columns = useMemo(
-    () => [
-      { Header: 'ID', accessor: 'id' },
-      { Header: 'Name', accessor: 'name' },
-      { Header: 'Age', accessor: 'age' },
-    ],
-    [],
-  );
+  const { id } = useParams();
+  const { responseItems } = useDataStore();
+
+  useEffect(() => {
+    if (!id) {
+      console.log('URL에 아이디가 제공되지 않았습니다.');
+      return;
+    }
+
+    const parsedId: number = +id;
+    const selectedItem = responseItems.find((item) => item.id === parsedId);
+
+    if (!selectedItem) {
+      console.log(`아이디 ${id}에 해당하는 아이템을 찾을 수 없습니다.`);
+      return;
+    }
+
+    console.log('PraDetail', selectedItem);
+  }, [id]);
+
   return (
     <PraPriceWrap>
       <PraPriceContent>
@@ -79,9 +77,7 @@ const PraPrice = () => {
           <PraPriceTitle>2. 실거래가</PraPriceTitle>
           <PraPriceTitle>필터버튼</PraPriceTitle>
         </PraPriceFlexDiv>
-        <PraPriceTable>
-          <Table tableData={exampleData} tableColumns={columns} />
-        </PraPriceTable>
+        <PraPriceTable>asd</PraPriceTable>
       </PraPriceContent>
 
       <PraPriceContent>
@@ -189,6 +185,6 @@ const PraPriceContent = styled.div`
 const PraPriceWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 988px;
+  width: 100%;
   height: 100%;
 `;
