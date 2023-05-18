@@ -279,13 +279,33 @@ const UplodPDF = () => {
         <ModalContents>
           <div>
             {isUploading ? (
-              <HeaderTitle>
-                지금 등기부등본에서
-                <br />
-                주소 정보를 읽어오고 있습니다.
-              </HeaderTitle>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <SpinnerButton duration={100000} filename={fileName} isUploading={false} />
+
+                <HeaderTitle>
+                  지금 등기부등본에서
+                  <br />
+                  주소 정보를 읽어오고 있습니다.
+                </HeaderTitle>
+              </div>
             ) : (
-              <HeaderTitle>등기부 등본 분석이 완료되었습니다</HeaderTitle>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <HeaderTitle>등기부 등본 분석이 완료되었습니다</HeaderTitle>
+              </div>
             )}
           </div>
           <div>

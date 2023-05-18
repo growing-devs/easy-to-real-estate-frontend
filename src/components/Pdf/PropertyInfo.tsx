@@ -31,79 +31,77 @@ const PropertyInfo = () => {
     <PraPropertyInfoWrap>
       <FlexColomnWrap>
         <FlexColomnDiv>
-          <FileNameDate>{summry?.data.summary.viewedAt || '-'}</FileNameDate>
+          <FileNameDate>{summry?.data?.summary.viewedAt || '-'}</FileNameDate>
           <FileNameSpan>{summry?.filename || '-'}</FileNameSpan>
         </FlexColomnDiv>
         <HrLine />
         <FlexColomnDiv>
           <TitleSpan>물건</TitleSpan>
-          <ContentSpan>{summry?.data.summary.address || '-'}</ContentSpan>
+          <ContentSpan>{summry?.data?.summary.address || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexColomnDiv>
           <TitleSpan>등기번호</TitleSpan>
-          <ContentSpan>{summry?.data.summary.registryNumber || '-'}</ContentSpan>
+          <ContentSpan>{summry?.data?.summary.registryNumber || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>유형</TitleSpan>
-              <ContentSpan>{summry?.data.summary.type || '-'}</ContentSpan>
+              <ContentSpan>{summry?.data?.summary.type || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>면적</TitleSpan>
               <ContentSpan>
-                {summry?.data.summary.area}㎡ / {summry?.data.summary.pyeong || '-'} 평
+                {summry?.data?.summary.area}㎡ / {summry?.data?.summary.pyeong || '-'} 평
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
-        {summry?.data?.actualTransactionPrice?.map((owner: any) => (
-          <FlexDiv key={owner.floor}>
-            <ContentWrap>
-              <FlexColomnDiv>
-                <TitleSpan>소유자</TitleSpan>
-                <ContentSpan>{owner.floor || '-'}</ContentSpan>
-              </FlexColomnDiv>
-            </ContentWrap>
-            <ContentWrap>
-              <FlexColomnDiv>
-                <TitleSpan>지분율</TitleSpan>
-                <ContentSpan>{owner.floor || '-'}</ContentSpan>
-              </FlexColomnDiv>
-            </ContentWrap>
-          </FlexDiv>
-        ))}
+        <FlexDiv>
+          <ContentWrap>
+            <FlexColomnDiv>
+              <TitleSpan>소유자</TitleSpan>
+              <ContentSpan>{summry?.data?.ownership_list[0]?.name || '-'}</ContentSpan>
+            </FlexColomnDiv>
+          </ContentWrap>
+          <ContentWrap>
+            <FlexColomnDiv>
+              <TitleSpan>지분율</TitleSpan>
+              <ContentSpan>{summry?.data?.ownership_list[0].percent || '-'}</ContentSpan>
+            </FlexColomnDiv>
+          </ContentWrap>
+        </FlexDiv>
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>소유권 이전</TitleSpan>
-              <ContentSpan>{summry?.data.summary.ownerTransfer || '-'}</ContentSpan>
+              <ContentSpan>{summry?.data?.summary.ownerTransfer || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>대지권</TitleSpan>
-              <ContentSpan>{summry?.data.summary.landRights || '-'}</ContentSpan>
+              <ContentSpan>{summry?.data?.summary.landRights || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
         <HrLine />
         <FlexColomnDiv>
           <TitleSpan>시세</TitleSpan>
-          <ContentSpan>{summry?.data.summary.actual_transaction_price || '-'}</ContentSpan>
+          <ContentSpan>{summry?.data?.summary.actual_transaction_price || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexColomnDiv>
           <TitleSpan>실거래가</TitleSpan>
-          <ContentSpan>{summry?.data.summary.actual_transaction_price || '-'}</ContentSpan>
+          <ContentSpan>{summry?.data?.summary.actual_transaction_price || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>세대수</TitleSpan>
               <ContentSpan>
-                {summry?.data.summary.units} / {summry?.data.summary.dong || '-'}
+                {summry?.data?.summary.units} / {summry?.data?.summary.dong || '-'}
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
@@ -111,7 +109,7 @@ const PropertyInfo = () => {
             <FlexColomnDiv>
               <TitleSpan>층수</TitleSpan>
               <ContentSpan>
-                {summry?.data.summary.floors} / {summry?.data.summary.total_floors || '-'}
+                {summry?.data?.summary.floors} / {summry?.data?.summary.total_floors || '-'}
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
