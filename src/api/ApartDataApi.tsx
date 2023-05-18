@@ -28,7 +28,7 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
   const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-  const url = `${PROXY}${queryParams}`;
+  const url = `${PROXY}/${queryParams}`;
   console.log('Request URL:', url);
   const response = await axios.get(url);
   const responseData = response.data.response.body.items.item;
