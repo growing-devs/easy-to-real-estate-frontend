@@ -27,7 +27,7 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const response = await axios.get(`/api?${queryParams}`);
+  const response = await axios.get(`/proxy?${queryParams}`);
   const responseData = response.data.response.body.items.item;
   const { totalCount } = response.data.response.body;
   if (totalCount > pageNo * 49) {
