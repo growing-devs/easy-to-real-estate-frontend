@@ -21,13 +21,13 @@ const getPastDates = (years: number) => {
 const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Promise<any[]> => {
   const serviceKey =
     'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
-  let queryParams = `serviceKey=${serviceKey}`;
+  let queryParams = `OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
   queryParams += `&pageNo=${pageNo}`;
   queryParams += `&numOfRows=49`;
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const url = `/proxy?${queryParams}`;
+  const url = `/proxy/${queryParams}`;
   console.log('Request URL:', url);
   const response = await axios.get(url);
   const responseData = response.data.response.body.items.item;

@@ -1,5 +1,5 @@
 [[redirects]]
   from = "/proxy/*"
-  to = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev/:splat"
+  to = "http://openapi.molit.go.kr/:splat"
   status = 200
   force = true

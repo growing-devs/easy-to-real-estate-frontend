@@ -10,9 +10,9 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/proxy': {
+      '/proxy/': {
         target:
-          'http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev',
+          'http://openapi.molit.go.kr/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/proxy/, ''),
       },
