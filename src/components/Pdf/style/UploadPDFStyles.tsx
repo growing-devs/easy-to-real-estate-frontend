@@ -5,7 +5,7 @@ const ModalContents = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
   gap: 50px;
 `;
 

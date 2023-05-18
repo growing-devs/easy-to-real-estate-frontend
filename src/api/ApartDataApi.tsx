@@ -41,7 +41,7 @@ const ApartData = (adress: string) => {
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
-      const pastDates = getPastDates(1).slice(0, 2);
+      const pastDates = getPastDates(1);
 
       console.log(
         `카카오 api 를 활용한 도로명 : `,
