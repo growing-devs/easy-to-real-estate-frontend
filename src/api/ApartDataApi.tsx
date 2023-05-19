@@ -21,38 +21,31 @@ const getPastDates = (years: number) => {
 const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Promise<any[]> => {
   const serviceKey =
     'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
+
   let queryParams = `OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
   queryParams += `&pageNo=${pageNo}`;
   queryParams += `&numOfRows=49`;
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const PROXY = window.location.hostname === 'localhost' ? '/proxy' : '/proxy';
-  const url = `${PROXY}/${queryParams}`;
-  console.log('Request URL:', url);
+  // const PROXY = window.location.hostname === 'localhost' ? '/proxy/' : '/proxy/';
+  // const url = `${PROXY}${queryParams}`;
+  const url = `/proxy/`;
+  console.log('url', `${url}`, `${queryParams}`);
   try {
-    const response = await axios.get(url);
-    if (response) {
-      const responseData = response.data.response.body.items.item;
-      const { totalCount } = response.data.response.body;
+    const response = await axios.get(`/proxy/${queryParams}`);
+    const responseData = response.data.response.body.items.item;
+    const { totalCount } = response.data.response.body;
 
-      if (totalCount > pageNo * 49) {
-        try {
-          const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
-          return responseData.concat(nextPageItems);
-        } catch (error) {
-          console.error('다음 페이지 데이터 요청 실패:', error);
-          // 에러 처리 방식에 따라 적절한 조치를 취합니다 (예: 반환하거나 에러를 던짐)
-        }
-      }
-
-      return responseData;
+    if (totalCount > pageNo * 49) {
+      const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
+      return responseData.concat(nextPageItems);
     }
 
-    throw new Error('API 응답이 없습니다.');
+    return responseData;
   } catch (error) {
     console.error('API 요청 실패:', error);
-    throw error; // 에러를 다시 던져서 호출하는 쪽에서 처리할 수 있도록 전파
+    throw error;
   }
 };
 
@@ -60,7 +53,7 @@ const ApartData = (adress: string) => {
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
-      const pastDates = getPastDates(1);
+      const pastDates = getPastDates(1).slice(0, 2);
 
       console.log(
         `카카오 api 를 활용한 도로명 : `,
