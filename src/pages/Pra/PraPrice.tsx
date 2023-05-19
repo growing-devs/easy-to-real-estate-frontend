@@ -124,7 +124,7 @@ const PraPrice = () => {
           </PraPriceChart>
           <PraPriceFlexColumnDiv style={{ width: '70%', gap: '10px', alignItems: 'center' }}>
             <PraPriceNow style={{ gap: '10px' }}>
-              <PraPriceTitle>실거래가</PraPriceTitle>
+              <PraPriceTitle>최근 실거래가</PraPriceTitle>
               <PraPriceFlexDiv style={{ justifyContent: 'center', gap: '30px' }}>
                 <div style={{ textAlignLast: 'center' }}>
                   <PraValue>{minPrice}</PraValue>

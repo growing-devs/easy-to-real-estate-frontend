@@ -171,7 +171,7 @@ const UplodPDF = () => {
   };
 
   useEffect(() => {
-    let timer: number;
+    let timer: NodeJS.Timeout;
     if (uploadProgress === 100) {
       timer = setTimeout(() => {
         setIsUploadComplete(true);

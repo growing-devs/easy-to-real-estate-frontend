@@ -21,27 +21,44 @@ const getPastDates = (years: number) => {
 const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Promise<any[]> => {
   const serviceKey =
     'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
-  let queryParams = `serviceKey=${serviceKey}`;
+
+  let queryParams = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
   queryParams += `&pageNo=${pageNo}`;
   queryParams += `&numOfRows=49`;
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const response = await axios.get(`/api?${queryParams}`);
-  const responseData = response.data.response.body.items.item;
-  const { totalCount } = response.data.response.body;
-  if (totalCount > pageNo * 49) {
-    const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
-    return responseData.concat(nextPageItems);
+  const data = {
+    pageNo: 1,
+    numOfRows: '49',
+    lawdCd: '11620',
+    dealYmd: '202206',
+  };
+  const url = 'https://www.mollyteam.shop/api/proxy/';
+  try {
+    const response = await axios.post(url, data, {});
+    console.log(' response', response);
+
+    const responseData = response.data.response.body.items.item;
+    const { totalCount } = response.data.response.body;
+
+    if (totalCount > pageNo * 49) {
+      const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
+      return responseData.concat(nextPageItems);
+    }
+
+    return responseData;
+  } catch (error) {
+    console.error('API 요청 실패:', error);
+    throw error;
   }
-  return responseData;
 };
 
 const ApartData = (adress: string) => {
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
-      const pastDates = getPastDates(1);
+      const pastDates = getPastDates(1).slice(0, 2);
 
       console.log(
         `카카오 api 를 활용한 도로명 : `,
