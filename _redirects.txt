@@ -1,1 +1,1 @@
-/proxy/ http://openapi.molit.go.kr/:splat 200! X-From=Netlify
+/proxy/* http://openapi.molit.go.kr/:splat 200! X-From=Netlify

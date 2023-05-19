@@ -30,11 +30,20 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
 
   // const PROXY = window.location.hostname === 'localhost' ? '/proxy/' : '/proxy/';
   // const url = `${PROXY}${queryParams}`;
-  const url = `/proxy/`;
-  console.log('url', `${url}`, `${queryParams}`);
+  // const url = `https://api.allorigins.win/get?url=http://openapi.molit.go.kr/${queryParams}`;
+  // console.log('url', url);
+
+  const proxy = axios.create({
+    baseURL: '/proxy',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
   try {
     // eslint-disable-next-line no-useless-concat
-    const response = await axios.get('/proxy/' + `${queryParams}`);
+    const response = await proxy.get(queryParams);
+    console.log('수정2 response', response);
+
     const responseData = response.data.response.body.items.item;
     const { totalCount } = response.data.response.body;
 
