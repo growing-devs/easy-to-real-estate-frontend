@@ -11,8 +11,8 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/proxy/': {
-        target: 'http://openapi.molit.go.kr/',
+      '/proxy': {
+        target: 'https://www.mollyteam.shop/api/proxy/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/proxy/, ''),
       },

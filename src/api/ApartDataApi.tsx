@@ -22,26 +22,22 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   const serviceKey =
     'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
 
-  let queryParams = `OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
+  let queryParams = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
   queryParams += `&pageNo=${pageNo}`;
   queryParams += `&numOfRows=49`;
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  // const PROXY = window.location.hostname === 'localhost' ? '/proxy/' : '/proxy/';
-  // const url = `${PROXY}${queryParams}`;
-  // const url = `https://api.allorigins.win/get?url=http://openapi.molit.go.kr/${queryParams}`;
-  // console.log('url', url);
-
-  const proxy = axios.create({
-    baseURL: '/proxy',
-    headers: {
-      'Content-Type': 'json',
-    },
-  });
+  const data = {
+    pageNo: 1,
+    numOfRows: '49',
+    lawdCd: '11620',
+    dealYmd: '202206',
+  };
+  const url = 'https://www.mollyteam.shop/api/proxy/';
   try {
-    const response = await proxy.get(queryParams);
-    console.log('수정3 response', response);
+    const response = await axios.post(url, data, {});
+    console.log(' response', response);
 
     const responseData = response.data.response.body.items.item;
     const { totalCount } = response.data.response.body;
