@@ -28,15 +28,16 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const data = {
-    pageNo: 1,
-    numOfRows: '49',
-    lawdCd: '11620',
-    dealYmd: '202206',
+  const proxyReqDTO = {
+    pageNo,
+    numOfRows: 49,
+    lawdCd: lawCityNumber,
+    dealYmd: yyyymm,
   };
-  const url = 'https://www.mollyteam.shop/api/proxy/';
+
+  const url = 'http://www.mollyteam.shop/api/proxy/';
   try {
-    const response = await axios.post(url, data, {});
+    const response = await axios.post('https://www.mollyteam.shop/api/proxy', proxyReqDTO);
     console.log(' response', response);
 
     const responseData = response.data.response.body.items.item;
@@ -58,7 +59,7 @@ const ApartData = (adress: string) => {
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
-      const pastDates = getPastDates(1).slice(0, 2);
+      const pastDates = getPastDates(1);
 
       console.log(
         `카카오 api 를 활용한 도로명 : `,
