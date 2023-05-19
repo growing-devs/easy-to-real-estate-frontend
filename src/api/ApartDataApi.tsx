@@ -36,13 +36,12 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   const proxy = axios.create({
     baseURL: '/proxy',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'json',
     },
   });
   try {
-    // eslint-disable-next-line no-useless-concat
     const response = await proxy.get(queryParams);
-    console.log('수정2 response', response);
+    console.log('수정3 response', response);
 
     const responseData = response.data.response.body.items.item;
     const { totalCount } = response.data.response.body;
