@@ -27,17 +27,33 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   queryParams += `&LAWD_CD=${lawCityNumber}`;
   queryParams += `&DEAL_YMD=${yyyymm}`;
 
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const PROXY = window.location.hostname === 'localhost' ? '/proxy' : '/proxy';
   const url = `${PROXY}/${queryParams}`;
   console.log('Request URL:', url);
-  const response = await axios.get(url);
-  const responseData = response.data.response.body.items.item;
-  const { totalCount } = response.data.response.body;
-  if (totalCount > pageNo * 49) {
-    const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
-    return responseData.concat(nextPageItems);
+  try {
+    const response = await axios.get(url);
+    if (response) {
+      const responseData = response.data.response.body.items.item;
+      const { totalCount } = response.data.response.body;
+
+      if (totalCount > pageNo * 49) {
+        try {
+          const nextPageItems = await fetchData(lawCityNumber, yyyymm, pageNo + 1);
+          return responseData.concat(nextPageItems);
+        } catch (error) {
+          console.error('다음 페이지 데이터 요청 실패:', error);
+          // 에러 처리 방식에 따라 적절한 조치를 취합니다 (예: 반환하거나 에러를 던짐)
+        }
+      }
+
+      return responseData;
+    }
+
+    throw new Error('API 응답이 없습니다.');
+  } catch (error) {
+    console.error('API 요청 실패:', error);
+    throw error; // 에러를 다시 던져서 호출하는 쪽에서 처리할 수 있도록 전파
   }
-  return responseData;
 };
 
 const ApartData = (adress: string) => {

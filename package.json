@@ -15,7 +15,7 @@
     "sync": "git pull origin main && npm i && git fetch --prune",
     "server": "json-server --watch mockupdb.json --port 4000"
   },
-  "proxy": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
+  "proxy": "http://openapi.molit.go.kr/",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
