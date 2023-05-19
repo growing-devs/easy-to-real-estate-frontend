@@ -33,7 +33,8 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   const url = `/proxy/`;
   console.log('url', `${url}`, `${queryParams}`);
   try {
-    const response = await axios.get(`/proxy/${queryParams}`);
+    // eslint-disable-next-line no-useless-concat
+    const response = await axios.get('/proxy/' + `${queryParams}`);
     const responseData = response.data.response.body.items.item;
     const { totalCount } = response.data.response.body;
 
