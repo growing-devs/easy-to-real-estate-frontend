@@ -13,9 +13,7 @@ const Location = () => {
   useEffect(() => {
     const geocoder = new window.kakao.maps.services.Geocoder();
     geocoder.addressSearch(address, (result: any, status: any) => {
-      console.log(address);
       if (status === window.kakao.maps.services.Status.OK) {
-        console.log('성공');
         setLat(result[0].y);
         setLng(result[0].x);
       }

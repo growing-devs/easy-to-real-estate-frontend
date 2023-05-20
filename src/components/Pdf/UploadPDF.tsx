@@ -109,11 +109,9 @@ const UplodPDF = () => {
     setDownloadProgress(0);
     try {
       // 서버 요청
-      console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
 
       if (response) {
-        console.log('리스폰', response);
         const customData = await ApartData(
           response.data.summary.newAddress,
           response.data.summary.area,
@@ -121,23 +119,12 @@ const UplodPDF = () => {
         if (customData) {
           const lastId = addResponseItem(fileName, { ...response.data, customData });
           setDataStoreId(lastId);
-          console.log('시세데이타 조회 , 추가 완료  :', dataStoreId);
-          let number = 50;
-          const interval = setInterval(() => {
-            if (number === 101) {
-              clearInterval(interval);
-              number = 0;
-              return;
-            }
-            setDownloadProgress(number);
-            number += 1;
-          }, 10);
         } else {
           const lastId = addResponseItem(fileName, { ...response.data });
           setDataStoreId(lastId);
-          console.log('시세데이타 추가 실패 기존 등본데이타 완료 :', dataStoreId);
         }
       }
+      setDownloadProgress(100);
     } catch (error) {
       setDownloadProgress(0);
       console.error('파일 업로드 실패:', error);
@@ -160,7 +147,6 @@ const UplodPDF = () => {
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           if (progressEvent.loaded && progressEvent.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            console.log('uploadProgress', progress);
             setUploadProgress(progress);
           }
         },
@@ -168,12 +154,9 @@ const UplodPDF = () => {
           if (progressEvent?.loaded && progressEvent?.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setDownloadProgress(progress);
-            console.log('downloadProgress', progress);
           }
         },
       });
-
-      console.log('응답 데이타 data:', response.data);
 
       return response.data;
     } catch (error) {
@@ -224,7 +207,6 @@ const UplodPDF = () => {
   };
   // 이동
   const ViewChange = () => {
-    console.log('이동');
     navigate(`${dataStoreId}/marketprice`);
   };
 

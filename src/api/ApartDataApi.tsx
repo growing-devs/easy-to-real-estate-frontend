@@ -61,12 +61,6 @@ const ApartData = (adress: string, area: number) => {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
       const pastDates = getPastDates(1);
 
-      console.log(
-        `카카오 api 를 활용한 도로명 : `,
-        documents.road_address.main_building_no,
-        ' 법정동 : ',
-        documents.address.b_code,
-      );
       const Bcode = documents.address.b_code;
       const lawCityNumber = Bcode.slice(0, 5);
       const lawSectionNumber = parseInt(Bcode.slice(5, 10), 10);
@@ -87,7 +81,6 @@ const ApartData = (adress: string, area: number) => {
               return null; // 반환 값으로 null을 명시적으로 반환
             })
             .catch((error) => {
-              console.error(`시세 데이타 분류 실패 `, error);
               return null; // 반환 값으로 null을 명시적으로 반환
             });
         }),
