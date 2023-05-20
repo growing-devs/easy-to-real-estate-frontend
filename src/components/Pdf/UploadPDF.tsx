@@ -1,26 +1,31 @@
-import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
-import { instance } from '../../api/api';
+import { instance } from '../../api/UploadApi';
 import DragAndDrop from './DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.svg';
-import { PrimaryButton, SpinnerButton, CancelButton, PrimaryModal, LoadingBar } from '../common';
+import { PrimaryButton, SpinnerButton, PrimaryModal, LoadingBar, CancleButton } from '../common';
 import UplodPDFStyles from './style/UploadPDFStyles';
 import { useDataStore } from '../../store/DataStore';
+import ApartData from '@/api/ApartDataApi';
 
 const UplodPDF = () => {
   const [PDFfile, setPDFfile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>('');
   const [labelWidth, setLabelWidth] = useState<number>(120);
+
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isErorrModalOpen, setErorrModalOpen] = useState(false);
   const [UploadErorrModalOpen, setUploadErorrModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState<string>('');
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isUploadComplete, setIsUploadComplete] = useState(false);
+
   const [cancelToken, setCancelToken] = useState<CancelTokenSource | null>(null);
+  const [dataStoreId, setDataStoreId] = useState(0);
   const { addResponseItem } = useDataStore();
   const navigate = useNavigate();
 
@@ -87,14 +92,10 @@ const UplodPDF = () => {
   // 파일 업로드 부분
   const onFileUpload = async () => {
     if (!PDFfile) {
-      console.log('PDF 파일이 선택되지 않았습니다.');
+      setErorrModalOpen(true);
       return;
     }
-    setDownloadProgress(0);
-
-    // 업로드 중임을 표시 초기설정값 false 에서 true로 변경
     // 버튼 잠금
-    setIsUploading(true);
 
     const formData = createFormData(PDFfile);
     if (!formData) {
@@ -104,16 +105,26 @@ const UplodPDF = () => {
     }
     // 폼데이타 생성이후 모달 표시 초기값 false
     setModalIsOpen(true);
+    setIsUploading(true);
+    setDownloadProgress(0);
     try {
       // 서버 요청
-      console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
+
       if (response) {
-        addResponseItem(fileName, response.data);
+        const customData = await ApartData(
+          response.data.summary.newAddress,
+          response.data.summary.area,
+        );
+        if (customData) {
+          const lastId = addResponseItem(fileName, { ...response.data, customData });
+          setDataStoreId(lastId);
+        } else {
+          const lastId = addResponseItem(fileName, { ...response.data });
+          setDataStoreId(lastId);
+        }
       }
-      if (response) {
-        setDownloadProgress(100);
-      }
+      setDownloadProgress(100);
     } catch (error) {
       setDownloadProgress(0);
       console.error('파일 업로드 실패:', error);
@@ -123,6 +134,7 @@ const UplodPDF = () => {
       setIsUploading(false);
     }
   };
+  // 업로드 로딩바 완료시 시간지연
 
   // 서버 전송 하기위한 비동기 처리
 
@@ -136,31 +148,53 @@ const UplodPDF = () => {
           if (progressEvent.loaded && progressEvent.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setUploadProgress(progress);
-            console.log('uploadProgress', progress);
           }
         },
         onDownloadProgress: (progressEvent?: AxiosProgressEvent) => {
           if (progressEvent?.loaded && progressEvent?.total) {
             const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
             setDownloadProgress(progress);
-            console.log('downloadProgress', progress);
           }
         },
       });
 
-      console.log('Response data:', response.data);
-
       return response.data;
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log('Request canceled by the user:', error.message);
+        setIsUploadComplete(false);
+        setUploadProgress(0);
+        console.log('사용자 취소 실패:', error.message);
+      } else {
+        setIsUploadComplete(false);
+        setUploadProgress(0);
+        console.log('통신 실패:');
+        setModalIsOpen(false);
+
+        ErrorModal(false, false);
       }
-      throw error;
     }
   };
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (uploadProgress === 100) {
+      timer = setTimeout(() => {
+        setIsUploadComplete(true);
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [uploadProgress]);
+
   const handleCancelUpload = () => {
+    setIsUploadComplete(false);
+    setUploadProgress(0);
+    console.log(uploadProgress);
+
     if (cancelToken) {
-      cancelToken.cancel('Request canceled by the user.');
+      cancelToken.cancel('사용자 취소 요청.');
       setCancelToken(null);
       setIsUploading(false);
       setModalIsOpen(false);
@@ -173,13 +207,24 @@ const UplodPDF = () => {
   };
   // 이동
   const ViewChange = () => {
-    console.log('이동');
-    navigate('marketprice');
+    navigate(`${dataStoreId}/marketprice`);
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
-    setErorrModalOpen(true); // 초기에 pdf파일 파일사이즈 검증
+    if (PdfType) {
+      setModalMessage('파일이 pdf 파일이 아닙니다.');
+      setErorrModalOpen(true);
+      return;
+    }
+    if (PdfSize) {
+      setModalMessage(`파일 사이즈가 ${MAX_FILE_SIZE}MB 보다 큽니다.`);
+      setErorrModalOpen(true);
+      return;
+    }
+    setModalMessage('파일이 잘못되었거나, 알 수 없는 오류가 발생했습니다.');
+    setErorrModalOpen(true);
   };
+
   const UploadErrorModal = () => {
     setModalIsOpen(false); // 업로드 실패시
     setUploadErorrModalOpen(true); // 업로드 실패시
@@ -197,9 +242,7 @@ const UplodPDF = () => {
       >
         <ModalContents>
           <HeaderTitle>파일 오류 </HeaderTitle>
-          <div style={{ color: 'red' }}>
-            pdf 파일이 아니거나, 파일사이즈 {MAX_FILE_SIZE}MB 보다 큽니다.
-          </div>
+          <div style={{ color: 'red' }}>{modalMessage}</div>
           <PrimaryButton
             width={200}
             height={50}
@@ -250,26 +293,50 @@ const UplodPDF = () => {
         <ModalContents>
           <div>
             {isUploading ? (
-              <HeaderTitle>
-                지금 등기부등본에서
-                <br />
-                주소 정보를 읽어오고 있습니다.
-              </HeaderTitle>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <HeaderTitle>
+                  지금 등기부등본에서
+                  <br />
+                  주소 정보를 읽어오고 있습니다.
+                </HeaderTitle>
+              </div>
             ) : (
-              <HeaderTitle>등기부 등본 분석이 완료되었습니다</HeaderTitle>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <HeaderTitle>등기부 등본 분석이 완료되었습니다</HeaderTitle>
+              </div>
             )}
           </div>
           <div>
             <div>{fileName}</div>
             <br />
-            {uploadProgress === 100 ? (
+            {isUploadComplete ? (
               <LoadingBar type="다운로드" progress={downloadProgress} start={isModalOpen} />
             ) : (
               <LoadingBar type="업로드" progress={uploadProgress} start={isModalOpen} />
             )}
           </div>
           {isUploading ? (
-            <PrimaryButton width={400} height={50} type="button" onClick={handleCancelUpload}>
+            <PrimaryButton
+              color="gray"
+              width={250}
+              height={50}
+              type="button"
+              onClick={handleCancelUpload}
+            >
               창닫기
             </PrimaryButton>
           ) : (
@@ -300,7 +367,7 @@ const UplodPDF = () => {
               {!fileName || (
                 <>
                   <SpinnerButton isUploading={isUploading} filename={fileName} />
-                  <CancelButton onClick={handledDeletePDFfile} disabled={isUploading} />
+                  <CancleButton onClick={handledDeletePDFfile} disabled={isUploading} />
                 </>
               )}
             </FileSelectionWrapper>

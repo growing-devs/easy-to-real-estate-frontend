@@ -5,7 +5,7 @@ const ModalContents = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
   gap: 50px;
 `;
 
@@ -80,7 +80,7 @@ const FileInputLabel = styled.label<{ labelWidth: number; selected: boolean }>`
   height: 40px;
   font-weight: bold;
   background-color: ${({ selected }) => (selected ? 'none' : '#1a237e')};
-  color: ${({ selected }) => (selected ? '#000000' : 'white')};
+  color: ${({ selected }) => (selected ? '#291717' : 'white')};
   border-radius: ${({ selected }) => (selected ? '30px' : '4px')};
   letter-spacing: 1px;
   border: 0.5px solid #8e8e8e;
@@ -104,7 +104,7 @@ const FileInputLabel = styled.label<{ labelWidth: number; selected: boolean }>`
     cursor: pointer;
   }
 
-  transition: width 0.3s ease-in-out;
+  transition: width 0.2s ease-in-out;
 `;
 const HeaderTitle = styled.div`
   display: flex;

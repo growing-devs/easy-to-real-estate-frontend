@@ -1,41 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { Link, useParams } from 'react-router-dom';
 import { useDataStore } from '../../store/DataStore';
 import { PrimaryButton } from '../common';
 
 const PropertyInfo = () => {
-  // const { responseItems } = useDataStore();
-  // const latestItem = responseItems[responseItems.length - 1];
-  // <PraPropertyInfoJson>{JSON.stringify(latestItem, null, 2)}</PraPropertyInfoJson>
-  // console.log(latestItem);
+  const { id } = useParams();
+  const { responseItems } = useDataStore();
+  const [summry, setSummary] = useState<any>(null);
+
+  const [price, setPrice] = useState<any>(null);
+  useEffect(() => {
+    if (!id) {
+      console.log('URL에 아이디가 제공되지 않았습니다.');
+      return;
+    }
+
+    const parsedId: number = +id;
+    const selectedItem: any = responseItems.find((item) => item.id === parsedId);
+    if (selectedItem) {
+      setSummary(selectedItem);
+    } else {
+      console.log(`아이디 ${id}에 해당하는 아이템을 찾을 수 없습니다.`);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (summry?.data?.customData?.filterDATA) {
+      const dateKeys = Object.keys(summry.data.customData.filterDATA).map(Number);
+      if (dateKeys.length > 0) {
+        const maxDateKey = Math.max(...dateKeys);
+        const maxDate = summry.data.customData.filterDATA[maxDateKey];
+        console.log('maxDate', maxDate);
+
+        if (maxDate.length > 0) {
+          setPrice(maxDate[maxDate.length - 1]);
+        }
+      }
+    }
+  }, [summry]);
+  console.log('price', price);
+
   return (
     <PraPropertyInfoWrap>
       <FlexColomnWrap>
         <FlexColomnDiv>
-          <FileNameDate>2023.05.03</FileNameDate>
-          <FileNameSpan>3순위 7억원 삼성아이파크 103동</FileNameSpan>
+          <FileNameDate>{summry?.data?.summary?.viewedAt || '-'}</FileNameDate>
+          <FileNameSpan>{summry?.filename || '-'}</FileNameSpan>
         </FlexColomnDiv>
         <HrLine />
-
         <FlexColomnDiv>
           <TitleSpan>물건</TitleSpan>
-          <ContentSpan>경기도 성남시 분당구 정자동 6 파크뷰 제 18층 제 605-1804호 </ContentSpan>
+          <ContentSpan>{summry?.data?.summary?.address || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexColomnDiv>
           <TitleSpan>등기번호</TitleSpan>
-          <ContentSpan>1356-2004-012044 </ContentSpan>
+          <ContentSpan>{summry?.data?.summary?.registryNumber || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
-              <TitleSpan>대지권</TitleSpan>
-              <ContentSpan>대지권 유</ContentSpan>
+              <TitleSpan>유형</TitleSpan>
+              <ContentSpan>{summry?.data?.summary?.type || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>면적</TitleSpan>
-              <ContentSpan>전용 84.99 ㎡ </ContentSpan>
+              <ContentSpan>
+                {summry?.data?.summary?.area}㎡ / {summry?.data?.summary?.pyeong || '-'} 평
+              </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
@@ -43,59 +77,68 @@ const PropertyInfo = () => {
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>소유자</TitleSpan>
-              <ContentSpan>전용 84.99</ContentSpan>
+              <ContentSpan>{summry?.data?.ownership_list[0]?.name || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>지분율</TitleSpan>
-              <ContentSpan>100%</ContentSpan>
+              <ContentSpan>{summry?.data?.ownership_list[0]?.percent || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
-        <FlexColomnDiv>
-          <TitleSpan>@@@지분전부이전</TitleSpan>
-          <ContentSpan>2016년 2월 25일 </ContentSpan>
-        </FlexColomnDiv>
+        <FlexDiv>
+          <ContentWrap>
+            <FlexColomnDiv>
+              <TitleSpan>소유권 이전</TitleSpan>
+              <ContentSpan>{summry?.data?.summary?.ownerTransfer || '-'}</ContentSpan>
+            </FlexColomnDiv>
+          </ContentWrap>
+          <ContentWrap>
+            <FlexColomnDiv>
+              <TitleSpan>대지권</TitleSpan>
+              <ContentSpan>{summry?.data?.summary?.landRights || '-'}</ContentSpan>
+            </FlexColomnDiv>
+          </ContentWrap>
+        </FlexDiv>
         <HrLine />
-        <FlexColomnDiv>
-          <TitleSpan>시세</TitleSpan>
-          <ContentSpan>네이버 부동산 하위 179.000</ContentSpan>
-          <ContentSpan>일반 183만원</ContentSpan>
-        </FlexColomnDiv>
+
         <FlexColomnDiv>
           <TitleSpan>실거래가</TitleSpan>
-          <ContentSpan>160000만원 (판매월 층수)</ContentSpan>
+          <ContentSpan>
+            {price
+              ? `${price.거래금액 ? price.거래금액.trim() : '-'}만원  ( ${price.층 || '-'}층, ${
+                  price.전용면적 || '-'
+                }㎡ )`
+              : '-'}
+          </ContentSpan>
         </FlexColomnDiv>
-        <FlexColomnDiv>
-          <TitleSpan>호가</TitleSpan>
-          <ContentSpan>160000만원 </ContentSpan>
-        </FlexColomnDiv>
-        <FlexColomnDiv>
-          <TitleSpan>세대수</TitleSpan>
-          <ContentSpan>1829세대 / 13동</ContentSpan>
-        </FlexColomnDiv>
-
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>세대수</TitleSpan>
-              <ContentSpan>1829세대 / 13동</ContentSpan>
+              <ContentSpan>
+                {summry?.data?.summary?.units} / {summry?.data?.summary?.dong || '-'}
+              </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>층수</TitleSpan>
-              <ContentSpan>18층/ 35층</ContentSpan>
+              <ContentSpan>
+                {summry?.data?.summary?.floors} / {summry?.data?.summary?.total_floors || '-'}
+              </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
         <HrLine />
         <FlexColomnDiv>
-          <TitleSpan>대환 말소대상</TitleSpan>
+          <TitleSpan>대환 / 말소대상</TitleSpan>
+          <TitleSpan>[채권 최고액(원금) / 비례율]</TitleSpan>
+
           <FlexDiv>
-            <ContentSpan>주식회사 조은은행</ContentSpan>
-            <ContentPercent>150%</ContentPercent>
+            <ContentSpan>-</ContentSpan>
+            <ContentPercent>-</ContentPercent>
           </FlexDiv>
         </FlexColomnDiv>
         <FlexColomnDiv>
@@ -107,9 +150,11 @@ const PropertyInfo = () => {
                 style={{
                   width: '100%',
                   height: '100px',
-                  fontSize: '16px',
+                  fontSize: '13px',
                   resize: 'none',
                   border: 'none',
+                  backgroundColor: '#F5F5F5',
+                  padding: '15px',
                 }}
                 placeholder="메모사항을 입력하세요"
               />
@@ -126,14 +171,16 @@ export default PropertyInfo;
 const ContentPercent = styled.div`
   color: #458af2;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
 `;
 const HrLine = styled.div`
   border: 0.5px solid #dfdcdc7b;
 `;
 const FileNameSpan = styled.span`
   color: #1a237e;
-  font-size: 11px;
+  font-weight: bold;
+
+  font-size: 12px;
 `;
 
 const FileNameDate = styled.span`
@@ -146,12 +193,12 @@ const ContentWrap = styled.span`
   width: 100%;
 `;
 const ContentSpan = styled.span`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
 `;
 const TitleSpan = styled.span`
   color: #8f8f8f;
-  font-size: 14px;
+  font-size: 12px;
 `;
 const FlexColomnWrap = styled.div`
   display: flex;
@@ -170,7 +217,7 @@ const FlexDiv = styled.div`
 `;
 
 const PraPropertyInfoWrap = styled.div`
-  border: 0.5px solid #c9c9c9;
+  width: 100%;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
