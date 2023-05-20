@@ -6,22 +6,11 @@ export const MapContainer = styled.div`
   width: 100%;
   height: 328px;
   #map {
-    width: 100%;
+    width: 50%;
     height: 100%;
-    &.active {
-      width: 50%;
-    }
   }
   #roadview {
-    &.active {
-      /* z-index: 1; */
-      display: block;
-      width: 50%;
-    }
-    &.inactive {
-      /* z-index: 0; */
-      display: none;
-    }
+    width: 50%;
   }
 
   #btnRoadview {
@@ -109,66 +98,33 @@ export const MapContainer = styled.div`
   }
 `;
 
-export const MapFilterContainer = styled.ul`
+export const FacilityListsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 550px;
-  li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 63px;
-    height: 63px;
-    background-color: #fdfdfd;
-    color: #8f8f8f;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-    border: 2px solid #bdbdbd;
-    border-radius: 4px;
-    cursor: pointer;
-    :hover {
-      background-color: #e9e9e9;
-    }
-    p {
-      margin-top: 5px;
-    }
-    &.on {
-      background-color: #e8eaf6;
-      border-color: #1a237e;
-      color: #1a237e;
-    }
-  }
+  width: 100%;
 `;
 
-export const PlaceListWrapper = styled.ul`
-  margin-top: 15px;
-  width: 100%;
-  ul {
-    width: 100%;
-    margin-right: 30px;
-  }
-  .listTitle {
-    padding: 15px 0;
-    font-weight: 700;
-    font-size: 18px;
-    background-color: #458af2;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-  }
-  .placelist {
+export const FacilityListsTable = styled.table`
+  width: 464px;
+  border-top: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
+  font-size: 12px;
+  th,
+  td {
+    text-align: center;
     padding: 10px 0;
   }
-  .placelist:nth-of-type(2n-1) {
+  td:first-of-type,
+  td:last-of-type {
+    width: 102px;
+  }
+  thead {
     background-color: #eee;
+    border-bottom: 1px solid #bdbdbd;
   }
-  .listName {
-    font-weight: 700;
-    margin-right: 30px;
-  }
-  .listAddress {
-    margin-right: 30px;
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: #f3f4fa;
+    }
   }
 `;

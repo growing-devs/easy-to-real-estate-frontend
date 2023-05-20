@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import styled from '@emotion/styled';
 
 interface ActualTransactionPrice {
   contract_date: string;
@@ -25,15 +26,16 @@ interface Data {
 
 const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
   const ref = useRef<SVGSVGElement | null>(null);
-  const margin = { top: 20, right: 20, bottom: 10, left: 50 };
+  const margin = { top: 10, right: 10, bottom: 10, left: 40 };
   const width = 480 - margin.left - margin.right;
-  const height = 200 - margin.top - margin.bottom;
+  const height = 210 - margin.top - margin.bottom;
 
   useEffect(() => {
     if (!ref.current) {
       return;
     }
     const svg = d3.select(ref.current);
+
     const marketPrices = marketPrice.map((item) => item.lower_avg_price);
     const transactionPrices = actualTransactionPrice.map((item) => item.price);
     const minPrice = Math.min(...marketPrices, ...transactionPrices);
@@ -41,12 +43,34 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       ...actualTransactionPrice.map((d) => d.price),
       ...marketPrice.map((d) => d.upper_avg_price),
     );
+    const parseDate = (date: string | null) => {
+      return date ? d3.timeParse('%Y%m%d')(date) : null;
+    };
 
+    const formatPrice = (price: { toString: () => any }) => {
+      const priceStr = price.toString();
+      const billion = priceStr.slice(0, -4);
+      const million = priceStr.slice(-4);
+
+      let formattedPrice = `${billion}억`;
+      if (Number(million) > 0) {
+        formattedPrice += ` ${Number(million).toLocaleString('ko-KR')}`;
+      }
+
+      return formattedPrice;
+    };
+
+    const formatContractDate = (contractDate: string) => {
+      const year = contractDate.slice(2, 4);
+      const month = parseInt(contractDate.slice(4, 6), 10);
+      const day = parseInt(contractDate.slice(6, 8), 10);
+
+      return `${year}년 ${month}월 ${day}일`;
+    };
     const x = d3
-      .scaleBand()
-      .domain(marketPrice.map((d) => d.reference_date))
-      .range([margin.left, width + margin.left - margin.right])
-      .padding(0.1);
+      .scaleTime()
+      .domain(d3.extent(marketPrice, (d) => parseDate(d.reference_date)) as [Date, Date])
+      .range([margin.left, width + margin.left - margin.right]);
 
     const y = d3
       .scaleLinear()
@@ -54,18 +78,15 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    const area = d3
-      .area<MarketPrice>()
-      .curve(d3.curveStep)
-      .x((d) => (x(d.reference_date) ?? 0) + x.bandwidth() / 2)
-      .y0((d) => y(Math.min(d.lower_avg_price, d.upper_avg_price)))
-      .y1((d) => y(Math.max(d.lower_avg_price, d.upper_avg_price)));
+    // const area = d3
+    //   .area<MarketPrice>()
+    //   .curve(d3.curveLinear)
+    //   .x((d) => (parseDate(d.reference_date) ? x(parseDate(d.reference_date)!) ?? 0 : 0))
+    //   .y0((d) => y(Math.min(d.lower_avg_price, d.upper_avg_price)))
+    //   .y1((d) => y(Math.max(d.lower_avg_price, d.upper_avg_price)));
 
-    const xAxis = d3.axisBottom(x);
-    const yAxis = d3
-      .axisLeft(y)
-      .tickSize(-width) // 이 부분을 추가합니다. tickSize는 그리드 라인의 길이를 결정합니다.
-      .tickFormat(d3.format('.2s')); // 이것은 선택 사항이며, 틱 레이블의 형식을 지정합니다.
+    const xAxis = d3.axisBottom(x).ticks(5);
+    const yAxis = d3.axisLeft(y).tickSize(-width).ticks(3).tickFormat(d3.format('.2s')); // 이것은 선택 사항이며, 틱 레이블의 형식을 지정합니다.
 
     const xActual = d3
       .scaleBand()
@@ -77,6 +98,10 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .append('g')
       .attr('transform', `translate(0,${height - margin.bottom})`)
       .call(xAxis);
+
+    svg.selectAll('.x-axis *').remove();
+
+    svg.selectAll('.x-axis text').style('font-size', '12px').style('color', '#8f8f8f');
 
     svg
       .append('g')
@@ -98,13 +123,34 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .style('text-anchor', 'start')
       .text('Price');
 
-    svg
-      .append('path')
-      .datum(marketPrice)
-      .attr('fill', '#E8EAF6')
-      .attr('stroke', '#1A237E')
-      .attr('stroke-dasharray', '3 3')
-      .attr('d', area);
+    const hoverLine = svg
+      .append('line')
+      .attr('class', 'hover-line')
+      .attr('x1', 0)
+      .attr('x2', 0)
+      .attr('y1', 0)
+      .attr('y2', height - margin.bottom)
+      .attr('stroke', '#ff2727')
+      .attr('stroke-width', 1)
+      .attr('opacity', 0);
+
+    svg.on('mousemove', handleMouseMove).on('mouseout', handleMouseOut);
+
+    function handleMouseMove(event: any) {
+      const [xPos] = d3.pointer(event);
+      hoverLine.attr('x1', xPos).attr('x2', xPos).attr('opacity', 1);
+    }
+
+    function handleMouseOut() {
+      hoverLine.attr('opacity', 0);
+    }
+    // svg
+    //   .append('path')
+    //   .datum(marketPrice)
+    //   .attr('fill', '#E8EAF6')
+    //   .attr('stroke', '#1A237E')
+    //   .attr('stroke-dasharray', '3 3')
+    //   .attr('d', area);
 
     const tooltip = d3
       .select('#tip')
@@ -124,25 +170,40 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .attr('class', 'dot')
       .attr('cx', (d) => (xActual(d.contract_date) ?? 0) + xActual.bandwidth() / 2)
       .attr('cy', (d) => y(d.price))
-      .attr('r', 4)
+      .attr('r', 3)
       .attr('fill', '#fd3c19')
-      .attr('stroke', '#fd3b19c0')
-      .attr('stroke-width', 2)
+      .attr('stroke', '#fd0901c0')
+      .attr('stroke-width', 1)
       .on('mouseover', (event, d) => {
         const svgBounds = event.target.ownerSVGElement.getBoundingClientRect();
         const pointer = d3.pointer(event, event.target);
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
-          .html(`날자: ${d.contract_date}<br/>시세: ${d.price}`)
+          .html(
+            `
+          <div style="display: flex; flex-direction: column; font-size: 14px;padding: 10px; gap: 10px; font-weight: bold;">
+            <strong style="color: #616161; background-clip: text; width :95px;
+             background-image: linear-gradient(to bottom,white 20%, #E8EAF6 80%);">${formatContractDate(
+               d.contract_date,
+             )}</strong>
+            <div style="align-items: center;">
+              <span class="tooltip-price">실거래가</span>
+              <span class="tooltip-price" style="font-size: 20px; color: #FF5252;">${formatPrice(
+                d.price,
+              )}</span>
+            </div>
+          </div>
+        `,
+          )
           .style('left', `${pointer[0] + svgBounds.left + 28}px`)
-          .style('top', `${pointer[1] + svgBounds.top}px`);
+          .style('top', `${pointer[1] + svgBounds.top}px`)
+          .style('border', '1px solid #1A237E');
       })
       .on('mouseout', (d) => {
         tooltip.transition().duration(500).style('opacity', 0);
       });
-
     return () => {
-      // 차트 정리하는 코드
+      // 차트 다시그려지면 초기화 정리하는 코드
       svg.selectAll('*').remove();
     };
   }, [actualTransactionPrice, marketPrice, height, margin, width]);
@@ -161,3 +222,9 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
 };
 
 export default Chart;
+
+const tooltipDiv = styled.div`
+  background-color: aqua;
+  width: 30px;
+  height: 30px;
+`;

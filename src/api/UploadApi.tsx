@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { MoreturnUrl } from '../utils/constants';
 
+// 반복횟수
 const maxRetries = 3;
 
 const createAxiosInstance = (): AxiosInstance => {
@@ -21,7 +22,6 @@ const handleRetry = async (error: any) => {
 
   if (config.retries < maxRetries) {
     config.retries += 1;
-    console.log(`Retry count: ${config.retries}`);
     return instance(config);
   }
 
