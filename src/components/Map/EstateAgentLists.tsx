@@ -1,6 +1,5 @@
 import { Column } from 'react-table';
 import { useState, useEffect } from 'react';
-import { PlaceListWrapper } from './style';
 import { useSearchStore } from '@/store/store';
 import Table, { TableProps } from '../common/Table';
 
