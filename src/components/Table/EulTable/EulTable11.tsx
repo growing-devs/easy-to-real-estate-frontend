@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Table, { TableProps } from '@/components/common/Table';
-import MOCK_DATA from '@/components/Table/EulTable/MOCK_DATA.json';
+import MOCK_DATA from '@/../mockupdb1.json';
 import { COLUMNS } from '@/components/Table/EulTable/columns';
 
 type ExampleProps = {};
 
 const Eultable11: React.FC<ExampleProps> = () => {
+  const mortgageInfoData = MOCK_DATA.pdfupload.eul_info.mortgage_info;
+
   const tableProps: TableProps = {
-    tableData: MOCK_DATA,
+    tableData: mortgageInfoData,
     tableColumns: COLUMNS,
     maxHeight: '120px',
     disableScroll: true,
