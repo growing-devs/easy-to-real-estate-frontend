@@ -1,11 +1,13 @@
 import { Column } from 'react-table';
 import { useState, useEffect } from 'react';
-import { PlaceListWrapper } from './style';
-import { useSearchStore } from '@/store/store';
 import Table, { TableProps } from '../common/Table';
 
-const EstateAgentLists = () => {
-  const { newLat, newLng } = useSearchStore(); // 위도, 경도
+interface positionProps {
+  newLat: number;
+  newLng: number;
+}
+
+const EstateAgentLists = ({ newLat, newLng }: positionProps) => {
   const [agentLists, setAgentLists] = useState<any>();
 
   useEffect(() => {
@@ -22,18 +24,11 @@ const EstateAgentLists = () => {
 
     // 부동산 리스트 검색 시 호출되는 콜백함수
     function searchAG2(data: any, status: any) {
-      const AgLists = []; // 검색될 리스트
       if (status === window.kakao.maps.services.Status.OK) {
-        // 5개 까지만 검색해서
-        for (let i = 0; i < 5; i += 1) {
-          if (data[i] === undefined) break; // 데이터가 없으면 스톱.;
-          AgLists.push(data[i]); // 리스트에 push해서
-        }
-        setAgentLists(AgLists); // 상태로 저장
+        setAgentLists(data); // 상태로 저장
       } else {
         setAgentLists(null); // 검색 결과 없으면 상태값 비우기
       }
-      console.log(agentLists);
     }
   }, [newLat]);
 
@@ -49,7 +44,7 @@ const EstateAgentLists = () => {
     },
     {
       Header: '거리',
-      accessor: 'distance',
+      accessor: (data) => `${data.distance}m`,
     },
     {
       Header: '주소',
@@ -64,8 +59,8 @@ const EstateAgentLists = () => {
   const tableProps: TableProps = {
     tableData: agentLists,
     tableColumns: COLUMNS,
-    maxHeight: '100%',
-    disableScroll: true, // 스크롤 없음
+    maxHeight: '230px',
+    disableScroll: false,
     width: ['240px', '200px', '320px', '180px'],
   };
 

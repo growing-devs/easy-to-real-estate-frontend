@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import logo from '@/assets/logo_moneyparking.svg';
+import logo from '@/assets/logo.png';
 import { HomeMenus, HomeTitle } from '@/components/HomeComp';
 
 const Home = () => {
@@ -22,7 +22,8 @@ const HomeLayout = styled.div`
   align-items: center;
   padding-top: 140px;
   img {
-    width: 94px;
+    width: 80px;
+    height: 50px;
     margin-bottom: 40px;
   }
 `;

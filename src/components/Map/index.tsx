@@ -1,7 +1,6 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/no-this-in-sfc */
 import { useEffect, useState } from 'react';
-import { useSearchStore } from '@/store/store';
 import { MapContainer } from './style';
 import centerMarker from '@/assets/centerMarker.png';
 
@@ -11,8 +10,12 @@ declare global {
   }
 }
 
-const Map = () => {
-  const { newLat, newLng } = useSearchStore(); // 위도, 경도
+interface positionProps {
+  newLat: number;
+  newLng: number;
+}
+
+const Map = ({ newLat, newLng }: positionProps) => {
   const [kakaoMap, setKakaoMap] = useState<any>(null);
   const mapCenter = new window.kakao.maps.LatLng(newLat, newLng);
 
@@ -62,7 +65,7 @@ const Map = () => {
 
       // 전달받은 좌표에 가까운 로드뷰의 파노라마 ID를 추출하여 로드뷰 설정하는 함수
       const toggleRoadview = (position: any) => {
-        roadviewClient.getNearestPanoId(position, 100, (panoId: any) => {
+        roadviewClient.getNearestPanoId(position, 300, (panoId: any) => {
           roadview.setPanoId(panoId, position); // 근접한 로드뷰 실행
         });
       };
