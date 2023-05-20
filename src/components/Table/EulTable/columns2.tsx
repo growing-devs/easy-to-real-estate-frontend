@@ -4,7 +4,7 @@ export const COLUMNS: Column<{
   debtor_name: string;
   debtor_address: string;
   registration_purpose: string;
-  mortgage: string;
+  leasehold_name: string;
   debtor_registration_number: string;
 }>[] = [
   {
@@ -21,7 +21,7 @@ export const COLUMNS: Column<{
   },
   {
     Header: '근저당권자',
-    accessor: 'mortgage',
+    accessor: 'leasehold_name',
   },
   {
     Header: '사업자/주민등록번호',

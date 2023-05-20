@@ -54,7 +54,12 @@ const Table: React.FC<TableProps> = ({
           {tableInstance.rows.map((row) => {
             tableInstance.prepareRow(row);
             return (
-              <tr {...row.getRowProps()} key={row.id}>
+              <tr
+                // (을구페이지) 조건에 따라 클래스를 추가해 취소선을 표시한다. canceled 클래스에 css 적용
+                className={row.original.rank?.isCanceled ? 'canceled' : ''}
+                {...row.getRowProps()}
+                key={row.id}
+              >
                 {row.cells.map((cell) => (
                   <TableCell {...cell.getCellProps()} key={cell.column.id}>
                     {renderCell ? renderCell(cell.value, cell.column) : cell.render('Cell')}
@@ -117,6 +122,11 @@ const TableBody = styled.tbody`
   }
   td {
     text-align: center;
+  }
+  tr.canceled td {
+    text-decoration: line-through;
+    text-decoration-color: #333;
+    color: #848484;
   }
 `;
 

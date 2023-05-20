@@ -2,7 +2,7 @@ import { Column } from 'react-table';
 
 export const COLUMNS: Column<{
   registration_purpose: string;
-  leasehold_name: string;
+  mortgage: string;
   debtor_registration_number: string;
 }>[] = [
   {
@@ -11,7 +11,7 @@ export const COLUMNS: Column<{
   },
   {
     Header: '전세권자',
-    accessor: 'leasehold_name',
+    accessor: 'mortgage',
   },
   {
     Header: '주민/사업자등록번호',

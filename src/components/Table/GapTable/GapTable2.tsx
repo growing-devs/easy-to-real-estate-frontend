@@ -1,13 +1,15 @@
 import React from 'react';
 import Table, { TableProps } from '@/components/common/Table';
-import MOCK_DATA from '@/components/Table/GapTable/GAP_MOCK_DATA1.json';
+import MOCK_DATA from '@/../mockupdb1.json';
 import { COLUMNS } from '@/components/Table/GapTable/columns1';
 
 type ExampleProps = {};
 
 const Gaptable2: React.FC<ExampleProps> = () => {
+  const ownerShipHistoryData = MOCK_DATA.pdfupload.gap_info.ownership_history;
+
   const tableProps: TableProps = {
-    tableData: MOCK_DATA,
+    tableData: ownerShipHistoryData,
     tableColumns: COLUMNS,
     maxHeight: '10000px',
     disableScroll: true, // 스크롤 없음
