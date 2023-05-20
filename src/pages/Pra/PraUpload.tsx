@@ -76,6 +76,7 @@ const Container = styled.div`
   height: auto;
   align-items: center;
   margin-top: 56px;
+  margin-right: 250px;
 `;
 
 const PageHeader = styled.div`
