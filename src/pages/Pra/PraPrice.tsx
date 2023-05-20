@@ -35,10 +35,10 @@ const PraPrice = () => {
         .flatMap(([date, records]) => {
           return (records as any[]).map((record, index) => ({
             계약일: date + String(record.일).padStart(2, '0'),
-            아파트명: `${record.아파트} ( ${Math.floor(record.전용면적 / 3.3)} )평`,
+            아파트명: `${record.아파트}  ${Math.floor(record.전용면적 / 3.3)}평`,
             거래: '매매',
             거래금액: record.거래금액.trim(),
-            전용면적: record.전용면적,
+            전용면적: `${record.전용면적}.㎡`,
             층: record.층,
           }));
         })
@@ -158,7 +158,7 @@ const PraPrice = () => {
           </PraPriceFlexColumnDiv>
         </PraPriceFlexDiv>
       </PraPriceContent>
-      <PraPriceContent style={{ width: '960px' }}>
+      <PraPriceContent style={{ width: '100%' }}>
         <PraPriceFlexDiv>
           <PraPriceTitle>2. 실거래가</PraPriceTitle>
         </PraPriceFlexDiv>
@@ -246,7 +246,6 @@ const PraPriceFlexDiv = styled.div`
 const PraPriceTable = styled.div`
   height: 510px;
   margin-top: 25px;
-  border: 0.5px solid #3333;
 `;
 
 const PraPriceTitle = styled.span`

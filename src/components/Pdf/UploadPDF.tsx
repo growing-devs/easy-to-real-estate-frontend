@@ -4,7 +4,7 @@ import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { instance } from '../../api/UploadApi';
 import DragAndDrop from './DragAndDrop';
 import PDfLogo from '../../assets/Pdf/PdfLogo.svg';
-import { PrimaryButton, SpinnerButton, CancelButton, PrimaryModal, LoadingBar } from '../common';
+import { PrimaryButton, SpinnerButton, PrimaryModal, LoadingBar, CancleButton } from '../common';
 import UplodPDFStyles from './style/UploadPDFStyles';
 import { useDataStore } from '../../store/DataStore';
 import ApartData from '@/api/ApartDataApi';
@@ -95,11 +95,7 @@ const UplodPDF = () => {
       setErorrModalOpen(true);
       return;
     }
-    setDownloadProgress(0);
-
-    // 업로드 중임을 표시 초기설정값 false 에서 true로 변경
     // 버튼 잠금
-    setIsUploading(true);
 
     const formData = createFormData(PDFfile);
     if (!formData) {
@@ -109,11 +105,13 @@ const UplodPDF = () => {
     }
     // 폼데이타 생성이후 모달 표시 초기값 false
     setModalIsOpen(true);
+    setIsUploading(true);
+    setDownloadProgress(0);
     try {
       // 서버 요청
       console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
-      setDownloadProgress(50);
+
       if (response) {
         console.log('리스폰', response);
         const customData = await ApartData(
@@ -124,12 +122,21 @@ const UplodPDF = () => {
           const lastId = addResponseItem(fileName, { ...response.data, customData });
           setDataStoreId(lastId);
           console.log('시세데이타 조회 , 추가 완료  :', dataStoreId);
+          let number = 50;
+          const interval = setInterval(() => {
+            if (number === 101) {
+              clearInterval(interval);
+              number = 0;
+              return;
+            }
+            setDownloadProgress(number);
+            number += 1;
+          }, 10);
         } else {
           const lastId = addResponseItem(fileName, { ...response.data });
           setDataStoreId(lastId);
           console.log('시세데이타 추가 실패 기존 등본데이타 완료 :', dataStoreId);
         }
-        setDownloadProgress(100);
       }
     } catch (error) {
       setDownloadProgress(0);
@@ -178,6 +185,9 @@ const UplodPDF = () => {
         setIsUploadComplete(false);
         setUploadProgress(0);
         console.log('통신 실패:');
+        setModalIsOpen(false);
+
+        ErrorModal(false, false);
       }
     }
   };
@@ -229,7 +239,7 @@ const UplodPDF = () => {
       setErorrModalOpen(true);
       return;
     }
-    setModalMessage('알 수 없는 오류가 발생했습니다.');
+    setModalMessage('파일이 잘못되었거나, 알 수 없는 오류가 발생했습니다.');
     setErorrModalOpen(true);
   };
 
@@ -338,7 +348,13 @@ const UplodPDF = () => {
             )}
           </div>
           {isUploading ? (
-            <PrimaryButton width={400} height={50} type="button" onClick={handleCancelUpload}>
+            <PrimaryButton
+              color="gray"
+              width={250}
+              height={50}
+              type="button"
+              onClick={handleCancelUpload}
+            >
               창닫기
             </PrimaryButton>
           ) : (
@@ -369,7 +385,7 @@ const UplodPDF = () => {
               {!fileName || (
                 <>
                   <SpinnerButton isUploading={isUploading} filename={fileName} />
-                  <CancelButton onClick={handledDeletePDFfile} disabled={isUploading} />
+                  <CancleButton onClick={handledDeletePDFfile} disabled={isUploading} />
                 </>
               )}
             </FileSelectionWrapper>
