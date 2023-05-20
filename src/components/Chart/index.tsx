@@ -11,8 +11,6 @@ type ResultItem = {
 };
 
 const index = ({ result }: { result: ResultItem[] }) => {
-  console.log('chartData', result);
-
   const actualTransactionPriceData = result
     .map((item) => ({
       contract_date: item.계약일,

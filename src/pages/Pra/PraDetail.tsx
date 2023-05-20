@@ -7,23 +7,21 @@ const PraDetail = () => {
   return (
     <PraContainer>
       <PraDetailWrap>
-        <PraDetailTitle>
-          <FlexDiv>
-            <TitleHeader>담보물건 요약</TitleHeader>
-            <PrimaryButton
-              onClick={() => {
-                alert('클릭하셧습니다');
-              }}
-              style={{ fontSize: '10px', border: 'none' }}
-              width={100}
-              height={24}
-              color="#CCAC55"
-            >
-              매물 요약 저장하기
-            </PrimaryButton>
-          </FlexDiv>
-          <PraPropertyInfo />
-        </PraDetailTitle>
+        <FlexDiv>
+          <TitleHeader>담보물건 요약</TitleHeader>
+          <PrimaryButton
+            onClick={() => {
+              alert('클릭하셧습니다');
+            }}
+            style={{ fontSize: '10px', border: 'none' }}
+            width={100}
+            height={24}
+            color="#CCAC55"
+          >
+            매물 요약 저장하기
+          </PrimaryButton>
+        </FlexDiv>
+        <PraPropertyInfo />
       </PraDetailWrap>
     </PraContainer>
   );
@@ -36,12 +34,11 @@ const PraContainer = styled.div`
   display: flex;
 `;
 const FlexDiv = styled.div`
-  padding-top: 30px;
   align-items: center;
   width: 100%;
   display: flex;
-  gap: 90px;
-  justify-content: space-around;
+  padding: 20px;
+  justify-content: space-between;
 `;
 const TitleHeader = styled.span`
   display: flex;
@@ -50,17 +47,11 @@ const TitleHeader = styled.span`
   place-content: center;
   color: #ccac55;
 `;
-const PraDetailTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 17px;
-  align-items: center;
-`;
+
 const PraDetailWrap = styled.div`
   border: 0.5px solid #c9c9c9;
   width: 100%;
   display: flex;
   flex-direction: column;
-
   height: auto;
 `;
