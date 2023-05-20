@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import { FacilityListsWrapper, FacilityListsTable } from './style';
 import { useSearchStore } from '@/store/store';
 
-const FacilityLists = () => {
-  const { newLat, newLng } = useSearchStore(); // 위도, 경도
+interface positionProps {
+  newLat: number;
+  newLng: number;
+}
+
+const FacilityLists = ({ newLat, newLng }: positionProps) => {
   const [subway, setSubway] = useState<any>();
   const [park, setPark] = useState<any>();
   const [cinema, setCinema] = useState<any>();

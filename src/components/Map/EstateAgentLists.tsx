@@ -1,10 +1,13 @@
 import { Column } from 'react-table';
 import { useState, useEffect } from 'react';
-import { useSearchStore } from '@/store/store';
 import Table, { TableProps } from '../common/Table';
 
-const EstateAgentLists = () => {
-  const { newLat, newLng } = useSearchStore(); // 위도, 경도
+interface positionProps {
+  newLat: number;
+  newLng: number;
+}
+
+const EstateAgentLists = ({ newLat, newLng }: positionProps) => {
   const [agentLists, setAgentLists] = useState<any>();
 
   useEffect(() => {

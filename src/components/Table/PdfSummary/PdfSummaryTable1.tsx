@@ -36,7 +36,7 @@ const COLUMNS: Column<{
 const PdfSummaryTable1 = () => {
   const { id } = useParams();
   const { responseItems } = useDataStore();
-  const [resData, setResData] = useState<any>();
+  const [resData, setResData] = useState();
 
   useEffect(() => {
     if (!id) {
