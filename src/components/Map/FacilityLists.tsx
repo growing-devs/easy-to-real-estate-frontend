@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FacilityListsWrapper, FacilityListsTable } from './style';
-import { useSearchStore } from '@/store/store';
 
 interface positionProps {
   newLat: number;

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDataStore } from '@/store/DataStore';
-import { useSearchStore } from '@/store/store';
 import Map from '@/components/Map';
 import EstateAgentLists from '@/components/Map/EstateAgentLists';
 import FacilityLists from '@/components/Map/FacilityLists';
