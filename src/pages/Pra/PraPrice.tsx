@@ -45,8 +45,6 @@ const PraPrice = () => {
         .sort((a, b) => b.계약일.localeCompare(a.계약일))
     : [];
 
-  console.log('result', result);
-
   const getPrice = (price: string) => parseInt(price.replace(/,/g, ''), 10);
 
   const findMinPrice = (data: any[]) =>
@@ -75,9 +73,6 @@ const PraPrice = () => {
     allMinPrice = formatPrice(findMinPrice(result));
     allMaxPrice = formatPrice(findMaxPrice(result));
   }
-  useEffect(() => {
-    console.log('praPrice', praPriceData);
-  }, [praPriceData]);
 
   const ColumnsPrice = [
     {

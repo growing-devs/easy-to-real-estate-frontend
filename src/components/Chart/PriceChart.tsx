@@ -47,6 +47,26 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       return date ? d3.timeParse('%Y%m%d')(date) : null;
     };
 
+    const formatPrice = (price: { toString: () => any }) => {
+      const priceStr = price.toString();
+      const billion = priceStr.slice(0, -4);
+      const million = priceStr.slice(-4);
+
+      let formattedPrice = `${billion}억`;
+      if (Number(million) > 0) {
+        formattedPrice += ` ${Number(million).toLocaleString('ko-KR')}`;
+      }
+
+      return formattedPrice;
+    };
+
+    const formatContractDate = (contractDate: string) => {
+      const year = contractDate.slice(2, 4);
+      const month = parseInt(contractDate.slice(4, 6), 10);
+      const day = parseInt(contractDate.slice(6, 8), 10);
+
+      return `${year}년 ${month}월 ${day}일`;
+    };
     const x = d3
       .scaleTime()
       .domain(d3.extent(marketPrice, (d) => parseDate(d.reference_date)) as [Date, Date])
@@ -160,31 +180,28 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
           .html(
-            `<div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                fontSize: '14px',
-                fontWeight: 'bold',
-              }}
-            >
-              <strong style={{ color: '#616161' }}>${d.contract_date}</strong>
-              <div style={{ alignItems: 'center' }}>
-                <span className="tooltip-price">실거래가 </span>
-                <span className="tooltip-price" style={{ fontSize: '20px', color: '#FF5252' }}>
-                  ${d.price}
-                </span>
-              </div>
-            </div>`,
+            `
+          <div style="display: flex; flex-direction: column; font-size: 14px;padding: 10px; gap: 10px; font-weight: bold;">
+            <strong style="color: #616161; background-clip: text; width :95px;
+             background-image: linear-gradient(to bottom,white 20%, #E8EAF6 80%);">${formatContractDate(
+               d.contract_date,
+             )}</strong>
+            <div style="align-items: center;">
+              <span class="tooltip-price">실거래가</span>
+              <span class="tooltip-price" style="font-size: 20px; color: #FF5252;">${formatPrice(
+                d.price,
+              )}</span>
+            </div>
+          </div>
+        `,
           )
           .style('left', `${pointer[0] + svgBounds.left + 28}px`)
           .style('top', `${pointer[1] + svgBounds.top}px`)
-          .style('border', `1px solid #1A237E`);
+          .style('border', '1px solid #1A237E');
       })
       .on('mouseout', (d) => {
         tooltip.transition().duration(500).style('opacity', 0);
       });
-
     return () => {
       // 차트 다시그려지면 초기화 정리하는 코드
       svg.selectAll('*').remove();

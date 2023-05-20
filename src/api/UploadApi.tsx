@@ -22,7 +22,6 @@ const handleRetry = async (error: any) => {
 
   if (config.retries < maxRetries) {
     config.retries += 1;
-    console.log(`Retry count: ${config.retries}`);
     return instance(config);
   }
 
