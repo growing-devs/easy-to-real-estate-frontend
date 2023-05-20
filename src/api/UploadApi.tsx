@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { MoreturnUrl } from '../utils/constants';
 
+// 반복횟수
 const maxRetries = 3;
 
 const createAxiosInstance = (): AxiosInstance => {

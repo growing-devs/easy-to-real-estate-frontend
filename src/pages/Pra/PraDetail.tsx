@@ -58,9 +58,9 @@ const PraDetailTitle = styled.div`
 `;
 const PraDetailWrap = styled.div`
   border: 0.5px solid #c9c9c9;
-
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 558px;
+
   height: auto;
 `;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { KakaoApi } from './kakaoApi';
 
+// 조회날자 기준 n년전
 const getPastDates = (years: number) => {
   const pastDates = [];
   const currentDate = new Date();
@@ -19,14 +20,13 @@ const getPastDates = (years: number) => {
 
 // 페이지 최대갯수가 49인 관계로 1페이지를 초과하게되면 페이지를 넘어가서 조회를해야함
 const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Promise<any[]> => {
-  const serviceKey =
-    'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
-
-  let queryParams = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
-  queryParams += `&pageNo=${pageNo}`;
-  queryParams += `&numOfRows=49`;
-  queryParams += `&LAWD_CD=${lawCityNumber}`;
-  queryParams += `&DEAL_YMD=${yyyymm}`;
+  // const serviceKey =
+  //   'J7KH6Ppo1yX4MSbd9yNXaeWvjo%2FcWuqKWSdnLBFFU1cnHfwPa1Ym4Ecc4ZtjUA0R0%2FNK%2FxdcZBZEbrKcwUQq0g%3D%3D';
+  // let queryParams = `http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=${serviceKey}`;
+  // queryParams += `&pageNo=${pageNo}`;
+  // queryParams += `&numOfRows=49`;
+  // queryParams += `&LAWD_CD=${lawCityNumber}`;
+  // queryParams += `&DEAL_YMD=${yyyymm}`;
 
   const proxyReqDTO = {
     pageNo,
@@ -35,10 +35,9 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
     dealYmd: yyyymm,
   };
 
-  const url = 'http://www.mollyteam.shop/api/proxy/';
   try {
+    // 프록시 구현으로 해당 조회주소는 백앤드에서 관리
     const response = await axios.post('https://www.mollyteam.shop/api/proxy', proxyReqDTO);
-    console.log(' response', response);
 
     const responseData = response.data.response.body.items.item;
     const { totalCount } = response.data.response.body;
@@ -50,12 +49,13 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
 
     return responseData;
   } catch (error) {
-    console.error('API 요청 실패:', error);
+    console.error('백앤드 요청 실패:', error);
     throw error;
   }
 };
 
-const ApartData = (adress: string) => {
+const ApartData = (adress: string, area: number) => {
+  // 카카오 법정동코드 추출
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
@@ -78,18 +78,16 @@ const ApartData = (adress: string) => {
         pastDates.map((yyyymm) => {
           return fetchData(lawCityNumber, yyyymm)
             .then((responseData) => {
-              console.log(yyyymm, '의 ResponseData :', responseData);
               const filteredData = responseData.filter(
                 (item: any) =>
                   item.도로명건물본번호코드 === roadNumber &&
                   item.법정동읍면동코드 === lawSectionNumber,
               );
               results.filterDATA[yyyymm] = filteredData;
-              results.originalDATA[yyyymm] = responseData;
               return null; // 반환 값으로 null을 명시적으로 반환
             })
             .catch((error) => {
-              console.error(`API response failed`, error);
+              console.error(`시세 데이타 분류 실패 `, error);
               return null; // 반환 값으로 null을 명시적으로 반환
             });
         }),

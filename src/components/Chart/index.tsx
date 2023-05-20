@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 
 import Chart from './PriceChart';
-import { ChartButton } from './PriceChartButton';
 
 type ResultItem = {
   층: any;
@@ -37,6 +36,10 @@ const index = ({ result }: { result: ResultItem[] }) => {
 
   return (
     <ChartWrap>
+      <ChartTitleWrap>
+        <ChartTitle>해당 건물 실거래가 그래프</ChartTitle>
+        <ChartSub>최근 1년</ChartSub>
+      </ChartTitleWrap>
       {/* <ChartButton
         dealType={dealType}
         year={year}
@@ -49,14 +52,27 @@ const index = ({ result }: { result: ResultItem[] }) => {
 };
 
 export default index;
+const ChartTitleWrap = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+`;
+const ChartTitle = styled.span`
+  font-weight: bold;
+  font-size: 14px;
+`;
+const ChartSub = styled.span`
+  color: #ccac55;
+  font-size: 10px;
+`;
 
 const ChartWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 220px;
-  border: 1px solid #cacaca81;
+  height: 100%;
   border-radius: 5px;
-  padding-top: 10px;
 `;

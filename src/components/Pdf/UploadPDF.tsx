@@ -14,9 +14,11 @@ const UplodPDF = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>('');
   const [labelWidth, setLabelWidth] = useState<number>(120);
+
   const [isModalOpen, setModalIsOpen] = useState(false);
   const [isErorrModalOpen, setErorrModalOpen] = useState(false);
   const [UploadErorrModalOpen, setUploadErorrModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState<string>('');
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -111,12 +113,22 @@ const UplodPDF = () => {
       // 서버 요청
       console.log('서버 전송시작 전송할데이타 :', formData);
       const response = await uploadFileToServer(formData);
+      setDownloadProgress(50);
       if (response) {
         console.log('리스폰', response);
-        const customData = await ApartData(response.data.summary.newAddress);
-        const lastId = addResponseItem(fileName, { ...response.data, customData });
-        setDataStoreId(lastId);
-        console.log('반환값', dataStoreId);
+        const customData = await ApartData(
+          response.data.summary.newAddress,
+          response.data.summary.area,
+        );
+        if (customData) {
+          const lastId = addResponseItem(fileName, { ...response.data, customData });
+          setDataStoreId(lastId);
+          console.log('시세데이타 조회 , 추가 완료  :', dataStoreId);
+        } else {
+          const lastId = addResponseItem(fileName, { ...response.data });
+          setDataStoreId(lastId);
+          console.log('시세데이타 추가 실패 기존 등본데이타 완료 :', dataStoreId);
+        }
         setDownloadProgress(100);
       }
     } catch (error) {
@@ -207,8 +219,20 @@ const UplodPDF = () => {
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
-    setErorrModalOpen(true); // 초기에 pdf파일 파일사이즈 검증
+    if (PdfType) {
+      setModalMessage('파일이 pdf 파일이 아닙니다.');
+      setErorrModalOpen(true);
+      return;
+    }
+    if (PdfSize) {
+      setModalMessage(`파일 사이즈가 ${MAX_FILE_SIZE}MB 보다 큽니다.`);
+      setErorrModalOpen(true);
+      return;
+    }
+    setModalMessage('알 수 없는 오류가 발생했습니다.');
+    setErorrModalOpen(true);
   };
+
   const UploadErrorModal = () => {
     setModalIsOpen(false); // 업로드 실패시
     setUploadErorrModalOpen(true); // 업로드 실패시
@@ -226,9 +250,7 @@ const UplodPDF = () => {
       >
         <ModalContents>
           <HeaderTitle>파일 오류 </HeaderTitle>
-          <div style={{ color: 'red' }}>
-            pdf 파일이 아니거나, 파일사이즈 {MAX_FILE_SIZE}MB 보다 큽니다.
-          </div>
+          <div style={{ color: 'red' }}>{modalMessage}</div>
           <PrimaryButton
             width={200}
             height={50}
@@ -287,8 +309,6 @@ const UplodPDF = () => {
                   gap: '10px',
                 }}
               >
-                <SpinnerButton duration={100000} filename={fileName} isUploading={false} />
-
                 <HeaderTitle>
                   지금 등기부등본에서
                   <br />
