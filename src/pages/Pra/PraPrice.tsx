@@ -35,7 +35,7 @@ const PraPrice = () => {
         .flatMap(([date, records]) => {
           return (records as any[]).map((record, index) => ({
             계약일: date + String(record.일).padStart(2, '0'),
-            아파트명: `${record.아파트 + Math.floor(record.전용면적 / 3.3)}평`,
+            아파트명: `${record.아파트} ( ${Math.floor(record.전용면적 / 3.3)} )평`,
             거래: '매매',
             거래금액: record.거래금액.trim(),
             전용면적: record.전용면적,
@@ -109,53 +109,57 @@ const PraPrice = () => {
     tableData: result,
     tableColumns: ColumnsPrice,
     maxHeight: '500px',
-    width: ['150px', '240px', '88px', '230px', '88px', '108px'],
+    width: ['150px', '250px', '100px', '230px', '100px', '110px'],
   };
 
   return (
     <PraPriceWrap>
       <PraPriceContent>
-        <PraPriceTitle>1. 시세 및 실거래가 정보</PraPriceTitle>
-        <PraPriceFlexDiv
-          style={{ justifyContent: 'space-between', gap: '15px', marginTop: '25px' }}
-        >
+        <PraPriceTitle>1. 시세 및 실거래가 정보 (출처 _국토교통부)</PraPriceTitle>
+        <PraPriceFlexDiv style={{ gap: '20px', marginTop: '25px' }}>
           <PraPriceChart>
             <Chart result={result} />
           </PraPriceChart>
-          <PraPriceFlexColumnDiv style={{ width: '70%', gap: '10px', alignItems: 'center' }}>
-            <PraPriceNow style={{ gap: '10px' }}>
+          <PraPriceFlexColumnDiv style={{ width: '400px', gap: '20px', alignItems: 'center' }}>
+            <PraPriceNow>
               <PraPriceTitle>최근 실거래가</PraPriceTitle>
-              <PraPriceFlexDiv style={{ justifyContent: 'center', gap: '30px' }}>
-                <div style={{ textAlignLast: 'center' }}>
+              <PraPriceFlexDiv style={{ justifyContent: 'center' }}>
+                <PraPriceNewHighLow>
                   <PraValue>{minPrice}</PraValue>
                   <PraPriceTitle>하한가</PraPriceTitle>
-                </div>
+                </PraPriceNewHighLow>
                 <PraHR />
-                <div style={{ textAlignLast: 'center' }}>
+                <PraPriceNewHighLow>
                   <PraValue>{maxPrice}</PraValue>
                   <PraPriceTitle>상한가</PraPriceTitle>
-                </div>
+                </PraPriceNewHighLow>
               </PraPriceFlexDiv>
-              <PraAnnotation>최근 4개 거래건 / 국토교통부기준</PraAnnotation>
+              <PraAnnotation>최근 4개 거래건</PraAnnotation>
             </PraPriceNow>
-            <PraPriceFlexDiv style={{ width: '100%', height: '100%', gap: '15px' }}>
+            <PraPriceFlexDiv
+              style={{
+                width: '100%',
+                height: '100%',
+                gap: '20px',
+              }}
+            >
               <PraPriceHighLow>
                 <PraPriceTitle>최고 실거래가</PraPriceTitle>
-                <div>{allMaxPrice}</div>
-                <PraAnnotation>전체데이타 / 국토교통부</PraAnnotation>
+                <PraValue style={{ color: '#7D6117' }}>{allMaxPrice}</PraValue>
+                <PraAnnotation>전체 데이타 기준</PraAnnotation>
               </PraPriceHighLow>
 
               <PraPriceHighLow>
                 <PraPriceTitle>최저 실거래가</PraPriceTitle>
-                <div>{allMinPrice}</div>
-                <PraAnnotation>전체데이타 / 국토교통부</PraAnnotation>
+                <PraValue style={{ color: '#7D6117' }}>{allMinPrice}</PraValue>
+                <PraAnnotation>전체 데이타 기준</PraAnnotation>
               </PraPriceHighLow>
             </PraPriceFlexDiv>
           </PraPriceFlexColumnDiv>
         </PraPriceFlexDiv>
       </PraPriceContent>
-      <PraPriceContent>
-        <PraPriceFlexDiv style={{ justifyContent: 'space-between' }}>
+      <PraPriceContent style={{ width: '960px' }}>
+        <PraPriceFlexDiv>
           <PraPriceTitle>2. 실거래가</PraPriceTitle>
         </PraPriceFlexDiv>
         <PraPriceTable>{result.length > 0 ? <Table {...tableProps} /> : <div />}</PraPriceTable>
@@ -166,14 +170,27 @@ const PraPrice = () => {
 
 export default PraPrice;
 
+const PraPriceNewHighLow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 172px;
+  height: 35ps;
+  text-align: center;
+  gap: 12px;
+`;
+
 const PraValue = styled.div`
+  font-weight: bold;
   color: #1a237e;
+  font-size: 18px;
 `;
 
 const PraAnnotation = styled.div`
   text-align: end;
-  color: #858585;
-  font-size: 10px;
+  color: #bdbdbd;
+  font-size: 9px;
+  font-weight: 100;
 `;
 const PraHR = styled.div`
   border-left: 1px solid #bdbdbd;
@@ -183,34 +200,37 @@ const PraHR = styled.div`
 const PraPriceChart = styled.div`
   max-width: 100%;
   height: 100%;
+  padding: 24px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
 `;
 
 const PraPriceNow = styled.div`
+  padding: 20px;
   display: flex;
+  gap: 20px;
   flex-direction: column;
   font-weight: bold;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  background-color: #e8eaf6;
-  border: 1px solid #cccccc;
+  background-color: #f3f5fb;
+  border: 1px solid #c8cbe2;
 `;
 const PraPriceHighLow = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
   width: 100%;
   height: 100%;
-  border: 1px solid #cccccc;
+  border: 1px solid #d0c7ab;
   color: #7d6117;
   font-weight: bold;
-  background-color: #e8e5d6;
+  background-color: #f3f2eb;
   border-radius: 5px;
-  gap: 10px;
 `;
 
 const PraPriceFlexColumnDiv = styled.div`
@@ -220,6 +240,7 @@ const PraPriceFlexColumnDiv = styled.div`
   max-width: 100%;
 `;
 const PraPriceFlexDiv = styled.div`
+  width: 100%;
   display: flex;
 `;
 const PraPriceTable = styled.div`
@@ -235,7 +256,6 @@ const PraPriceTitle = styled.span`
 `;
 
 const PraPriceContent = styled.div`
-  width: 860px;
   padding-bottom: 30px;
 `;
 

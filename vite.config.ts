@@ -10,13 +10,6 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    proxy: {
-      '/proxy': {
-        target: 'https://www.mollyteam.shop/api/proxy/',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/proxy/, ''),
-      },
-    },
   },
   build: {
     commonjsOptions: {

@@ -26,9 +26,9 @@ interface Data {
 
 const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
   const ref = useRef<SVGSVGElement | null>(null);
-  const margin = { top: 10, right: 10, bottom: 25, left: 40 };
+  const margin = { top: 10, right: 10, bottom: 10, left: 40 };
   const width = 480 - margin.left - margin.right;
-  const height = 240 - margin.top - margin.bottom;
+  const height = 210 - margin.top - margin.bottom;
 
   useEffect(() => {
     if (!ref.current) {
@@ -66,7 +66,7 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
     //   .y1((d) => y(Math.max(d.lower_avg_price, d.upper_avg_price)));
 
     const xAxis = d3.axisBottom(x).ticks(5);
-    const yAxis = d3.axisLeft(y).tickSize(-width).ticks(5).tickFormat(d3.format('.2s')); // 이것은 선택 사항이며, 틱 레이블의 형식을 지정합니다.
+    const yAxis = d3.axisLeft(y).tickSize(-width).ticks(3).tickFormat(d3.format('.2s')); // 이것은 선택 사항이며, 틱 레이블의 형식을 지정합니다.
 
     const xActual = d3
       .scaleBand()
@@ -150,9 +150,9 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       .attr('class', 'dot')
       .attr('cx', (d) => (xActual(d.contract_date) ?? 0) + xActual.bandwidth() / 2)
       .attr('cy', (d) => y(d.price))
-      .attr('r', 2)
+      .attr('r', 3)
       .attr('fill', '#fd3c19')
-      .attr('stroke', '#fd3b19c0')
+      .attr('stroke', '#fd0901c0')
       .attr('stroke-width', 1)
       .on('mouseover', (event, d) => {
         const svgBounds = event.target.ownerSVGElement.getBoundingClientRect();
@@ -160,7 +160,7 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip
           .html(
-            `<tooltipDiv
+            `<div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -175,7 +175,7 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
                   ${d.price}
                 </span>
               </div>
-            </tooltipDiv>`,
+            </div>`,
           )
           .style('left', `${pointer[0] + svgBounds.left + 28}px`)
           .style('top', `${pointer[1] + svgBounds.top}px`)
@@ -186,7 +186,7 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       });
 
     return () => {
-      // 차트 정리하는 코드
+      // 차트 다시그려지면 초기화 정리하는 코드
       svg.selectAll('*').remove();
     };
   }, [actualTransactionPrice, marketPrice, height, margin, width]);
