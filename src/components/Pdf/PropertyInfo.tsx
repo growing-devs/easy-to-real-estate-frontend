@@ -8,6 +8,8 @@ const PropertyInfo = () => {
   const { id } = useParams();
   const { responseItems } = useDataStore();
   const [summry, setSummary] = useState<any>(null);
+
+  const [price, setPrice] = useState<any>(null);
   useEffect(() => {
     if (!id) {
       console.log('URL에 아이디가 제공되지 않았습니다.');
@@ -24,8 +26,20 @@ const PropertyInfo = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log(summry);
+    if (summry?.data?.customData?.filterDATA) {
+      const dateKeys = Object.keys(summry.data.customData.filterDATA).map(Number);
+      if (dateKeys.length > 0) {
+        const maxDateKey = Math.max(...dateKeys);
+        const maxDate = summry.data.customData.filterDATA[maxDateKey];
+        console.log('maxDate', maxDate);
+
+        if (maxDate.length > 0) {
+          setPrice(maxDate[maxDate.length - 1]);
+        }
+      }
+    }
   }, [summry]);
+  console.log('price', price);
 
   return (
     <PraPropertyInfoWrap>
@@ -88,13 +102,16 @@ const PropertyInfo = () => {
           </ContentWrap>
         </FlexDiv>
         <HrLine />
-        <FlexColomnDiv>
-          <TitleSpan>시세</TitleSpan>
-          <ContentSpan>{summry?.data?.summary?.actual_transaction_price || '-'}</ContentSpan>
-        </FlexColomnDiv>
+
         <FlexColomnDiv>
           <TitleSpan>실거래가</TitleSpan>
-          <ContentSpan>{summry?.data?.summary?.actual_transaction_price || '-'}</ContentSpan>
+          <ContentSpan>
+            {price
+              ? `${price.거래금액 ? price.거래금액.trim() : '-'}만원  ( ${price.층 || '-'}층, ${
+                  price.전용면적 || '-'
+                }㎡ )`
+              : '-'}
+          </ContentSpan>
         </FlexColomnDiv>
         <FlexDiv>
           <ContentWrap>
