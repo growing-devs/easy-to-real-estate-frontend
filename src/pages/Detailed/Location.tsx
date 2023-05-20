@@ -42,7 +42,7 @@ export default Location;
 const LocationContainer = styled.div`
   width: 100%;
   p {
-    font-weight: 500;
+    font-weight: bold;
     font-size: 14px;
     margin: 24px 0;
     span {
