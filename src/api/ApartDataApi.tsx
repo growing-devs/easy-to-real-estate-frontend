@@ -54,7 +54,7 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
   }
 };
 
-const ApartData = (adress: string, area: number) => {
+const ApartData = (adress: string) => {
   // 카카오 법정동코드 추출
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
@@ -77,7 +77,9 @@ const ApartData = (adress: string, area: number) => {
                   item.도로명건물본번호코드 === roadNumber &&
                   item.법정동읍면동코드 === lawSectionNumber,
               );
-              results.filterDATA[yyyymm] = filteredData;
+              if (filteredData.length > 0) {
+                results.filterDATA[yyyymm] = filteredData;
+              }
               return null; // 반환 값으로 null을 명시적으로 반환
             })
             .catch((error) => {
