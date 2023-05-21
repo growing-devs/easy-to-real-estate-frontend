@@ -28,8 +28,12 @@ export const COLUMNS: Column<{
   },
   {
     Header: '관리자 및 기타 사항',
-    accessor: (data: { notes: { note: string[] } }) => (
-      <div style={{ whiteSpace: 'pre-wrap', textAlign: 'left' }}>{data.notes.note.join('\n')}</div>
+    accessor: (data: { notes: { note: string[]; canceled: string[] } }) => (
+      <div style={{ whiteSpace: 'pre-wrap', textAlign: 'left' }}>
+        {data.notes.note.join('\n')}
+        <br />
+        <span style={{ textDecoration: 'line-through' }}>{data.notes.canceled.join('\n')}</span>
+      </div>
     ),
   },
 ];
