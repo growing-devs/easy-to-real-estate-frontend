@@ -98,37 +98,6 @@ export const MapContainer = styled.div`
   }
 `;
 
-export const PlaceListWrapper = styled.ul`
-  margin-top: 15px;
-  width: 100%;
-  ul {
-    width: 100%;
-    margin-right: 30px;
-  }
-  .listTitle {
-    padding: 15px 0;
-    font-weight: 700;
-    font-size: 18px;
-    background-color: #458af2;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-  }
-  .placelist {
-    padding: 10px 0;
-  }
-  .placelist:nth-of-type(2n-1) {
-    background-color: #eee;
-  }
-  .listName {
-    font-weight: 700;
-    margin-right: 30px;
-  }
-  .listAddress {
-    margin-right: 30px;
-  }
-`;
-
 export const FacilityListsWrapper = styled.div`
   display: flex;
   justify-content: space-between;

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import notFoundIcon from '@/assets/NotFount_icon.png';
-import logo from '@/assets/logo_moneyparking.svg';
+import logo from '@/assets/logo.png';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -40,6 +40,8 @@ const NFContainer = styled.div`
   align-items: center;
   justify-content: center;
   .logo {
+    width: 80px;
+    height: 50px;
     position: fixed;
     top: 50px;
     left: 50px;

@@ -13,13 +13,14 @@ export const SidebarContainer = styled.aside`
   overflow-x: hidden;
   overflow-y: auto;
   .logo {
-    width: 100px;
+    width: 80px;
+    height: 50px;
     margin-top: 40px;
   }
 `;
 
 export const SidebarMenus = styled.div`
-  margin-top: 95px;
+  margin-top: 48px;
   width: inherit;
   .mainmenu {
     display: flex;
