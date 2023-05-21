@@ -38,6 +38,8 @@ const PdfSummaryTable1 = () => {
   const { responseItems } = useDataStore();
   const [resData, setResData] = useState();
 
+  console.log(responseItems);
+
   useEffect(() => {
     if (!id) {
       console.log('URL에 아이디가 제공되지 않았습니다.');
