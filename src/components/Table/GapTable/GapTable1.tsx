@@ -1,16 +1,18 @@
 import React from 'react';
 import Table, { TableProps } from '@/components/common/Table';
-import MOCK_DATA from '@/components/Table/GapTable/GAP_MOCK_DATA.json';
+import MOCK_DATA from '@/../mockupdb1.json';
 import { COLUMNS } from '@/components/Table/GapTable/columns';
 
 type ExampleProps = {};
 
-const Gaptable1: React.FC<ExampleProps> = () => {
+const GapTable1: React.FC<ExampleProps> = () => {
+  const recentRegistrationData = MOCK_DATA.pdfupload.gap_info.recent_registration;
+
   const tableProps: TableProps = {
-    tableData: MOCK_DATA,
+    tableData: recentRegistrationData,
     tableColumns: COLUMNS,
     maxHeight: '200px',
-    disableScroll: true, // 스크롤 없음
+    disableScroll: true,
     width: ['120px', '180px', '116px', '135px', '377px'],
   };
 
@@ -21,4 +23,4 @@ const Gaptable1: React.FC<ExampleProps> = () => {
   );
 };
 
-export default Gaptable1;
+export default GapTable1;

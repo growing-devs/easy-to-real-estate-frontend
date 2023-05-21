@@ -1,15 +1,15 @@
 import { Column } from 'react-table';
 
 export const COLUMNS: Column<{
-  rank: string;
+  rank: any;
   registration_purpose: string;
   reception_information: string;
-  major_registration_items: string;
+  major_registration_items: string[];
   target_owner: string;
 }>[] = [
   {
     Header: '순위',
-    accessor: 'rank',
+    accessor: (data) => data.rank.value,
   },
   {
     Header: '등기목적',
@@ -22,6 +22,9 @@ export const COLUMNS: Column<{
   {
     Header: '주요등기사항',
     accessor: 'major_registration_items',
+    Cell: ({ value }: { value: string[] }) => (
+      <div style={{ whiteSpace: 'pre-wrap' }}>{value.join('\n')}</div>
+    ),
   },
   {
     Header: '대상소유자',

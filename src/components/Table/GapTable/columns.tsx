@@ -5,7 +5,10 @@ export const COLUMNS: Column<{
   registration_purpose: string;
   reception_inform: string;
   registration_cause: string;
-  notes: string;
+  notes: {
+    note: string[];
+    canceled: string[];
+  };
 }>[] = [
   {
     Header: '순위번호',
@@ -18,6 +21,9 @@ export const COLUMNS: Column<{
   {
     Header: '접수',
     accessor: 'reception_inform',
+    Cell: ({ value }: { value: string }) => (
+      <div style={{ whiteSpace: 'pre-wrap' }}>{value.replace(' ', '\n')}</div>
+    ),
   },
   {
     Header: '등기 원인',
@@ -26,5 +32,8 @@ export const COLUMNS: Column<{
   {
     Header: '관리자 및 기타 사항',
     accessor: 'notes',
+    Cell: ({ value }: { value: { note: string[] } }) => (
+      <div style={{ whiteSpace: 'pre-wrap', textAlign: 'left' }}>{value.note.join('\n')}</div>
+    ),
   },
 ];
