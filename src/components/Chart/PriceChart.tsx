@@ -47,14 +47,13 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
       return date ? d3.timeParse('%Y%m%d')(date) : null;
     };
 
-    const formatPrice = (price: { toString: () => any }) => {
-      const priceStr = price.toString();
-      const billion = priceStr.slice(0, -4);
-      const million = priceStr.slice(-4);
+    const formatPrice = (price: number) => {
+      const billion = Math.floor(price / 10000);
+      const million = price % 10000;
 
       let formattedPrice = `${billion}억`;
-      if (Number(million) > 0) {
-        formattedPrice += ` ${Number(million).toLocaleString('ko-KR')}`;
+      if (million > 0) {
+        formattedPrice += ` ${million.toLocaleString('ko-KR')}`;
       }
 
       return formattedPrice;
@@ -203,7 +202,7 @@ const Chart = ({ actualTransactionPrice, marketPrice }: Data) => {
         tooltip.transition().duration(500).style('opacity', 0);
       });
     return () => {
-      // 차트 다시그려지면 초기화 정리하는 코드
+      //  초기화
       svg.selectAll('*').remove();
     };
   }, [actualTransactionPrice, marketPrice, height, margin, width]);

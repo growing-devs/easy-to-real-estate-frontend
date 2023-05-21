@@ -34,6 +34,7 @@ const PraContainer = styled.div`
   display: flex;
 `;
 const FlexDiv = styled.div`
+  background-color: white;
   align-items: center;
   width: 100%;
   display: flex;

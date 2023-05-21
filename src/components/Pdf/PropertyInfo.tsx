@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link, useParams } from 'react-router-dom';
+import { gray } from 'd3';
 import { useDataStore } from '../../store/DataStore';
 import { PrimaryButton } from '../common';
 
 const PropertyInfo = () => {
   const { id } = useParams();
   const { responseItems } = useDataStore();
-  const [summry, setSummary] = useState<any>(null);
+  const [summary, setSummary] = useState<any>(null);
 
   const [price, setPrice] = useState<any>(null);
+  const [priceDate, setPriceDate] = useState<any>(null);
+
+  const [ownershipList, setOwnershipList] = useState<any[]>([]);
+
+  const [mortgage, setMortgage] = useState<any[]>([]);
+
+  const [maximumDebt, setMaximumDebt] = useState<any[]>([]);
+
   useEffect(() => {
     if (!id) {
       console.log('URL에 아이디가 제공되지 않았습니다.');
@@ -24,90 +33,129 @@ const PropertyInfo = () => {
       console.log(`아이디 ${id}에 해당하는 아이템을 찾을 수 없습니다.`);
     }
   }, [id]);
-
   useEffect(() => {
-    if (summry?.data?.customData?.filterDATA) {
-      const dateKeys = Object.keys(summry.data.customData.filterDATA).map(Number);
+    if (summary) {
+      const dateKeys = Object.keys(summary.data.customData.filterDATA).map(Number);
+      const ownershipListValues = Object.values(summary.data.ownership_list);
+      const ownership = Object.values(summary.data.rights_other_than_ownership);
+      const originalMoney = Object.values(summary.data.originalMoney);
+      setMaximumDebt(originalMoney);
+      setMortgage(ownership);
+      setOwnershipList(ownershipListValues);
+      console.log(mortgage);
+      console.log('maximumDebt', maximumDebt);
+
       if (dateKeys.length > 0) {
         const maxDateKey = Math.max(...dateKeys);
-        const maxDate = summry.data.customData.filterDATA[maxDateKey];
-        console.log('maxDate', maxDate);
+        const maxDate = summary.data.customData.filterDATA[maxDateKey];
 
         if (maxDate.length > 0) {
+          setPriceDate(maxDateKey.toString());
           setPrice(maxDate[maxDate.length - 1]);
         }
       }
     }
-  }, [summry]);
-  console.log('price', price);
+  }, [summary]);
 
   return (
     <PraPropertyInfoWrap>
       <FlexColomnWrap>
+        <HrLine />
         <FlexColomnDiv>
-          <FileNameDate>{summry?.data?.summary?.viewedAt || '-'}</FileNameDate>
-          <FileNameSpan>{summry?.filename || '-'}</FileNameSpan>
+          <FileNameDate>{summary?.data?.summary?.viewedAt || '-'}</FileNameDate>
+          <FileNameSpan>{summary?.filename || '-'}</FileNameSpan>
         </FlexColomnDiv>
         <HrLine />
         <FlexColomnDiv>
           <TitleSpan>물건</TitleSpan>
-          <ContentSpan>{summry?.data?.summary?.address || '-'}</ContentSpan>
+          <ContentSpan>{summary?.data?.summary?.address || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexColomnDiv>
           <TitleSpan>등기번호</TitleSpan>
-          <ContentSpan>{summry?.data?.summary?.registryNumber || '-'}</ContentSpan>
+          <ContentSpan>{summary?.data?.summary?.registryNumber || '-'}</ContentSpan>
         </FlexColomnDiv>
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>유형</TitleSpan>
-              <ContentSpan>{summry?.data?.summary?.type || '-'}</ContentSpan>
+              <ContentSpan>{summary?.data ? '아파트' : '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>면적</TitleSpan>
               <ContentSpan>
-                {summry?.data?.summary?.area}㎡ / {summry?.data?.summary?.pyeong || '-'} 평
+                {summary?.data?.summary?.area}㎡ / {summary?.data?.summary?.pyeong || '-'} 평
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
-        <FlexDiv>
-          <ContentWrap>
-            <FlexColomnDiv>
-              <TitleSpan>소유자</TitleSpan>
-              <ContentSpan>{summry?.data?.ownership_list[0]?.name || '-'}</ContentSpan>
-            </FlexColomnDiv>
-          </ContentWrap>
-          <ContentWrap>
-            <FlexColomnDiv>
-              <TitleSpan>지분율</TitleSpan>
-              <ContentSpan>{summry?.data?.ownership_list[0]?.percent || '-'}</ContentSpan>
-            </FlexColomnDiv>
-          </ContentWrap>
-        </FlexDiv>
+        {ownershipList.length > 0 ? (
+          ownershipList.map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <FlexDiv key={index}>
+              <ContentWrap>
+                <FlexColomnDiv>
+                  <TitleSpan>소유자</TitleSpan>
+                  <ContentSpan>{item.name}</ContentSpan>
+                </FlexColomnDiv>
+              </ContentWrap>
+              <ContentWrap>
+                <FlexColomnDiv>
+                  <TitleSpan>지분율</TitleSpan>
+                  <ContentSpan>{item.percent}</ContentSpan>
+                </FlexColomnDiv>
+              </ContentWrap>
+            </FlexDiv>
+          ))
+        ) : (
+          <FlexDiv>
+            <ContentWrap>
+              <FlexColomnDiv>
+                <TitleSpan>소유자</TitleSpan>
+                <ContentSpan>-</ContentSpan>
+              </FlexColomnDiv>
+            </ContentWrap>
+            <ContentWrap>
+              <FlexColomnDiv>
+                <TitleSpan>지분율</TitleSpan>
+                <ContentSpan>-</ContentSpan>
+              </FlexColomnDiv>
+            </ContentWrap>
+          </FlexDiv>
+        )}
+
         <FlexDiv>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>소유권 이전</TitleSpan>
-              <ContentSpan>{summry?.data?.summary?.ownerTransfer || '-'}</ContentSpan>
+              <ContentSpan>{summary?.data?.summary?.ownerTransfer || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
           <ContentWrap>
             <FlexColomnDiv>
               <TitleSpan>대지권</TitleSpan>
-              <ContentSpan>{summry?.data?.summary?.landRights || '-'}</ContentSpan>
+              <ContentSpan>{summary?.data?.summary?.landRights || '-'}</ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
         </FlexDiv>
         <HrLine />
 
         <FlexColomnDiv>
-          <TitleSpan>실거래가</TitleSpan>
+          <TitleSpan>
+            실거래가 (
+            {priceDate && (
+              <>
+                {`${priceDate.slice(0, 4)}년 `}
+                {`${parseInt(priceDate.slice(4), 10)}월 `}
+                거래
+              </>
+            )}
+            )
+          </TitleSpan>
           <ContentSpan>
             {price
-              ? `${price.거래금액 ? price.거래금액.trim() : '-'}만원  ( ${price.층 || '-'}층, ${
+              ? ` ${price.거래금액 ? price.거래금액.trim() : '-'}만원  ( ${price.층 || '-'}층, ${
                   price.전용면적 || '-'
                 }㎡ )`
               : '-'}
@@ -118,7 +166,7 @@ const PropertyInfo = () => {
             <FlexColomnDiv>
               <TitleSpan>세대수</TitleSpan>
               <ContentSpan>
-                {summry?.data?.summary?.units} / {summry?.data?.summary?.dong || '-'}
+                {summary?.data?.summary?.units} / {summary?.data?.summary?.dong || '-'}
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
@@ -126,7 +174,7 @@ const PropertyInfo = () => {
             <FlexColomnDiv>
               <TitleSpan>층수</TitleSpan>
               <ContentSpan>
-                {summry?.data?.summary?.floors} / {summry?.data?.summary?.total_floors || '-'}
+                {summary?.data?.summary?.floors} / {summary?.data?.summary?.total_floors || '-'}
               </ContentSpan>
             </FlexColomnDiv>
           </ContentWrap>
@@ -134,13 +182,49 @@ const PropertyInfo = () => {
         <HrLine />
         <FlexColomnDiv>
           <TitleSpan>대환 / 말소대상</TitleSpan>
-          <TitleSpan>[채권 최고액(원금) / 비례율]</TitleSpan>
+          <TitleSpan style={{ marginBottom: '10px' }}>[채권 최고액(원금) / 비례율(110%)]</TitleSpan>
 
-          <FlexDiv>
-            <ContentSpan>-</ContentSpan>
-            <ContentPercent>-</ContentPercent>
-          </FlexDiv>
+          {mortgage.length > 0 &&
+            mortgage.map((item: any, index) => {
+              if (item.purpose === '임차권설정' || item.purpose === '근저당권설정') {
+                return (
+                  <FlexDiv
+                    style={{ alignItems: 'end', marginBottom: '8px', paddingRight: '10%' }}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                  >
+                    <FlexColomnDiv>
+                      <FlexDiv style={{ justifyContent: 'flex-start', gap: '5px' }}>
+                        {item.purpose === '임차권설정' ? (
+                          <FileNameSpan style={{ fontSize: '13px', color: '#CCAC55' }}>
+                            임차권
+                          </FileNameSpan>
+                        ) : (
+                          <FileNameSpan style={{ fontSize: '13px' }}>근저당</FileNameSpan>
+                        )}
+                        <ContentSpan>{item.info.split(' ')[4]}</ContentSpan>
+                      </FlexDiv>
+                      <ContentSpan>
+                        {Math.floor(
+                          (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 10000,
+                        )}
+                        만원 (
+                        {Math.floor(
+                          (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 1.1 / 10000,
+                        )}
+                        만원 )
+                      </ContentSpan>
+                    </FlexColomnDiv>
+                    <ContentPercent>110%</ContentPercent>
+                  </FlexDiv>
+                );
+              } else {
+                return null;
+              }
+            })}
         </FlexColomnDiv>
+        <HrLine />
+
         <FlexColomnDiv>
           <FlexColomnDiv>
             <TitleSpan>메모</TitleSpan>
@@ -185,7 +269,6 @@ const FileNameSpan = styled.span`
 
 const FileNameDate = styled.span`
   color: #1a237e;
-
   font-weight: bold;
   font-size: 14px;
 `;
@@ -199,6 +282,7 @@ const ContentSpan = styled.span`
 const TitleSpan = styled.span`
   color: #8f8f8f;
   font-size: 12px;
+  font-weight: 400;
 `;
 const FlexColomnWrap = styled.div`
   display: flex;
@@ -221,5 +305,5 @@ const PraPropertyInfoWrap = styled.div`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0px 30px 30px 30px;
 `;
