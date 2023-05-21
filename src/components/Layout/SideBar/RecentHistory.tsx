@@ -2,9 +2,11 @@ import { MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useStepStore } from '@/store/store';
 import { RecentHistoryContainer } from './style';
+import { useDataStore } from '@/store/DataStore';
 
-const RecentHistoryItem = ({ idNum }: { idNum: number }) => {
+const RecentHistoryItem = ({ idNum, fileName }: { idNum: number; fileName: string }) => {
   const { setStep } = useStepStore();
+
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -18,7 +20,7 @@ const RecentHistoryItem = ({ idNum }: { idNum: number }) => {
         setStep(2);
       }}
     >
-      <span> 등기부등본 {idNum}.pdf</span>
+      <span>{fileName}</span>
       <button type="button" onClick={handleDelete}>
         X
       </button>
@@ -27,13 +29,15 @@ const RecentHistoryItem = ({ idNum }: { idNum: number }) => {
 };
 
 const RecentHistory = () => {
+  const { responseItems } = useDataStore();
+
   return (
     <RecentHistoryContainer>
       <p>최근 조회내역</p>
       <p>등기부 파일명으로 표시됩니다</p>
-      <RecentHistoryItem idNum={1} />
-      <RecentHistoryItem idNum={2} />
-      <RecentHistoryItem idNum={3} />
+      {responseItems.map((item) => (
+        <RecentHistoryItem key={item.id} idNum={item.id} fileName={item.filename} />
+      ))}
     </RecentHistoryContainer>
   );
 };
