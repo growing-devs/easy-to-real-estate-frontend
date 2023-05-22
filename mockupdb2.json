@@ -143,7 +143,10 @@
     },
     "eul_info": {
       "mortgage_info": [
-        { "collateral_amount": "203,500,000/4건", "principal_amount_estimate": "" }
+        {
+          "collateral_amount": "203,500,000/4건",
+          "principal_amount_estimate": "185,000,000원 예상(1.1%)"
+        }
       ],
       "leasehold_info": [
         {
