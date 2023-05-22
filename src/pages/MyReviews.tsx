@@ -1,22 +1,37 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import axios from 'axios';
 
 const MyReviews = () => {
-  const [email, setEmail] = useState<string>('');
+  const [mail, setMail] = useState<string>('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (email.trim() === '') {
+    if (mail.trim() === '') {
       alert('이메일을 입력하세요');
       return;
+    } else {
+      axios
+        .post('https://www.mollyteam.shop/presubscribe', {
+          email: mail,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            alert('신청완료되었습니다.');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('다시 시도해 주세요');
+        });
     }
-    console.log(email);
-    setEmail('');
+
+    setMail('');
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+    setMail(event.target.value);
   };
 
   return (
@@ -34,7 +49,7 @@ const MyReviews = () => {
         <p>지금 사전 등록하고, 서비스 출시 일정을 이메일로 안내받으시겠어요?</p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="emailInput">
-            <input type="email" value={email} onChange={handleChange} />
+            <input type="email" value={mail} onChange={handleChange} />
           </label>
           <button type="submit">등록</button>
         </form>
