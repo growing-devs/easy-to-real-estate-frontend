@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { KAKAO_API_KEY, KAKAO_API_URL } from '../utils/constants';
 
-export const KakaoApi = async (query: string) => {
+export const KakaoSearchApi = async (query: string) => {
   try {
     const response = await axios({
       method: 'GET',
