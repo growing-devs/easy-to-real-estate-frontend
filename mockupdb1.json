@@ -39,10 +39,7 @@
           "registration_cause": "",
           "notes": {
             "note": ["소유자", "124771-0001551"],
-            "canceled": [
-              "인천광역시도시개발공사",
-              "인천광역시 남동구 만수동 1090"
-            ]
+            "canceled": ["인천광역시도시개발공사", "인천광역시 남동구 만수동 1090"]
           }
         },
         {
@@ -94,7 +91,7 @@
       "mortgage_info": [
         {
           "collateral_amount": "541,200,000원/3건",
-          "principal_amount_estimate": ""
+          "principal_amount_estimate": "492,000,000원 예상(1.1%)"
         }
       ],
       "leasehold_info": [
@@ -121,10 +118,7 @@
           },
           "registration_purpose": "근저당권설정",
           "reception_information": "2015년12월8일 제152705호",
-          "major_registration_items": [
-            "채권최고액 금403,200,000원",
-            "근저당권자 농협은행주식회사"
-          ],
+          "major_registration_items": ["채권최고액 금403,200,000원", "근저당권자 농협은행주식회사"],
           "target_owner": "박관재"
         },
         {
@@ -134,10 +128,7 @@
           },
           "registration_purpose": "근저당권설정",
           "reception_information": "2016년3월14일 제34633호",
-          "major_registration_items": [
-            "채권최고액 금54,000,000원",
-            "근저당권자 농협은행주식회사"
-          ],
+          "major_registration_items": ["채권최고액 금54,000,000원", "근저당권자 농협은행주식회사"],
           "target_owner": "박관재"
         },
         {
@@ -147,10 +138,7 @@
           },
           "registration_purpose": "근저당권설정",
           "reception_information": "2020년4월8일 제168070호",
-          "major_registration_items": [
-            "채권최고액 금84,000,000원",
-            "근저당권자 농협은행주식회사"
-          ],
+          "major_registration_items": ["채권최고액 금84,000,000원", "근저당권자 농협은행주식회사"],
           "target_owner": "박관재"
         }
       ]
