@@ -13,5 +13,5 @@ const MarketPrice = () => {
 
 export default MarketPrice;
 const MarketPriceWrap = styled.div`
-  width: 100%;
+  width: 940px;
 `;
