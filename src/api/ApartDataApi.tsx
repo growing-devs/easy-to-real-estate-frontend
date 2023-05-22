@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { KakaoApi } from './kakaoApi';
+import { KakaoApi } from './KakaoApi';
 
 // 조회날자 기준 n년전
 const getPastDates = (years: number) => {

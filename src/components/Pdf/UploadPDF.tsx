@@ -112,10 +112,7 @@ const UplodPDF = () => {
       const response = await uploadFileToServer(formData);
 
       if (response) {
-        const customData = await ApartData(
-          response.data.summary.newAddress,
-          response.data.summary.area,
-        );
+        const customData = await ApartData(response.data.summary.newAddress);
         if (customData) {
           const lastId = addResponseItem(fileName, { ...response.data, customData });
           setDataStoreId(lastId);

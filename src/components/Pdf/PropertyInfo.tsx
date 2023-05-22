@@ -42,8 +42,6 @@ const PropertyInfo = () => {
       setMaximumDebt(originalMoney);
       setMortgage(ownership);
       setOwnershipList(ownershipListValues);
-      console.log(mortgage);
-      console.log('maximumDebt', maximumDebt);
 
       if (dateKeys.length > 0) {
         const maxDateKey = Math.max(...dateKeys);
