@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line import/named
 import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { instance } from '../../api/UploadApi';
 import DragAndDrop from './DragAndDrop';
@@ -173,7 +174,7 @@ const UplodPDF = () => {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number;
     if (uploadProgress === 100) {
       timer = setTimeout(() => {
         setIsUploadComplete(true);
