@@ -8,8 +8,9 @@ export const KakaoApi = async (query: string) => {
       url: `${KAKAO_API_URL}?query=${query}`,
       headers: { Authorization: `KakaoAK ${KAKAO_API_KEY}` },
     });
+    const { documents } = response.data; // SomeType은 실제 타입에 맞게 지정해야 합니다.
 
-    return response.data.documents[0];
+    return documents[0];
   } catch (error) {
     return null;
   }
