@@ -1,10 +1,11 @@
-import axios, { AxiosInstance, AxiosProgressEvent, CancelTokenSource } from 'axios';
+// eslint-disable-next-line import/named
+import axios, { AxiosInstance, CancelTokenSource } from 'axios';
 import { MoreturnUrl } from '../utils/constants';
 
 // 반복횟수
 const maxRetries = 3;
 
-const createAxiosInstance = (): AxiosInstance => {
+const createAxiosInstance = () => {
   return axios.create({
     baseURL: MoreturnUrl,
     headers: {
