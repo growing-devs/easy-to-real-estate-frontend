@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import { PrimaryModal } from '@/components/common';
 
 const MyReviews = () => {
   const [mail, setMail] = useState<string>('');
+  const [opened, setOpened] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (mail.trim() === '') {
-      alert('이메일을 입력하세요');
+      setMessage('이메일을 제대로 기입하였는지 확인해 주세요.');
+      setOpened(true);
       return;
     } else {
       axios
@@ -18,12 +22,14 @@ const MyReviews = () => {
         .then((res) => {
           console.log(res);
           if (res.data.code === 200) {
-            alert('신청완료되었습니다.');
+            setMessage('신청이 완료되었습니다.');
+            setOpened(true);
           }
         })
         .catch((err) => {
           console.log(err);
-          alert('다시 시도해 주세요');
+          setMessage('오류가 발생했습니다. 다시 시도해 주세요.');
+          setOpened(true);
         });
     }
 
@@ -36,6 +42,16 @@ const MyReviews = () => {
 
   return (
     <PreparingPage>
+      <PrimaryModal
+        isOpen={opened}
+        onClose={() => {
+          setOpened(false);
+        }}
+        width={420}
+        height={120}
+      >
+        {message}
+      </PrimaryModal>
       <p className="mainTitle">
         내 심사관리 서비스가
         <br />곧 출시됩니다.
