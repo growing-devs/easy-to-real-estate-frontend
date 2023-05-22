@@ -205,7 +205,7 @@ const UplodPDF = () => {
   };
   // 이동
   const ViewChange = () => {
-    navigate(`${dataStoreId}/marketprice`);
+    navigate(`${dataStoreId}/pdfsummary`);
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {
