@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line import/named
 import axios, { AxiosProgressEvent, CancelTokenSource } from 'axios';
 import { instance } from '../../api/UploadApi';
 import DragAndDrop from './DragAndDrop';
@@ -112,10 +113,7 @@ const UplodPDF = () => {
       const response = await uploadFileToServer(formData);
 
       if (response) {
-        const customData = await ApartData(
-          response.data.summary.newAddress,
-          response.data.summary.area,
-        );
+        const customData = await ApartData(response.data.summary.newAddress);
         if (customData) {
           const lastId = addResponseItem(fileName, { ...response.data, customData });
           setDataStoreId(lastId);
@@ -176,7 +174,7 @@ const UplodPDF = () => {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number;
     if (uploadProgress === 100) {
       timer = setTimeout(() => {
         setIsUploadComplete(true);
@@ -207,7 +205,7 @@ const UplodPDF = () => {
   };
   // 이동
   const ViewChange = () => {
-    navigate(`${dataStoreId}/marketprice`);
+    navigate(`${dataStoreId}/pdfsummary`);
   };
 
   const ErrorModal = (PdfType: boolean, PdfSize: boolean) => {

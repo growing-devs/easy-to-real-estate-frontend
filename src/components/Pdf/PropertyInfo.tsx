@@ -42,8 +42,6 @@ const PropertyInfo = () => {
       setMaximumDebt(originalMoney);
       setMortgage(ownership);
       setOwnershipList(ownershipListValues);
-      console.log(mortgage);
-      console.log('maximumDebt', maximumDebt);
 
       if (dateKeys.length > 0) {
         const maxDateKey = Math.max(...dateKeys);
@@ -204,18 +202,30 @@ const PropertyInfo = () => {
                         )}
                         <ContentSpan>{item.info.split(' ')[4]}</ContentSpan>
                       </FlexDiv>
-                      <ContentSpan>
-                        {Math.floor(
-                          (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 10000,
-                        )}
-                        만원 (
-                        {Math.floor(
-                          (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 1.1 / 10000,
-                        )}
-                        만원 )
-                      </ContentSpan>
+
+                      {item.purpose === '임차권설정' ? (
+                        <ContentSpan>
+                          {Math.floor(
+                            (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 10000,
+                          )}
+                          만원
+                        </ContentSpan>
+                      ) : (
+                        <FlexDiv style={{ width: '250px', justifyContent: 'space-between' }}>
+                          <ContentSpan>
+                            {Math.floor(
+                              (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 10000,
+                            )}
+                            만원 (
+                            {Math.floor(
+                              (item.info?.split(' ')[2]?.replace(/[^0-9]/g, '') ?? 0) / 1.1 / 10000,
+                            )}
+                            만원 )
+                          </ContentSpan>
+                          <ContentPercent>110%</ContentPercent>
+                        </FlexDiv>
+                      )}
                     </FlexColomnDiv>
-                    <ContentPercent>110%</ContentPercent>
                   </FlexDiv>
                 );
               } else {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { KakaoApi } from './kakaoApi';
+import { KakaoSearchApi } from './KakaoSearchApi';
 
 // 조회날자 기준 n년전
 const getPastDates = (years: number) => {
@@ -56,7 +56,8 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
 
 const ApartData = (adress: string) => {
   // 카카오 법정동코드 추출
-  return KakaoApi(adress).then((documents) => {
+  console.log(adress);
+  return KakaoSearchApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
       const pastDates = getPastDates(1);
@@ -83,6 +84,8 @@ const ApartData = (adress: string) => {
               return null; // 반환 값으로 null을 명시적으로 반환
             })
             .catch((error) => {
+              console.log(error);
+
               return null; // 반환 값으로 null을 명시적으로 반환
             });
         }),
