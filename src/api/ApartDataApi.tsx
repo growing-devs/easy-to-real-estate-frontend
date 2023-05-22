@@ -84,6 +84,8 @@ const ApartData = (adress: string) => {
               return null; // 반환 값으로 null을 명시적으로 반환
             })
             .catch((error) => {
+              console.log(error);
+
               return null; // 반환 값으로 null을 명시적으로 반환
             });
         }),
