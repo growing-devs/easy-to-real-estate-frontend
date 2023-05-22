@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { KakaoApi } from './kakaoApi';
+import { KakaoApi } from './KakaoApi';
 
 // 조회날자 기준 n년전
 const getPastDates = (years: number) => {
@@ -56,6 +56,7 @@ const fetchData = async (lawCityNumber: string, yyyymm: string, pageNo = 1): Pro
 
 const ApartData = (adress: string) => {
   // 카카오 법정동코드 추출
+  console.log(adress);
   return KakaoApi(adress).then((documents) => {
     if (documents !== null) {
       // 현재날자를 기준으로 몇년전 날자를 조회할것인지 월단위로 배열에 넣어줌
